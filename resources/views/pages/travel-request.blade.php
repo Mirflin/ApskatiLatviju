@@ -26,56 +26,75 @@
             </style>
         @endif
     </head>
-    <body class="welcome-page">
+    <body class="min-h-screen flex flex-col">
         @include('layouts.nav-header')
 
-        <main class="welcome-container">
-            <div class="start-section radial-gradient-circle">
-                <!-- <div class="slider-wrapper">
-            <div class="slider">
-            <div class="slide active">
-                <h3>Kāpēc izvēlēties "Apskati Latviju"?</h3>
-                <ul>
-                    <li>one</li>
-                    <li>two</li>
-                    <li>three</li>
-                </ul>
-            </div>
-            <div class="slide">
-                <h3>Other info</h3>
-                <p>
-                ...
-                </p>
-            </div>
-            </div>
-            <button class="slider-btn prev">&#10094;</button>
-            <button class="slider-btn next">&#10095;</button>
-        </div> -->
+        <main class="flex-grow max-w-3xl mx-auto p-6">
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h1 class="text-2xl font-bold mb-6">Pieteikuma forma</h1>
 
-                <div class="r-content">
-                    <h1>Apskati skaistāko Latvijā</h1>
-                    <p>
-                        Ceļojumu piedāvājumu pārvaldības sistēma “Apskati
-                        Latviju” ir paredzēta, lai atvieglotu ceļojumu
-                        organizatora pakalpojumu sniegšanu un popularizēšanu
-                        Latvijā.
-                    </p>
-                    <a
-                        href="{{ route('travel.request') }}"
-                        class="btn-big box-shadow-item"
+                <form action="#" method="POST" class="space-y-4">
+                    @csrf
+
+                    <div>
+                        <label for="name" class="block font-semibold">
+                            Vārds
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="w-full border rounded p-2"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label for="email" class="block font-semibold">
+                            E-pasts
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="w-full border rounded p-2"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label for="travel_id" class="block font-semibold">
+                            Izvēlies ceļojumu
+                        </label>
+                        <select
+                            name="travel_id"
+                            id="travel_id"
+                            class="w-full border rounded p-2"
+                            required
+                        >
+                            <option value="">-- Lūdzu, izvēlies --</option>
+                            @foreach ($allTravels as $option)
+                                <option
+                                    value="{{ $option->id }}"
+                                    @if($travel && $travel->id === $option->id) selected @endif
+                                >
+                                    {{ $option->name }}
+                                    ({{ $option->country }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600 transition"
                     >
-                        Sākt
-                    </a>
-                </div>
+                        Pieteikties
+                    </button>
+                </form>
             </div>
-            @include('layouts.news-section')
-            @include('layouts.travels-section', ['travels' => $travels])
-            @include('layouts.coops-section')
         </main>
-        @include('layouts.footer')
 
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
+        @include('layouts.footer')
     </body>
 </html>
