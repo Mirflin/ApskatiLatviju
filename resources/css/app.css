@@ -161,19 +161,19 @@ header.topbar {
     filter: drop-shadow(var(--filter-shadow-item-selected));
 }
 
-section {
+.welcome-container section {
     padding: 60px 100px;
     background-color: #f9f9f9;
     border-bottom: 1px solid #e0e0e0;
 }
 
-section h2 {
+.welcome-container section h2 {
     font-size: 32px;
     font-family: 'Oswald', sans-serif;
     margin-bottom: 15px;
 }
 
-section p {
+.welcome-container section p {
     font-size: 18px;
     color: #333;
     max-width: 800px;
@@ -261,6 +261,10 @@ section p {
 @media (max-width: 1110px) {
     header.topbar {
         padding: 10px 20px;
+    }
+
+    .welcome-container section {
+        padding: 60px 20px;
     }
 
     .start-section {

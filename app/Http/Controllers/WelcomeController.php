@@ -13,9 +13,8 @@ class WelcomeController extends Controller
     {
         $news = News::latest()->get();
         $travels = Travel::whereNull('deleted_at')->get();
-        $coops = Client::all();
 
-        return view('welcome', compact('news', 'travels', 'coops'));
+        return view('welcome', compact('news', 'travels'));
     }
 
     public function showTravelDetails($id)

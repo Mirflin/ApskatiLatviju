@@ -38,7 +38,7 @@
                         {{ $news->header }}
                     </h1>
                     <p class="text-sm text-gray-500 mb-6">
-                        Publicēts:
+                        <strong>Publicēts:</strong>
                         {{ \Carbon\Carbon::parse($news->created_at)->format('d.m.Y') }}
                     </p>
                     <p

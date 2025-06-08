@@ -49,6 +49,7 @@ const btnList = document.querySelector(".btn-list");
 
 burger.addEventListener("click", () => {
     if (btnList.classList.contains("visible")) {
+        burger.style.color = "";
         btnList.classList.remove("visible");
         btnList.classList.add("hiding");
         setTimeout(() => {

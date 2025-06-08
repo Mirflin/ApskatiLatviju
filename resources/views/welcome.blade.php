@@ -30,7 +30,7 @@
         @include('layouts.nav-header')
 
         <main class="welcome-container">
-            <div class="start-section radial-gradient-circle">
+            <div class="start-section radial-gradient-circle" id="start-section">
                 <!-- <div class="slider-wrapper">
             <div class="slider">
             <div class="slide active">
@@ -70,9 +70,9 @@
             </div>
             @include('layouts.sections.news-section', ['news' => $news])
             @include('layouts.sections.travels-section', ['travels' => $travels])
-            @include('layouts.sections.coops-section', ['coops' => $coops])
         </main>
         @include('layouts.footer')
+
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
