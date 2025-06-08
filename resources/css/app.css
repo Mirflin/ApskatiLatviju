@@ -11,7 +11,8 @@ main:not(.welcome-container) {
 }
 
 body:is(.welcome-page),
-body:is(.travel-details-page) {
+body:is(.travel-details-page),
+body:is(.news-details-page)  {
     background-color: var(--main-white);
     color: var(--main-black);
     margin-top: 100px;

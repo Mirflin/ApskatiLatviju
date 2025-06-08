@@ -80,7 +80,7 @@
 
                 <div class="lg:w-1/2">
                     <img
-                        src="{{ asset('storage/travels/' . $travel->image) }}"
+                        src="{{ $travel->image_url }}"
                         alt="{{ $travel->name }}"
                         class="w-full h-full object-cover"
                     />

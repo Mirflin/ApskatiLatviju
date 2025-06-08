@@ -1,14 +1,17 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TravelController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [TravelController::class, 'index'])->name('welcome');
+use App\Http\Controllers\WelcomeController;
 
-Route::get('/travel-request', [TravelController::class, 'requestForm'])->name('travel.request');
 
-Route::get('/travel-details/{id}', [TravelController::class, 'show'])->name('travel.details');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+Route::get('/travel-details/{id}', [WelcomeController::class, 'showTravelDetails'])->name('travel.details');
+Route::get('/travel-request', [WelcomeController::class, 'travelRequest'])->name('travel.request');
+
+Route::get('/news/{id}', [WelcomeController::class, 'showNewsDetails'])->name('news.details');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
