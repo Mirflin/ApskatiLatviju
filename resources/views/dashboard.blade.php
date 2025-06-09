@@ -23,34 +23,25 @@
                             <i class="fa-solid fa-chevron-down"></i>
                         </div>
                     </div>
-                    <div class="child-option hidden-elem">
-                        <a class="child">
+                    <div class="child-option">
+                        <button @click="setActive('travelT')" :class="active === 'travelT' ? 'active' : ' '" class="child">
                             <img class="child-option-image">
                             <div class="child-option-text">
-                                <p>sommething</p>
-                                <p>sommething</p>
+                                <p>Travel trends</p>
                             </div>
-                        </a>
-                        <a class="child">
+                        </button>
+                        <button @click="setActive('serviceT')" :class="active === 'serviceT' ? 'active' : ' '" class="child">
                             <img class="child-option-image">
                             <div class="child-option-text">
-                                <p>sommething</p>
-                                <p>sommething</p>
+                                <p>Services trends</p>
                             </div>
-                        </a>
-                        <a class="child">
-                            <img class="child-option-image">
-                            <div class="child-option-text">
-                                <p>sommething</p>
-                                <p>sommething</p>
-                            </div>
-                        </a>
+                        </button>
                     </div>
                 </div>
 
                 <button @click="setActive('news')" :class="active === 'news' ? 'active' : ' '" class="parrent-label">
                     <div>
-                        <img class="parrent-image">
+                        <i class="fa-solid fa-newspaper fa-2xl"></i>
                         <p class="function-p">News</p>
                     </div>
                 </button>
@@ -114,6 +105,12 @@
         <template x-if="active === 'moderators'">
             @include('components.dashboard-moderators', ['breadcrumb' => 'dashboard/moderators'])
         </template>
+        <template x-if="active === 'serviceT'">
+            @include('components.dashboard-service-trend', ['breadcrumb' => 'dashboard/service-trend'])
+        </template>
+        <template x-if="active === 'travelT'">
+            @include('components.dashboard-travel-trend', ['breadcrumb' => 'dashboard/travel-trend'])
+        </template>
     </section>
     </div>
 </x-app-layout>
@@ -136,7 +133,7 @@
                     }
                 })
             },
-            
+
             setActive(name){
                 this.active = name;
                 console.log(this.active)

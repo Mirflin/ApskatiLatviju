@@ -42,6 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+/*
 document.querySelectorAll(".options .parrent-option").forEach((option) => {
     option.addEventListener("click", function(e){
         option.querySelector(".child-option").classList.toggle('hidden-elem')
