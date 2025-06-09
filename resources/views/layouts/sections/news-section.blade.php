@@ -2,10 +2,10 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-center mb-10">Aktuāls</h2>
 
-        <div class="relative overflow-hidden" id="newsSlider">
+        <div class="relative overflow-hidden rounded-lg" id="newsSlider">
             <div class="flex transition-transform duration-500" id="newsSlides">
                 @foreach ($news as $item)
-                    <div class="min-w-full flex flex-col lg:flex-row bg-white rounded-lg shadow-lg p-4 sm:p-6 h-auto lg:h-[500px]">
+                    <div class="min-w-full flex flex-col lg:flex-row bg-white shadow-lg p-4 sm:p-6 h-auto lg:h-[500px]">
                         <img src="{{ $item->image_url }}"
                              alt="{{ $item->header }}"
                              class="w-full lg:w-3/5 h-60 sm:h-80 lg:h-full object-cover rounded mb-4 lg:mb-0 lg:mr-6" />
@@ -31,11 +31,11 @@
             </div>
 
             <button id="prevSlide"
-                    class="absolute top-1/2 left-2 sm:left-4 transform -translate-y-1/2 bg-black text-white p-2 sm:p-3 rounded-full hover:bg-gray-700 z-10">
+                    class="absolute top-1/2 left-2 sm:left-4 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 sm:p-3 rounded-full hover:bg-opacity-100 z-10">
                 &#8592;
             </button>
             <button id="nextSlide"
-                    class="absolute top-1/2 right-2 sm:right-4 transform -translate-y-1/2 bg-black text-white p-2 sm:p-3 rounded-full hover:bg-gray-700 z-10">
+                    class="absolute top-1/2 right-2 sm:right-4 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 sm:p-3 rounded-full hover:bg-opacity-100 z-10">
                 &#8594;
             </button>
         </div>
