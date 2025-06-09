@@ -6,21 +6,49 @@ use Illuminate\Http\Request;
 use App\Models\Travel;
 use App\Models\News;
 use App\Models\Client;
+use App\Models\Service;
 
 class WelcomeController extends Controller
 {
     public function index()
     {
         $news = News::latest()->get();
+        
+        return view('welcome', compact('news'));
+    }
+    
+    public function travels()
+    {
         $travels = Travel::whereNull('deleted_at')->get();
 
-        return view('welcome', compact('news', 'travels'));
+        return view('pages.travels', compact('travels'));
+    }
+
+    public function myTravels()
+    {
+        return view('pages.my-travels');
+    }
+
+    public function support()
+    {
+        return view('pages.support');
+    }
+
+    public function services()
+    {
+        $services = Service::whereNull('deleted_at')->get();
+
+        return view('pages.services', compact('services'));
     }
 
     public function showTravelDetails($id)
     {
         $travel = Travel::findOrFail($id);
-        return view('pages.travel-details', compact('travel'));
+
+        // get 10 comments with limit-10
+        $feedbacks = $travel->feedbacks()->paginate(10);
+
+        return view('pages.travel-details', compact('travel', 'feedbacks'));
     }
 
     public function showNewsDetails($id)
@@ -45,5 +73,17 @@ class WelcomeController extends Controller
         }
 
         return view('pages.travel-request', compact('travel', 'allTravels'));
+    }
+
+    public function serviceRequest(Request $request)
+    {
+        $service = null;
+        $allServices = Service::all();
+
+        if ($request->has('service_id')) {
+            $service = Service::find($request->get('service_id'));
+        }
+        
+        return view('pages.service-request', compact('service', 'allServices'));
     }
 }

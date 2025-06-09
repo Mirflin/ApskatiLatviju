@@ -26,77 +26,52 @@
             </style>
         @endif
     </head>
-    <body class="travel-details-page min-h-screen flex flex-col">
+    <body class="travels-page min-h-screen flex flex-col">
         @include('layouts.nav-header')
 
-        <main class="max-w-6xl mx-auto p-6 flex-grow">
-            <div
-                class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row"
-            >
-                <div class="p-8 flex flex-col justify-between lg:w-1/2">
-                    <div>
-                        <h1 class="text-4xl font-bold mb-4 text-gray-800">
-                            {{ $travel->name }}
-                        </h1>
-                        <h2 class="text-2xl font-bold mb-4 text-gray-300">
-                            {{ $travel->road_marks}}
-                        </h2>
-                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
-                            {{ $travel->description }}
-                        </p>
+        @include('components.travels-filtration')
 
-                        <ul class="text-md text-gray-600 mb-6 space-y-2">
-                            <li>
-                                <strong>Pilsēta:</strong>
-                                {{ $travel->country }}
-                            </li>
-                            <li>
-                                <strong>Derīguma termiņš:</strong>
-                                {{ $travel->formattedTimeTerm('d.m.Y H:i') }}
-                            </li>
-                            <li>
-                                <strong>Brīvas vietas:</strong>
-                                {{ $travel->spot_count }}
-                            </li>
-                            <li>
-                                <strong>Cena:</strong>
-                                {{ $travel->price }} €
-                            </li>
-                        </ul>
+        <h2 class="text-3xl font-bold mb-6 text-center my-5">Ceļojumi</h2>
+        <main class="flex-grow mx-auto p-6">
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                @forelse ($travels as $travel)
+                    <div
+                        class="border rounded-lg shadow-lg overflow-hidden bg-white"
+                    >
+                        <img
+                            src="{{ $travel->image_url }}"
+                            alt="{{ $travel->name }}"
+                            class="w-full h-78 object-cover"
+                        />
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold mb-2">
+                                {{ $travel->name }} - {{ $travel->country }}
+                            </h3>
+                            <ul class="text-sm text-gray-600 mb-2">
+                                <li>
+                                    <strong>Derīguma termiņš:</strong>
+                                    {{ $travel->formattedTimeTerm() }}
+                                </li>
+                                <li>
+                                    <strong>Brīvas vietas:</strong>
+                                    {{ $travel->spot_count }}
+                                </li>
+                            </ul>
+                            <a
+                                href="{{ route('travel.details', $travel->id) }}"
+                                class="inline-block mt-3 text-orange-500 hover:underline"
+                            >
+                                Lasīt vairāk
+                            </a>
+                        </div>
                     </div>
-
-                    <div class="flex flex-col gap-3 mt-6">
-                        <a
-                            href="{{ route('travel.request', ['travel_id' => $travel->id]) }}"
-                            class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white text-center rounded-lg shadow-md transition duration-300"
-                        >
-                            Pieteikties ceļojumam
-                        </a>
-                        <a
-                            href="/travels"
-                            class="text-orange-500 hover:underline text-center"
-                        >
-                            Atgriezties
-                        </a>
-                    </div>
-                </div>
-
-                <div class="lg:w-1/2">
-                    <img
-                        src="{{ $travel->image_url }}"
-                        alt="{{ $travel->name }}"
-                        class="w-full h-full object-cover"
-                    />
-                </div>
+                @empty
+                    <p>Nav pieejamu ceļojumu.</p>
+                @endforelse
             </div>
         </main>
 
-        @include('layouts.comment')
-
         @include('layouts.footer')
-
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
     </body>
 </html>

@@ -68,8 +68,7 @@
                     </a>
                 </div>
             </div>
-            @include('layouts.sections.news-section', ['news' => $news])
-            @include('layouts.sections.travels-section', ['travels' => $travels])
+            @include('layouts.news-section', ['news' => $news])
         </main>
         @include('layouts.footer')
 

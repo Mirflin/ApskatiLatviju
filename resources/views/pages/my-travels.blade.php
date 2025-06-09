@@ -26,77 +26,56 @@
             </style>
         @endif
     </head>
-    <body class="travel-details-page min-h-screen flex flex-col">
-        @include('layouts.nav-header')
+    <body class="my-travels-page min-h-screen flex flex-col bg-white text-gray-800">
+    @include('layouts.nav-header')
 
-        <main class="max-w-6xl mx-auto p-6 flex-grow">
-            <div
-                class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row"
-            >
-                <div class="p-8 flex flex-col justify-between lg:w-1/2">
-                    <div>
-                        <h1 class="text-4xl font-bold mb-4 text-gray-800">
-                            {{ $travel->name }}
-                        </h1>
-                        <h2 class="text-2xl font-bold mb-4 text-gray-300">
-                            {{ $travel->road_marks}}
-                        </h2>
-                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
-                            {{ $travel->description }}
-                        </p>
+    <main class="flex-grow mx-auto w-full px-4 sm:px-6 max-w-3xl py-6">
+        <div>
+            <h1 class="text-3xl font-bold mb-6 text-center">
+                Mani ceļojumi
+            </h1>
 
-                        <ul class="text-md text-gray-600 mb-6 space-y-2">
-                            <li>
-                                <strong>Pilsēta:</strong>
-                                {{ $travel->country }}
-                            </li>
-                            <li>
-                                <strong>Derīguma termiņš:</strong>
-                                {{ $travel->formattedTimeTerm('d.m.Y H:i') }}
-                            </li>
-                            <li>
-                                <strong>Brīvas vietas:</strong>
-                                {{ $travel->spot_count }}
-                            </li>
-                            <li>
-                                <strong>Cena:</strong>
-                                {{ $travel->price }} €
-                            </li>
-                        </ul>
-                    </div>
+            <div class="bg-orange-50 border border-orange-300 rounded-xl p-5 mb-6 shadow">
+                <label for="check_code" class="block text-lg font-semibold text-orange-700 mb-2">
+                    Ievadi čeka kodu:
+                </label>
 
-                    <div class="flex flex-col gap-3 mt-6">
-                        <a
-                            href="{{ route('travel.request', ['travel_id' => $travel->id]) }}"
-                            class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white text-center rounded-lg shadow-md transition duration-300"
-                        >
-                            Pieteikties ceļojumam
-                        </a>
-                        <a
-                            href="/travels"
-                            class="text-orange-500 hover:underline text-center"
-                        >
-                            Atgriezties
-                        </a>
-                    </div>
-                </div>
-
-                <div class="lg:w-1/2">
-                    <img
-                        src="{{ $travel->image_url }}"
-                        alt="{{ $travel->name }}"
-                        class="w-full h-full object-cover"
+                <!-- Responsive input + button -->
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input
+                        type="text"
+                        id="check_code"
+                        name="check_code"
+                        class="w-full border border-orange-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
                     />
+                    <button
+                        class="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded font-semibold transition"
+                    >
+                        Meklēt
+                    </button>
                 </div>
             </div>
-        </main>
 
-        @include('layouts.comment')
+            <!-- Travel Info Card -->
+            <div class="bg-white border rounded-xl shadow p-6 overflow-x-auto">
+                <h2 class="text-2xl font-bold text-orange-700 mb-2">
+                    Ceļojuma informācija
+                </h2>
+                <p><strong>Nosaukums:</strong> Test nosaukums</p>
+                <p><strong>Pilsēta:</strong> Liepāja</p>
+                <p><strong>Cena:</strong> €45.00</p>
+                <p><strong>Datums:</strong> 2025.07.15</p>
+                <div>
+                    <strong>Apraksts:</strong>
+                    <p class="break-words">
+                        Test commentTest commentTest commentTest commentTest commentTest commentTest commentTest commentTest comment Test commentTest commentTest commentTest commentTest commentTest commentTest commentTest commentTest comment Test commentTest commentTest commentTest commentTest commentTest commentTest commentTest commentTest comment Test commentTest commentTest commentTest commentTest commentTest commentTest commentTest commentTest comment
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-        @include('layouts.footer')
+    @include('layouts.footer')
+</body>
 
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
-    </body>
 </html>
