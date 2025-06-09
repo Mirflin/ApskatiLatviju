@@ -43,18 +43,19 @@
 #main{
     display: flex;
     flex-direction: row;
+    height: 93vh;
 }
 .main-panel{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     background-color: #f5f6f8;
 }
 .dashboard-aside{
-    height: 90vh;
-    width: 40%;
+    height: 100%;
+    width: 25%;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -70,7 +71,7 @@
     width: 100%;
     height: 4rem;
     gap: 1rem;
-    
+
 }
 .parrent-option{
     display: flex;
@@ -113,6 +114,7 @@
     border-radius: 0.5rem;
 }
 .active{
+    border-radius: 0.5rem;
     background-color: #299efe;
 }
 .child-option-image{
@@ -195,7 +197,7 @@
     width: 100%;
 }
 .double-chart .panel:nth-child(2){
-    width: 60%; 
+    width: 60%;
     margin-left: 0;
 }
 .child:hover{
@@ -204,4 +206,20 @@
 }
 .child:active{
     background-color: #299efe;
+}
+
+.header-button-panels{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-button-panels button{
+    border: 0.2rem solid rgb(0, 174, 0);
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.header-button-panels button:hover{
+    border: 0.2rem solid rgb(0, 233, 0);
 }

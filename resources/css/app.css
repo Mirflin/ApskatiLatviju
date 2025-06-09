@@ -4,7 +4,6 @@
 @tailwind utilities;
 
 main:not(.welcome-container) {
-    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
@@ -96,6 +95,14 @@ header.topbar {
     align-items: center;
     gap: 8px;
     font-weight: 600;
+}
+
+.active{
+    border-radius: 0.5rem;
+    background-color: #299efe;
+}
+.hidden-elem{
+    display: none !important;
 }
 
 .btn-list a:hover,

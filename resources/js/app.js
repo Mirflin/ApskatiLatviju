@@ -42,6 +42,25 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+/*
+document.querySelectorAll(".options .parrent-option").forEach((option) => {
+    option.addEventListener("click", function(e){
+        option.querySelector(".child-option").classList.toggle('hidden-elem')
+    })
+})
+
+/*
+console.log(document.querySelectorAll(".options a").closest("parrent-label"))
+(document.querySelectorAll(".options a").closest(".parrent-label")).forEach((label) => {
+    console.log(label)
+    label.addEventListener("click", function (e) {
+        label.classList.toggle('active')
+        console.log("click")
+    })
+})
+    */
+
+
 
 // burger -> hide/show
 const burger = document.querySelector(".burger");
@@ -126,3 +145,4 @@ document.querySelectorAll(".btn-list a").forEach((link) => {
 });
 
 // --------------------
+
