@@ -43,18 +43,19 @@
 #main{
     display: flex;
     flex-direction: row;
+    height: 93vh;
 }
 .main-panel{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     background-color: #f5f6f8;
 }
 .dashboard-aside{
-    height: 90vh;
-    width: 40%;
+    height: 100%;
+    width: 25%;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -113,6 +114,7 @@
     border-radius: 0.5rem;
 }
 .active{
+    border-radius: 0.5rem;
     background-color: #299efe;
 }
 .child-option-image{
