@@ -3,9 +3,16 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\WelcomeController;
+
+
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+
+// sections (news, travels)
+Route::get('/travel-request', [WelcomeController::class, 'travelRequest'])->name('travel.request');
+Route::get('/travel-details/{id}', [WelcomeController::class, 'showTravelDetails'])->name('travel.details');
+
+Route::get('/news/{id}', [WelcomeController::class, 'showNewsDetails'])->name('news.details');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

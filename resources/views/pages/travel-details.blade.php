@@ -26,53 +26,69 @@
             </style>
         @endif
     </head>
-    <body class="welcome-page">
+    <body class="travel-details-page min-h-screen flex flex-col">
         @include('layouts.nav-header')
 
-        <main class="welcome-container">
-            <div class="start-section radial-gradient-circle" id="start-section">
-                <!-- <div class="slider-wrapper">
-            <div class="slider">
-            <div class="slide active">
-                <h3>Kāpēc izvēlēties "Apskati Latviju"?</h3>
-                <ul>
-                    <li>one</li>
-                    <li>two</li>
-                    <li>three</li>
-                </ul>
-            </div>
-            <div class="slide">
-                <h3>Other info</h3>
-                <p>
-                ...
-                </p>
-            </div>
-            </div>
-            <button class="slider-btn prev">&#10094;</button>
-            <button class="slider-btn next">&#10095;</button>
-        </div> -->
+        <main class="max-w-6xl mx-auto p-6 flex-grow">
+            <div
+                class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row"
+            >
+                <div class="p-8 flex flex-col justify-between lg:w-1/2">
+                    <div>
+                        <h1 class="text-4xl font-bold mb-4 text-gray-800">
+                            {{ $travel->name }}
+                        </h1>
+                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                            {{ $travel->description }}
+                        </p>
 
-                <div class="r-content">
-                    <h1>Apskati skaistāko Latvijā</h1>
-                    <p>
-                        Ceļojumu piedāvājumu pārvaldības sistēma “Apskati
-                        Latviju” ir paredzēta, lai atvieglotu ceļojumu
-                        organizatora pakalpojumu sniegšanu un popularizēšanu
-                        Latvijā.
-                    </p>
-                    <a
-                        href="{{ route('travel.request') }}"
-                        class="btn-big box-shadow-item"
-                    >
-                        Sākt
-                    </a>
+                        <ul class="text-md text-gray-600 mb-6 space-y-2">
+                            <li>
+                                <strong>Valsts:</strong>
+                                {{ $travel->country }}
+                            </li>
+                            <li>
+                                <strong>Ilgums:</strong>
+                                {{ $travel->formattedTimeTerm('d.m.Y H:i') }}
+                            </li>
+                            <li>
+                                <strong>Brīvas vietas:</strong>
+                                {{ $travel->spot_count }}
+                            </li>
+                            <li>
+                                <strong>Cena:</strong>
+                                {{ $travel->price }} €
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col gap-3 mt-6">
+                        <a
+                            href="{{ route('travel.request', ['travel_id' => $travel->id]) }}"
+                            class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white text-center rounded-lg shadow-md transition duration-300"
+                        >
+                            Pieteikties ceļojumam
+                        </a>
+                        <a
+                            href="/"
+                            class="text-blue-500 hover:underline text-center"
+                        >
+                            Atgriezties
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2">
+                    <img
+                        src="{{ $travel->image_url }}"
+                        alt="{{ $travel->name }}"
+                        class="w-full h-full object-cover"
+                    />
                 </div>
             </div>
-            @include('layouts.sections.news-section', ['news' => $news])
-            @include('layouts.sections.travels-section', ['travels' => $travels])
         </main>
-        @include('layouts.footer')
 
+        @include('layouts.footer')
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>

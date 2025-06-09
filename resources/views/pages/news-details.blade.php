@@ -26,53 +26,48 @@
             </style>
         @endif
     </head>
-    <body class="welcome-page">
+    <body class="news-details-page min-h-screen flex flex-col">
         @include('layouts.nav-header')
 
-        <main class="welcome-container">
-            <div class="start-section radial-gradient-circle" id="start-section">
-                <!-- <div class="slider-wrapper">
-            <div class="slider">
-            <div class="slide active">
-                <h3>Kāpēc izvēlēties "Apskati Latviju"?</h3>
-                <ul>
-                    <li>one</li>
-                    <li>two</li>
-                    <li>three</li>
-                </ul>
-            </div>
-            <div class="slide">
-                <h3>Other info</h3>
-                <p>
-                ...
-                </p>
-            </div>
-            </div>
-            <button class="slider-btn prev">&#10094;</button>
-            <button class="slider-btn next">&#10095;</button>
-        </div> -->
-
-                <div class="r-content">
-                    <h1>Apskati skaistāko Latvijā</h1>
-                    <p>
-                        Ceļojumu piedāvājumu pārvaldības sistēma “Apskati
-                        Latviju” ir paredzēta, lai atvieglotu ceļojumu
-                        organizatora pakalpojumu sniegšanu un popularizēšanu
-                        Latvijā.
+        <main class="max-w-6xl mx-auto p-6 flex-grow">
+            <div
+                class="bg-white rounded-lg shadow-md overflow-hidden p-6 flex flex-col lg:flex-row"
+            >
+                <div class="lg:w-3/5 lg:pr-8">
+                    <h1 class="text-3xl font-bold mb-4">
+                        {{ $news->header }}
+                    </h1>
+                    <p class="text-sm text-gray-500 mb-6">
+                        <strong>Publicēts:</strong>
+                        {{ \Carbon\Carbon::parse($news->created_at)->format('d.m.Y') }}
                     </p>
-                    <a
-                        href="{{ route('travel.request') }}"
-                        class="btn-big box-shadow-item"
+                    <p
+                        class="text-gray-800 text-lg leading-relaxed whitespace-pre-line"
                     >
-                        Sākt
-                    </a>
+                        {{ $news->paragraph }}
+                    </p>
+
+                    <div class="mt-8">
+                        <a
+                            href="{{ route('welcome') }}"
+                            class="inline-block bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
+                        >
+                            ← Atpakaļ
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:w-2/5 mt-6 lg:mt-0">
+                    <img
+                        src="{{ $news->image_url }}"
+                        alt="{{ $news->header }}"
+                        class="w-full h-auto max-h-[600px] object-cover rounded-lg"
+                    />
                 </div>
             </div>
-            @include('layouts.sections.news-section', ['news' => $news])
-            @include('layouts.sections.travels-section', ['travels' => $travels])
         </main>
-        @include('layouts.footer')
 
+        @include('layouts.footer')
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
