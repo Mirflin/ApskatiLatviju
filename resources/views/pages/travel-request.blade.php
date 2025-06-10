@@ -26,50 +26,120 @@
             </style>
         @endif
     </head>
-    <body class="min-h-screen flex flex-col">
+    <body
+        class="travel-request-page min-h-screen flex flex-col bg-white text-gray-800"
+    >
         @include('layouts.nav-header')
 
-        <main class="flex-grow max-w-3xl mx-auto p-6">
-            <div class="bg-white shadow-lg rounded-lg p-6">
-                <h1 class="text-2xl font-bold mb-6">Pieteikuma forma</h1>
+        <main class="flex-grow max-w-4xl mx-auto p-6">
+            <div
+                class="bg-orange-50 shadow-lg rounded-lg p-6 border border-orange-200"
+            >
+                <h1 class="text-2xl font-bold mb-6 text-orange-700">
+                    Pieteikuma forma
+                </h1>
 
-                <form action="#" method="POST" class="space-y-4">
+                <form
+                    action="#"
+                    method="POST"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4"
+                >
                     @csrf
 
                     <div>
-                        <label for="name" class="block font-semibold">
+                        <label
+                            for="name"
+                            class="block font-semibold text-orange-800"
+                        >
                             Vārds
                         </label>
                         <input
                             type="text"
                             id="name"
                             name="name"
-                            class="w-full border rounded p-2"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
                             required
                         />
                     </div>
 
                     <div>
-                        <label for="email" class="block font-semibold">
+                        <label
+                            for="surname"
+                            class="block font-semibold text-orange-800"
+                        >
+                            Uzvārds
+                        </label>
+                        <input
+                            type="text"
+                            id="surname"
+                            name="surname"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label
+                            for="email"
+                            class="block font-semibold text-orange-800"
+                        >
                             E-pasts
                         </label>
                         <input
                             type="email"
                             id="email"
                             name="email"
-                            class="w-full border rounded p-2"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
                             required
                         />
                     </div>
 
                     <div>
-                        <label for="travel_id" class="block font-semibold">
+                        <label
+                            for="telephone"
+                            class="block font-semibold text-orange-800"
+                        >
+                            Tālruņa numurs
+                        </label>
+                        <input
+                            type="tel"
+                            id="telephone"
+                            name="telephone"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label
+                            for="people-count"
+                            class="block font-semibold text-orange-800"
+                        >
+                            Cilvēku skaits
+                        </label>
+                        <input
+                            type="number"
+                            id="people-count"
+                            name="people-count"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            min="1"
+                            max="50"
+                            value="1"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label
+                            for="travel_id"
+                            class="block font-semibold text-orange-800"
+                        >
                             Izvēlies ceļojumu
                         </label>
                         <select
                             name="travel_id"
                             id="travel_id"
-                            class="w-full border rounded p-2"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
                             required
                         >
                             <option value="">-- Lūdzu, izvēlies --</option>
@@ -85,12 +155,30 @@
                         </select>
                     </div>
 
-                    <button
-                        type="submit"
-                        class="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600 transition"
-                    >
-                        Pieteikties
-                    </button>
+                    <div class="md:col-span-2">
+                        <label
+                            for="comment"
+                            class="block font-semibold text-orange-800"
+                        >
+                            Komentārs
+                        </label>
+                        <textarea
+                            name="comment"
+                            id="comment"
+                            cols="30"
+                            rows="5"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                        ></textarea>
+                    </div>
+
+                    <div class="md:col-span-2 flex justify-end">
+                        <button
+                            type="submit"
+                            class="text-white px-6 py-2 rounded bg-orange-500 hover:bg-orange-600 transition"
+                        >
+                            Pieteikties
+                        </button>
+                    </div>
                 </form>
             </div>
         </main>

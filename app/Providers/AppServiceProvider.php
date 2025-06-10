@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\FooterContents;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
             // add footer to all; and check if footerContent exist
             $footer = FooterContents::first() ?? new FooterContents();
             view()->share('footer', $footer);
+
+            // custom style for pagination (Pagination =>  <-1lpp  2lpp->)
+            Paginator::defaultView('vendor.pagination.custom');
         });
     }
 }

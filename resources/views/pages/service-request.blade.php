@@ -26,77 +26,144 @@
             </style>
         @endif
     </head>
-    <body class="travel-details-page min-h-screen flex flex-col">
+    <body
+        class="service-request-page min-h-screen flex flex-col bg-white text-gray-800"
+    >
         @include('layouts.nav-header')
 
-        <main class="max-w-6xl mx-auto p-6 flex-grow">
+        <main class="flex-grow max-w-4xl mx-auto p-6">
             <div
-                class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row"
+                class="bg-orange-50 shadow-lg rounded-lg p-6 border border-orange-200"
             >
-                <div class="p-8 flex flex-col justify-between lg:w-1/2">
+                <h1 class="text-2xl font-bold mb-6 text-orange-700">
+                    Pieteikuma forma
+                </h1>
+
+                <form
+                    {{-- action="{{ route('service.request.submit') }}" --}}
+                    method="POST"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4"
+                >
+                    @csrf
+
                     <div>
-                        <h1 class="text-4xl font-bold mb-4 text-gray-800">
-                            {{ $travel->name }}
-                        </h1>
-                        <h2 class="text-2xl font-bold mb-4 text-gray-300">
-                            {{ $travel->road_marks}}
-                        </h2>
-                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
-                            {{ $travel->description }}
-                        </p>
-
-                        <ul class="text-md text-gray-600 mb-6 space-y-2">
-                            <li>
-                                <strong>Pilsēta:</strong>
-                                {{ $travel->country }}
-                            </li>
-                            <li>
-                                <strong>Derīguma termiņš:</strong>
-                                {{ $travel->formattedTimeTerm('d.m.Y H:i') }}
-                            </li>
-                            <li>
-                                <strong>Brīvas vietas:</strong>
-                                {{ $travel->spot_count }}
-                            </li>
-                            <li>
-                                <strong>Cena:</strong>
-                                {{ $travel->price }} €
-                            </li>
-                        </ul>
+                        <label
+                            for="name"
+                            class="block font-semibold text-orange-800"
+                        >
+                            Vārds
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            required
+                        />
                     </div>
 
-                    <div class="flex flex-col gap-3 mt-6">
-                        <a
-                            href="{{ route('travel.request', ['travel_id' => $travel->id]) }}"
-                            class="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white text-center rounded-lg shadow-md transition duration-300"
+                    <div>
+                        <label
+                            for="surname"
+                            class="block font-semibold text-orange-800"
                         >
-                            Pieteikties ceļojumam
-                        </a>
-                        <a
-                            href="/travels"
-                            class="text-orange-500 hover:underline text-center"
-                        >
-                            Atgriezties
-                        </a>
+                            Uzvārds
+                        </label>
+                        <input
+                            type="text"
+                            id="surname"
+                            name="surname"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            required
+                        />
                     </div>
-                </div>
 
-                <div class="lg:w-1/2">
-                    <img
-                        src="{{ $travel->image_url }}"
-                        alt="{{ $travel->name }}"
-                        class="w-full h-full object-cover"
-                    />
-                </div>
+                    <div>
+                        <label
+                            for="email"
+                            class="block font-semibold text-orange-800"
+                        >
+                            E-pasts
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label
+                            for="telephone"
+                            class="block font-semibold text-orange-800"
+                        >
+                            Tālruņa numurs
+                        </label>
+                        <input
+                            type="tel"
+                            id="telephone"
+                            name="telephone"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label
+                            for="service_id"
+                            class="block font-semibold text-orange-800"
+                        >
+                            Izvēlies pakalpojumu
+                        </label>
+                        <select
+                            name="service_id"
+                            id="service_id"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            required
+                        >
+                            <option value="">-- Lūdzu, izvēlies --</option>
+                            @foreach ($allServices as $option)
+                                <option
+                                    value="{{ $option->id }}"
+                                    @if($service && $service->id === $option->id) selected @endif
+                                >
+                                    {{ $option->name }} ({{ $option->price }}
+                                    €)
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label
+                            for="comment"
+                            class="block font-semibold text-orange-800"
+                        >
+                            Komentārs
+                        </label>
+                        <textarea
+                            name="comment"
+                            id="comment"
+                            cols="30"
+                            rows="5"
+                            class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                        ></textarea>
+                    </div>
+
+                    <div class="md:col-span-2 flex justify-end">
+                        <button
+                            type="submit"
+                            class="text-white px-6 py-2 rounded bg-orange-500 hover:bg-orange-600 transition"
+                        >
+                            Pieteikties
+                        </button>
+                    </div>
+                </form>
             </div>
         </main>
 
-        @include('layouts.comment')
-
         @include('layouts.footer')
-
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
     </body>
 </html>

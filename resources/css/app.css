@@ -10,8 +10,13 @@ main:not(.welcome-container) {
 }
 
 body:is(.welcome-page),
+body:is(.travels-page),
 body:is(.travel-details-page),
-body:is(.news-details-page)  {
+body:is(.travel-request-page),
+body:is(.news-details-page),
+body:is(.my-travels-page),
+body:is(.services-page),
+body:is(.service-request-page)   {
     background-color: var(--main-white);
     color: var(--main-black);
     margin-top: 100px;
@@ -294,7 +299,7 @@ header.topbar {
     }
 }
 
-@media (max-width: 1060px) {
+@media (max-width: 1260px) {
     .burger {
         margin-left: 10px;
         display: block;

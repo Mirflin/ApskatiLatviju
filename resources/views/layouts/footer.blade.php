@@ -13,7 +13,11 @@
         </a>
     </p>
     <p class="w-full sm:w-auto text-center">{{ $footer->center_text }}</p>
-    <div class="w-full sm:w-auto flex justify-center sm:justify-start">
+    <div class="w-full sm:w-auto flex justify-center sm:justify-start gap-2">
+        <a href="/support" class="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white rounded-full shadow-md transition mx-auto sm:mx-0">
+            <i class="fa-solid fa-headset"></i>
+            Palīdzība
+        </a>
         <button
             id="openModal"
             class="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white rounded-full shadow-md transition mx-auto sm:mx-0"

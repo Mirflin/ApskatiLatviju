@@ -36,4 +36,9 @@ class Travel extends Model
 
         return asset('no-image.png');
     }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(\App\Models\Feedbacks::class)->latest();
+    }
 }
