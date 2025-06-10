@@ -5,6 +5,7 @@ import  newsTable from "./components/newsTable.vue";
 import adminPanel from "./components/adminPanel.vue";
 import dashboardStart from "./components/dashboardStart.vue";
 
+
 const app = createApp()
 app.component('news-table', newsTable)
 app.component('admin-panel', adminPanel)

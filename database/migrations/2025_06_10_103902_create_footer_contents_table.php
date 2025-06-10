@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Permision_groups;
 
 return new class extends Migration
 {
@@ -12,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permision_groups', function (Blueprint $table) {
+        Schema::create('footer_contents', function (Blueprint $table) {
             $table->id();
-            $table->string('permision_name')->nullable();
+            $table->string('url_name');
+            $table->string('url');
+            $table->string('center_text');
+            $table->string('button_name');
+            $table->string('modal_title');
+            $table->string('modal_text');
             $table->timestamps();
         });
-
-        Permision_groups::create([
-            ['permision_name' => 'administrator'],
-            ['permision_name' => 'moderator']
-        ]);
     }
 
     /**
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permision_groups');
+        Schema::dropIfExists('footer_contents');
     }
 };

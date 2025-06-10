@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class footer_content extends Model
 {
-    protected $guarded = [];
+    //
 }

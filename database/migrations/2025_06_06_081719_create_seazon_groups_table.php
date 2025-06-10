@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Seazon_group;
 
 return new class extends Migration
 {
@@ -13,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('seazon_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
 
-        DB::table('seazon_groups')->insert([
+        Seazon_group::create([
             ['name' => 'summer'],
             ['name' => 'autumn'],
             ['name' => 'winter'],

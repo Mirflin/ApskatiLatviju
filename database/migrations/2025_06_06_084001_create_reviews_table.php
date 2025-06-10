@@ -15,7 +15,9 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('travel_id');
+            $table->unsignedBigInteger('client_id');
             $table->foreign('travel_id')->references('id')->on('travel');
+            $table->foreign('client_id')->references('id')->on('client');
             $table->text('review');
             $table->timestamps();
             $table->softDeletes();

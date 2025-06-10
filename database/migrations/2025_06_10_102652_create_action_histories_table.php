@@ -12,13 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services_checks', function (Blueprint $table) {
+        Schema::create('action_histories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('service_id')->references('id')->on('services');
-            $table->foreign('client_id')->references('id')->on('clients');
-            $table->string('code');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->text('action');
+            $table->unsignedBigInteger('status_id');
+            $table->foreign('status_id')->references('id')->on('action_statuses');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services_checks');
+        Schema::dropIfExists('action_histories');
     }
 };

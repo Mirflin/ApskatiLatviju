@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('group_id')->references('id')->on('travel_groups')->nullable();
             $table->string('name');
             $table->string('road_marks');
-            $table->string('country',70);
+            $table->string('city',70);
             $table->string('image');
             $table->text('description');
             $table->float('price');
