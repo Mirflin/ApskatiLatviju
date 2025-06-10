@@ -9,18 +9,12 @@ main:not(.welcome-container) {
     flex-direction: row;
 }
 
-body:is(.welcome-page),
-body:is(.travels-page),
-body:is(.travel-details-page),
-body:is(.travel-request-page),
-body:is(.news-details-page),
-body:is(.my-travels-page),
-body:is(.services-page),
-body:is(.service-request-page)   {
+body:is(.header-margins)  {
     background-color: var(--main-white);
     color: var(--main-black);
     margin-top: 100px;
 }
+
 
 :root {
     --main-orange: #f6b534;

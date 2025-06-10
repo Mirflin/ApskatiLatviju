@@ -35,7 +35,7 @@
         <li>
             <a href="/my-travels">
                 <i class="fa-solid fa-meteor"></i>
-                Mani ceļojumi
+                Mani čeki
             </a>
         </li>
         <li>

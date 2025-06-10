@@ -26,7 +26,7 @@
             </style>
         @endif
     </head>
-    <body class="services-page min-h-screen flex flex-col">
+    <body class="services-page header-margins min-h-screen flex flex-col">
         @include('layouts.nav-header')
 
         @include('components.services-filtration')

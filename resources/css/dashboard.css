@@ -1,4 +1,6 @@
-.dashboard-header{
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css');
+
+.dashboard-header {
     height: 4rem;
     padding: 1rem 2rem;
     display: flex;
@@ -8,13 +10,13 @@
     position: sticky;
 }
 
-#header-name{
+#header-name {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
-#header-name img{
+#header-name img {
     width: 3rem;
     height: 3rem;
     border-radius: 0.3rem;
@@ -22,7 +24,7 @@
     background-color: #e4e5e9;
     margin-right: 1rem;
 }
-#header-info{
+#header-info {
     height: 80%;
     width: 25rem;
     display: flex;
@@ -34,18 +36,18 @@
     background-color: #e4e5e9;
     border-radius: 0.3rem;
 }
-.profile-image{
+/* .profile-image {
     background-color: #e4e5e9;
     width: 3rem;
     height: 3rem;
     border-radius: 2rem;
-}
-#main{
+} */
+#main {
     display: flex;
     flex-direction: row;
     height: 93vh;
 }
-.main-panel{
+.main-panel {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -53,7 +55,7 @@
     width: 100%;
     background-color: #f5f6f8;
 }
-.dashboard-aside{
+.dashboard-aside {
     height: 100%;
     width: 25%;
     display: flex;
@@ -63,30 +65,22 @@
     background-color: #fff;
     padding: 1rem 2rem;
 }
-.parrent-label{
+.parrent-label {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     flex-direction: row;
     width: 100%;
     height: 4rem;
     gap: 1rem;
-
 }
-.parrent-option{
+.parrent-option {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 0.5rem;
     width: 100%;
 }
-.parrent-image{
-    background-color: #e4e5e9;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 2rem;
-}
-.parrent-label div{
+.parrent-label div {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -94,7 +88,7 @@
     padding: 0 1rem;
     justify-content: center;
 }
-.child-option{
+.child-options {
     display: flex;
     flex-direction: column;
     width: 85%;
@@ -102,35 +96,27 @@
     align-items: flex-start;
     gap: 0.5rem;
 }
-.child{
+.child-option {
+    font-size: 13pt;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     flex-direction: row;
     width: 100%;
-    gap: 1.5rem;
     height: 4rem;
-    border: #fff;
-    border-radius: 0.5rem;
+    gap: 1rem;
+    padding: 10px;
 }
-.active{
+.active {
     border-radius: 0.5rem;
     background-color: #299efe;
 }
-.child-option-image{
-    background-color: #e4e5e9;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 2rem;
-    margin-left: 1rem;
-}
-.child-option-text{
+.child-option-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
 }
-.panel{
+.panel {
     margin: 2rem 2rem 0 2rem;
     padding: 1rem;
     width: 90%;
@@ -138,25 +124,25 @@
     border-radius: 0.5rem;
     background-color: #fff;
 }
-.panel-header{
+.panel-header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
-.panel-header i{
+.panel-header i {
     margin-right: 1rem;
 }
-.options{
+.options {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
-.aside-footer{
+.aside-footer {
     width: 100%;
     border-top: 0.1rem solid #d8d8d8;
 }
-.theme-changer{
+.theme-changer {
     background-color: #e4e5e9;
     width: 100%;
     height: 4rem;
@@ -167,59 +153,59 @@
     align-items: center;
     margin-top: 1rem;
 }
-.white{
+.white {
     width: 100%;
     height: 70%;
     border-radius: 0.2rem;
     margin: 0.7rem;
     background-color: #fff;
 }
-.black{
+.black {
     width: 100%;
     height: 70%;
     border-radius: 0.2rem;
     margin: 0.7rem;
     background-color: #fff;
 }
-.parrent-label:hover{
+.parrent-label:hover {
     background-color: #78c1fd;
     border-radius: 0.5rem;
     cursor: pointer;
 }
-.parrent-label:active{
+.parrent-label:active {
     background-color: #299efe;
 }
-.double-chart{
+.double-chart {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     width: 100%;
 }
-.double-chart .panel:nth-child(2){
+.double-chart .panel:nth-child(2) {
     width: 60%;
     margin-left: 0;
 }
-.child:hover{
+.child:hover {
     background-color: #78c1fd;
     cursor: pointer;
 }
-.child:active{
+.child:active {
     background-color: #299efe;
 }
 
-.header-button-panels{
+.header-button-panels {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.header-button-panels button{
+.header-button-panels button {
     border: 0.2rem solid rgb(0, 174, 0);
     padding: 0.2rem;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
 }
 
-.header-button-panels button:hover{
+.header-button-panels button:hover {
     border: 0.2rem solid rgb(0, 233, 0);
 }

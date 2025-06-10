@@ -27,7 +27,7 @@
         @endif
     </head>
     <body
-        class="service-request-page min-h-screen flex flex-col bg-white text-gray-800"
+        class="service-request-page header-margins min-h-screen flex flex-col bg-white text-gray-800"
     >
         @include('layouts.nav-header')
 

@@ -26,13 +26,13 @@
             </style>
         @endif
     </head>
-    <body class="my-travels-page min-h-screen flex flex-col bg-white text-gray-800">
+    <body class="my-travels-page header-margins min-h-screen flex flex-col bg-white text-gray-800">
     @include('layouts.nav-header')
 
     <main class="flex-grow mx-auto w-full px-4 sm:px-6 max-w-3xl py-6">
         <div>
             <h1 class="text-3xl font-bold mb-6 text-center">
-                Mani ceļojumi
+                Mani čeki
             </h1>
 
             <div class="bg-orange-50 border border-orange-300 rounded-xl p-5 mb-6 shadow">
@@ -40,7 +40,6 @@
                     Ievadi čeka kodu:
                 </label>
 
-                <!-- Responsive input + button -->
                 <div class="flex flex-col sm:flex-row gap-2">
                     <input
                         type="text"
@@ -56,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- Travel Info Card -->
             <div class="bg-white border rounded-xl shadow p-6 overflow-x-auto">
                 <h2 class="text-2xl font-bold text-orange-700 mb-2">
                     Ceļojuma informācija

@@ -26,7 +26,7 @@
             </style>
         @endif
     </head>
-    <body class="travel-details-page min-h-screen flex flex-col">
+    <body class="travel-details-page header-margins min-h-screen flex flex-col">
         @include('layouts.nav-header')
 
         <main class="max-w-6xl mx-auto p-6 flex-grow">

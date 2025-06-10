@@ -27,7 +27,7 @@
         @endif
     </head>
     <body
-        class="travel-request-page min-h-screen flex flex-col bg-white text-gray-800"
+        class="travel-request-page header-margins min-h-screen flex flex-col bg-white text-gray-800"
     >
         @include('layouts.nav-header')
 

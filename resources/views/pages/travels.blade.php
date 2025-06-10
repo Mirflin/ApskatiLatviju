@@ -26,7 +26,7 @@
             </style>
         @endif
     </head>
-    <body class="travels-page min-h-screen flex flex-col">
+    <body class="travels-page header-margins min-h-screen flex flex-col">
         @include('layouts.nav-header')
 
         @include('components.travels-filtration')
