@@ -38,7 +38,6 @@
                         <td class="px-4 py-2">2025-06-08</td>
                         <td class="px-4 py-2">2025-06-09</td>
                     </tr>
-                    <!-- Add more rows as needed -->
                     </tbody>
                 </table>
                 </div>

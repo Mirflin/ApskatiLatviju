@@ -1,15 +1,15 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-
-Alpine.start();
-
 import { createApp } from 'vue';
+import  newsTable from "./components/newsTable.vue";
+import adminPanel from "./components/adminPanel.vue";
+import dashboardStart from "./components/dashboardStart.vue";
 
 const app = createApp()
-app.component('example-component', ExampleComponent)
+app.component('news-table', newsTable)
+app.component('admin-panel', adminPanel)
+app.component('dashboard-start', dashboardStart)
+
 app.mount('#app');
 
 // --------------------
