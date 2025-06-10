@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('center_text');
             $table->string('button_name');
             $table->string('modal_title');
-            $table->string('modal_text');
+            $table->text('modal_text');
             $table->timestamps();
         });
     }

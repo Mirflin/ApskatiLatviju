@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('travel_id');
             $table->unsignedBigInteger('client_id');
             $table->foreign('travel_id')->references('id')->on('travel');
-            $table->foreign('client_id')->references('id')->on('client');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->text('review');
             $table->timestamps();
             $table->softDeletes();

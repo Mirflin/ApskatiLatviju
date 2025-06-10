@@ -18,11 +18,9 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Action_status::create([
-            ["name" => 'Completed'],
-            ["name" => 'Needs approval'],
-            ["name" => 'Canceled']
-        ]);
+        Action_status::create(["name" => 'Canceled']);
+        Action_status::create(["name" => 'Completed']);
+        Action_status::create(["name" => 'Waiting approval']);
     }
 
     /**

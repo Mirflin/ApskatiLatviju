@@ -18,10 +18,8 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Permision_groups::create([
-            ['permision_name' => 'administrator'],
-            ['permision_name' => 'moderator']
-        ]);
+        Permision_groups::create(['permision_name' => 'administrator']);
+        Permision_groups::create(['permision_name' => 'moderator']);
     }
 
     /**
