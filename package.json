@@ -25,5 +25,9 @@
         ],
         "tabWidth": 4,
         "singleQuote": true
+    },
+    "dependencies": {
+        "@vitejs/plugin-vue": "^5.2.4",
+        "vue": "^3.5.16"
     }
 }
