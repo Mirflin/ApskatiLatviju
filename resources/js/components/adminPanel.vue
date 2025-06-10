@@ -59,7 +59,7 @@
                         class="parrent-label"
                     >
                         <div>
-                            <i class="fa-solid fa-fire"></i>
+                            <i class="fa-solid fa-fire fa-2xl"></i>
                             <p class="function-p">News</p>
                         </div>
                     </button>

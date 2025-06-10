@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\apiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::get('/support', [WelcomeController::class, 'support'])->name('support');
 Route::get('/services', [WelcomeController::class, 'services'])->name('services');
 Route::get('/services/service-request', [WelcomeController::class, 'serviceRequest'])->name('service.request');
 
+Route::post('/support/send-ticket', [apiController::class, 'createTicket']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

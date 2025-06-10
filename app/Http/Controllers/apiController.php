@@ -9,6 +9,7 @@ use App\Models\Travel_group;
 use App\Models\News;
 use App\Models\User;
 use App\Models\travel_check;
+use App\Models\Ticket;
 
 class apiController extends Controller
 {
@@ -137,6 +138,19 @@ class apiController extends Controller
                 "code" => '12345'
             ];
             travel_check::create($check);
+            return response()->json([
+                'message' => "Success!",
+            ],201);
+        }
+        return response()->json([
+            'message' => "Failure!",
+        ],301);
+    }
+
+    public function createTicket(Request $request){
+        $validated = $request->only(['email','content']);
+        if($validated['email'] && $validated['content']){
+            Ticket::create($validated);
             return response()->json([
                 'message' => "Success!",
             ],201);
