@@ -2,7 +2,7 @@
     <article class="main-panel">
         <div class="panel">
             <div class="panel-header">
-                <p>{{ $breadcrumb }}</p>
+                <p>/ travel</p>
             </div>
             <div class="p-6 bg-[#f7f8fa]">
                 <div class="bg-white rounded-xl shadow-md p-4">
@@ -12,80 +12,59 @@
                         </h2>
                         <button>Create new</button>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table
-                            class="min-w-full text-sm text-left text-gray-700"
-                        >
-                            <thead class="bg-[#f0f1f5] text-gray-600">
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        class="px-4 py-3 rounded-tl-xl"
-                                    >
-                                        #
-                                    </th>
-                                    <th scope="col" class="px-4 py-3">Name</th>
-                                    <th scope="col" class="px-4 py-3">City</th>
-                                    <th
-                                        scope="col"
-                                        class="px-4 py-3 rounded-tr-xl"
-                                    >
-                                        Description
-                                    </th>
-                                    <th scope="col" class="px-4 py-3">Price</th>
-                                    <th scope="col" class="px-4 py-3">
-                                        Time term
-                                    </th>
-                                    <th scope="col" class="px-4 py-3">Tools</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white">
-                                <tr class="border-b hover:bg-[#f5f6f8]">
-                                    <td class="px-4 py-2">1</td>
-                                    <td class="px-4 py-2">No Kuldiga</td>
-                                    <td class="px-4 py-2">Liepaja</td>
-                                    <td class="px-4 py-2">
-                                        Lorem ipsum dolor sit amet consectetur
-                                        adipisicing elit. Odio, deserunt?
-                                        Repellendus quidem aut cumque dolores.
-                                        Facere earum id maiores tempore, quod
-                                        molestias quaerat quisquam dolorum
-                                        commodi voluptate eveniet reiciendis
-                                        magnam?
-                                    </td>
-                                    <td class="px-4 py-2">20</td>
-                                    <td
-                                        class="px-4 py-2 text-green-600 font-medium"
-                                    >
-                                        2025.06.30
-                                    </td>
-                                </tr>
-                                <tr class="border-b hover:bg-[#f5f6f8]">
-                                    <td class="px-4 py-2">2</td>
-                                    <td class="px-4 py-2">No Kuldigai</td>
-                                    <td class="px-4 py-2">Riga</td>
-                                    <td class="px-4 py-2">
-                                        Lorem ipsum dolor sit amet consectetur
-                                        adipisicing elit. Odio, deserunt?
-                                        Repellendus quidem aut cumque dolores.
-                                        Facere earum id maiores tempore, quod
-                                        molestias quaerat quisquam dolorum
-                                        commodi voluptate eveniet reiciendis
-                                        magnam?
-                                    </td>
-                                    <td class="px-4 py-2">40</td>
-                                    <td
-                                        class="px-4 py-2 text-green-600 font-medium"
-                                    >
-                                        2025.07.30
-                                    </td>
-                                </tr>
-                                <!-- Add more rows as needed -->
-                            </tbody>
-                        </table>
-                    </div>
+                    <universalTable
+                        :data="travels"
+                        :columns="columns"
+                        :perPage="10"
+                        :searchableFields="['name', 'city','spot_count','group','seazon','price','time_term']"
+                        @edit="handleEdit"
+                        @delete="handleDelete"
+                    >
+                        <template #tool="{ row }">
+                            <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                            <button @click="$emit('delete', row)"><i class="fa-solid fa-trash fa-xl"></i></button>
+                        </template>
+                    </universalTable>
                 </div>
             </div>
         </div>
     </article>
 </template>
+<script setup>
+import universalTable from './universalTable.vue'
+
+const travels = [
+  { id: 1, header: 'Alice', content: 'alice@example.com', created_at: "2025" },
+  { id: 2, header: 'Bob', content: 'bob@example.com' , created_at: "2025"},
+  { id: 3, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
+  { id: 4, header: 'David', content: 'david@example.com' , created_at: "2025"},
+  { id: 5, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
+  { id: 6, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
+  { id: 7, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
+  { id: 8, header: 'David', content: 'david@example.com' , created_at: "2025"},
+  { id: 9, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
+  { id: 10, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
+
+]
+
+const columns = [
+  { label: 'Id', key: 'id' },
+  { label: 'Name', key: 'name' },
+  { label: 'City', key: 'city' },
+  { label: 'Spots', key: 'spot_count' },
+  { label: 'Group', key: 'group' },
+  { label: 'Seazon', key: 'seazon' },
+  { label: 'Price', key: 'price' },
+  { label: 'Time', key: 'time_term' },
+  { label: 'Created at', key: 'created_at' },
+]
+
+function handleEdit(row) {
+  alert(`Edit ${row}`)
+}
+
+function handleDelete(row) {
+  alert(`Delete ${row}`)
+}
+
+</script>

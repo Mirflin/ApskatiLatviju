@@ -21,7 +21,6 @@
                                 <p class="function-p">Graphs</p>
                             </div>
                             <div>
-                                <i class="fa-solid fa-circle-plus"></i>
                                 <i
                                     v-if="showGraphsOptions"
                                     class="fa-solid fa-chevron-up"

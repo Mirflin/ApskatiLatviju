@@ -2,7 +2,7 @@
     <article class="main-panel">
         <div class="panel">
             <div class="panel-header">
-                <p>{{ $breadcrumb }}</p>
+                <p>/ action-history</p>
             </div>
             <div class="p-6 bg-[#f7f8fa]">
                 <div class="bg-white rounded-xl shadow-md p-4">
@@ -12,64 +12,59 @@
                         </h2>
                         <button>Create new</button>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table
-                            class="min-w-full text-sm text-left text-gray-700"
-                        >
-                            <thead class="bg-[#f0f1f5] text-gray-600">
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        class="px-4 py-3 rounded-tl-xl"
-                                    >
-                                        #
-                                    </th>
-                                    <th scope="col" class="px-4 py-3">User</th>
-                                    <th scope="col" class="px-4 py-3">
-                                        Action
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-4 py-3 rounded-tr-xl"
-                                    >
-                                        Date
-                                    </th>
-                                    <th scope="col" class="px-4 py-3">
-                                        Status
-                                    </th>
-                                    <th scope="col" class="px-4 py-3">Tools</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white">
-                                <tr class="border-b hover:bg-[#f5f6f8]">
-                                    <td class="px-4 py-2">1</td>
-                                    <td class="px-4 py-2">John Doe</td>
-                                    <td class="px-4 py-2">Deleted item</td>
-                                    <td class="px-4 py-2">2025-06-09</td>
-                                    <td
-                                        class="px-4 py-2 text-green-600 font-medium"
-                                    >
-                                        Success
-                                    </td>
-                                </tr>
-                                <tr class="border-b hover:bg-[#f5f6f8]">
-                                    <td class="px-4 py-2">2</td>
-                                    <td class="px-4 py-2">Jane Smith</td>
-                                    <td class="px-4 py-2">Edited settings</td>
-                                    <td class="px-4 py-2">2025-06-08</td>
-                                    <td
-                                        class="px-4 py-2 text-yellow-600 font-medium"
-                                    >
-                                        Pending
-                                    </td>
-                                </tr>
-                                <!-- Add more rows as needed -->
-                            </tbody>
-                        </table>
-                    </div>
+
+                    <universalTable
+                        :data="news"
+                        :columns="columns"
+                        :perPage="10"
+                        :searchableFields="['user','permission', 'status','action','created_at']"
+                        @edit="handleEdit"
+                        @delete="handleDelete"
+                    >
+                        <template #tool="{ row }">
+                            <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                            <button @click="$emit('delete', row)"><i class="fa-solid fa-trash fa-xl"></i></button>
+                        </template>
+                    </universalTable>
+
                 </div>
             </div>
         </div>
     </article>
-    <!-- Modal window -->
 </template>
+
+<script setup>
+import universalTable from './universalTable.vue'
+
+const news = [
+  { id: 1, header: 'Alice', content: 'alice@example.com', created_at: "2025" },
+  { id: 2, header: 'Bob', content: 'bob@example.com' , created_at: "2025"},
+  { id: 3, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
+  { id: 4, header: 'David', content: 'david@example.com' , created_at: "2025"},
+  { id: 5, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
+  { id: 6, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
+  { id: 7, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
+  { id: 8, header: 'David', content: 'david@example.com' , created_at: "2025"},
+  { id: 9, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
+  { id: 10, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
+
+]
+
+const columns = [
+  { label: 'Id', key: 'id' },
+  { label: 'User', key: 'user' },
+  { label: 'Permissions', key: 'permission' },
+  { label: 'Action', key: 'action' },
+  { label: 'Status', key: 'status' },
+  { label: 'Time', key: 'created_at' },
+]
+
+function handleEdit(row) {
+  alert(`Edit ${row}`)
+}
+
+function handleDelete(row) {
+  alert(`Delete ${row}`)
+}
+
+</script>

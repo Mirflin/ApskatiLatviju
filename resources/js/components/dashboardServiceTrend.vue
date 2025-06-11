@@ -2,7 +2,7 @@
     <article class="main-panel">
         <div class="panel">
             <div class="panel-header">
-                <p>{{ $breadcrumb }}</p>
+                <p>/ service-data</p>
             </div>
         </div>
         <div class="double-chart">

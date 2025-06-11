@@ -2,13 +2,13 @@
     <article class="main-panel">
         <div class="panel">
             <div class="panel-header">
-                <p>{{$breadcrumb}}</p>
+                <p>/</p>
             </div>
         </div>
         <div class="double-chart">
             <div class="panel">
                 <div class="panel-header">
-                    <i class="fa-solid fa-paragraph fa-2xl"></i> 
+                    <i class="fa-solid fa-paragraph fa-2xl"></i>
                     <p></p>
                 </div>
             </div>

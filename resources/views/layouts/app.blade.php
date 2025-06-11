@@ -16,11 +16,11 @@
         @vite(['resources/css/dashboard.css'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900" id="app">
             @include('layouts.navigation')
 
             <!-- Page Content -->
-            <main id="app">
+            <main>
                 {{ $slot }}
             </main>
         </div>
