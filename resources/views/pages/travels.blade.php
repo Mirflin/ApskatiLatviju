@@ -32,7 +32,7 @@
         @include('components.travels-filtration')
 
         <h2 class="text-3xl font-bold mb-6 text-center my-5">Ceļojumi</h2>
-        <main class="flex-grow mx-auto p-6">
+        <main class="flex-grow mx-full p-6">
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 @forelse ($travels as $travel)
@@ -46,7 +46,7 @@
                         />
                         <div class="p-4">
                             <h3 class="text-xl font-semibold mb-2">
-                                {{ $travel->name }} - {{ $travel->country }}
+                                {{ $travel->name }} - {{ $travel->city }}
                             </h3>
                             <ul class="text-sm text-gray-600 mb-2">
                                 <li>

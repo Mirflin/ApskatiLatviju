@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Service;
 use App\Models\Travel;
 use App\Models\Travel_group;
@@ -32,14 +33,14 @@ class apiController extends Controller
     }
 
     public function createNewTravel(Request $request){
-        $validated = $request->only(['group_id','name','ŗoad_marks','country','image','description','price','seazon_id','spot_count','time_term']);
+        $validated = $request->only(['group_id','name','ŗoad_marks','city','image','description','price','seazon_id','spot_count','time_term']);
 
-        if($validated['group_id'] && $validated['name'] && $validated['ŗoad_marks'] && $validated['country'] && $validated['image'] && $validated['description'] && $validated['price'] && $validated['seazon_id'] && $validated['spot_count'] && $validated['time_term']){
+        if($validated['group_id'] && $validated['name'] && $validated['ŗoad_marks'] && $validated['city'] && $validated['image'] && $validated['description'] && $validated['price'] && $validated['seazon_id'] && $validated['spot_count'] && $validated['time_term']){
             $travel = [
                 "group_id" => $validated['group_id'],
                 "name" => $validated['name'],
                 "ŗoad_marks" => $validated['ŗoad_marks'],
-                "country" => $validated['country'],
+                "city" => $validated['city'],
                 "image" => $validated['image'],
                 "description" => $validated['description'],
                 "price" => $validated['price'],
@@ -91,24 +92,23 @@ class apiController extends Controller
     }
 
     public function createNewUser(Request $request){
-        $validated = $request->only(['name','email','password','permision_group']);
+    $validated = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|string|min:6',
+        'permision_group' => 'required|integer'
+    ]);
 
-        if($validated['name'] && $validated['email'] && $validated['password'] && $validated['permision_group']){
-            $user = [
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'password' => $validated['password'],
-                'permision_group' => $validated['permision_group']
-            ];
-            User::create($user);
-            return response()->json([
-                'message' => "Success!",
-            ],201);
-        }
+    $user = [
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+        'permision_group' => $validated['permision_group']
+    ];
 
-        return response()->json([
-            'message' => "Failure!",
-        ],301);
+    User::create($user);
+
+    return response()->json(['message' => "Success!"], 201);
     }
 
     public function createTravelCheck(Request $request){
@@ -146,19 +146,18 @@ class apiController extends Controller
             'message' => "Failure!",
         ],301);
     }
-
+    
     public function createTicket(Request $request){
-        $validated = $request->only(['email','content']);
-        if($validated['email'] && $validated['content']){
+        $validated = $request->only(['email', 'content']);
+        
+        if (!empty($validated['email']) && !empty($validated['content'])) {
             Ticket::create($validated);
-            return response()->json([
-                'message' => "Success!",
-            ],201);
+            return redirect()->back()->with('message', 'Ziņa nosūtīta!');
         }
-        return response()->json([
-            'message' => "Failure!",
-        ],301);
+        // message appearing isnt done!
+        return redirect()->back()->with('message', 'Radās kļūda, mēģini vēlreiz.');
     }
+
 
 
 }

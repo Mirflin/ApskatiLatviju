@@ -32,7 +32,7 @@
         @include('components.services-filtration')
 
         <h2 class="text-3xl font-bold mb-6 text-center my-5">Pakalpojumi</h2>
-        <main class="flex-grow mx-auto p-6">
+        <main class="flex-grow mx-full p-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 @forelse ($services as $service)
                     <div

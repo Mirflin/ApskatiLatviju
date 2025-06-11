@@ -84,7 +84,7 @@
                     <label class="block font-semibold mb-1">Pilsēta</label>
                     <input
                         type="text"
-                        name="country"
+                        name="city"
                         class="w-full focus-orange-500 border border-orange-300 rounded p-2"
                         placeholder="Rīga, Liepāja, ..."
                     />

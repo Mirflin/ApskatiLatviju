@@ -12,7 +12,7 @@ class Travel extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'road_marks', 'country', 'image',
+        'name', 'road_marks', 'city', 'image',
         'description', 'price', 'spot_count', 'time_term'
     ];
 
@@ -37,8 +37,8 @@ class Travel extends Model
         return asset('no-image.png');
     }
 
-    public function feedbacks()
+    public function reviews()
     {
-        return $this->hasMany(\App\Models\Feedbacks::class)->latest();
+        return $this->hasMany(\App\Models\Review::class)->latest();
     }
 }

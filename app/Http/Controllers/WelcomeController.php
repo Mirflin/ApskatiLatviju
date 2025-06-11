@@ -7,6 +7,7 @@ use App\Models\Travel;
 use App\Models\News;
 use App\Models\Client;
 use App\Models\Service;
+use App\Models\Review;
 
 class WelcomeController extends Controller
 {
@@ -46,9 +47,10 @@ class WelcomeController extends Controller
         $travel = Travel::findOrFail($id);
 
         // get 10 comments with limit-10
-        $feedbacks = $travel->feedbacks()->paginate(10);
+        $reviews = Review::with('client')->latest()->paginate(10);
 
-        return view('pages.travel-details', compact('travel', 'feedbacks'));
+
+        return view('pages.travel-details', compact('travel', 'reviews'));
     }
 
     public function showNewsDetails($id)

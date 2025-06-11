@@ -9,12 +9,11 @@ main:not(.welcome-container) {
     flex-direction: row;
 }
 
-body:is(.header-margins)  {
+body:is(.header-margins) {
     background-color: var(--main-white);
     color: var(--main-black);
     margin-top: 100px;
 }
-
 
 :root {
     --main-orange: #f6b534;
@@ -91,11 +90,11 @@ header.topbar {
     font-weight: 600;
 }
 
-.active{
+.active {
     border-radius: 0.5rem;
     background-color: #299efe;
 }
-.hidden-elem{
+.hidden-elem {
     display: none !important;
 }
 
@@ -354,6 +353,9 @@ header.topbar {
     }
     .btn-list.visible li:nth-child(5) {
         animation-delay: 0.25s;
+    }
+    .btn-list.visible li:nth-child(6) {
+        animation-delay: 0.3s;
     }
 
     @keyframes fadeInUp {

@@ -13,17 +13,24 @@
         </a>
     </p>
     <p class="w-full sm:w-auto text-center">{{ $footer->center_text }}</p>
-    <div class="w-full sm:w-auto flex justify-center sm:justify-start gap-2">
-        <a href="/support" class="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white rounded-full shadow-md transition mx-auto sm:mx-0">
+    <div
+        class="flex flex-wrap sm:flex-nowrap gap-2 justify-center sm:justify-start"
+    >
+        <a
+            href="/support"
+            class="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white rounded-full shadow-md transition"
+        >
             <i class="fa-solid fa-headset"></i>
             Palīdzība
         </a>
         <button
             id="openModal"
-            class="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white rounded-full shadow-md transition mx-auto sm:mx-0"
+            class="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white rounded-full shadow-md transition"
         >
             <i class="fa-solid fa-circle-info"></i>
-            {{ $footer->button_name }}
+            <span class="inline-block max-w-[10ch] truncate">
+                {{ $footer->button_name }}
+            </span>
         </button>
     </div>
 </footer>
@@ -78,3 +85,5 @@
         });
     });
 </script>
+
+

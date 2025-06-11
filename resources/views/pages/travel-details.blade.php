@@ -48,7 +48,7 @@
                         <ul class="text-md text-gray-600 mb-6 space-y-2">
                             <li>
                                 <strong>Pilsēta:</strong>
-                                {{ $travel->country }}
+                                {{ $travel->city }}
                             </li>
                             <li>
                                 <strong>Derīguma termiņš:</strong>

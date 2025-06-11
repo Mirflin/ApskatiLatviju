@@ -39,7 +39,13 @@
                     Atbalsta saziņa
                 </h1>
 
-                <form class="grid grid-cols-1 gap-4">
+                <form
+                    action="{{ route('ticket.submit') }}"
+                    method="POST"
+                    class="grid grid-cols-1 gap-4"
+                >
+                    @csrf
+
                     <div>
                         <label
                             for="email"
@@ -51,10 +57,16 @@
                             type="email"
                             id="email"
                             name="email"
+                            value="{{ old('email') }}"
                             required
                             placeholder="piemērs@email.com"
                             class="w-full border border-orange-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
                         />
+                        @error('email')
+                            <p class="text-red-500 text-sm mt-1">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
 
                     <div>
@@ -66,12 +78,18 @@
                         </label>
                         <textarea
                             id="message"
-                            name="message"
+                            name="content"
                             rows="5"
                             required
                             placeholder="Apraksti savu problēmu vai jautājumu..."
                             class="w-full border border-orange-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
-                        ></textarea>
+                        ></textarea
+                        >
+                        @error('content')
+                            <p class="text-red-500 text-sm mt-1">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
 
                     <div class="text-right">
@@ -85,7 +103,6 @@
                 </form>
             </div>
         </main>
-
         @include('layouts.footer')
     </body>
 </html>

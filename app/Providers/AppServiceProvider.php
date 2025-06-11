@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
 
             // custom style for pagination (Pagination =>  <-1lpp  2lpp->)
             Paginator::defaultView('vendor.pagination.custom');
+
+            // Info list (Toast)
+            $messages = session('messages') ?? (session('message') ? [session('message')] : []);
+            view()->share('messages', $messages);
         });
     }
 }

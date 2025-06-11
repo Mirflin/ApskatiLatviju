@@ -149,7 +149,7 @@
                                     @if($travel && $travel->id === $option->id) selected @endif
                                 >
                                     {{ $option->name }}
-                                    ({{ $option->country }})
+                                    ({{ $option->city }})
                                 </option>
                             @endforeach
                         </select>
