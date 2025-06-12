@@ -2,14 +2,20 @@
     <article class="main-panel">
         <div class="panel">
             <div class="panel-header">
+<<<<<<< HEAD
                 <p>{{ breadcrumb }}</p>
+=======
+                <p>/ news</p>
+>>>>>>> 9e9dbb970e3271c2a58d744ebf7ea80a5562022b
             </div>
             <div>
                 <div class="bg-white rounded-xl shadow-md p-4">
                     <div
                         class="header-button-panels flex items-center justify-between mb-4"
                     >
-                        <h2 class="text-lg font-semibold text-gray-800">
+                        <!-- <h2 class="text-lg font-semibold text-gray-800"> -->
+                    <div class="header-button-panels">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800">
                             News
                         </h2>
                         <button
@@ -80,6 +86,19 @@
                             </tbody>
                         </table>
                     </div>
+                    <universalTable
+                        :data="news2"
+                        :columns="columns"
+                        :perPage="10"
+                        :searchableFields="['header', 'content','created_at']"
+                        @edit="handleEdit"
+                        @delete="handleDelete"
+                    >
+                        <template #tool="{ row }">
+                            <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                            <button @click="$emit('delete', row)"><i class="fa-solid fa-trash fa-xl"></i></button>
+                        </template>
+                    </universalTable>
                 </div>
             </div>
 
@@ -202,4 +221,36 @@ const editNews = (newsItem) => {
 const deleteNews = (id) => {
     news.value = news.value.filter((n) => n.id !== id);
 };
+
+import universalTable from './universalTable.vue'
+
+const news2 = [
+  { id: 1, header: 'Alice', content: 'alice@example.com', created_at: "2025" },
+  { id: 2, header: 'Bob', content: 'bob@example.com' , created_at: "2025"},
+  { id: 3, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
+  { id: 4, header: 'David', content: 'david@example.com' , created_at: "2025"},
+  { id: 5, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
+  { id: 6, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
+  { id: 7, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
+  { id: 8, header: 'David', content: 'david@example.com' , created_at: "2025"},
+  { id: 9, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
+  { id: 10, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
+
+]
+
+const columns = [
+  { label: 'Id', key: 'id' },
+  { label: 'Header', key: 'header' },
+  { label: 'Content', key: 'content' },
+  { label: 'Created at', key: 'created_at' },
+]
+
+function handleEdit(row) {
+  alert(`Edit ${row}`)
+}
+
+function handleDelete(row) {
+  alert(`Delete ${row}`)
+}
+
 </script>

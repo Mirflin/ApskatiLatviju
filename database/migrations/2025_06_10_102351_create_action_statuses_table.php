@@ -19,8 +19,10 @@ return new class extends Migration
         });
 
         Action_status::create(["name" => 'Canceled']);
-        Action_status::create(["name" => 'Completed']);
-        Action_status::create(["name" => 'Waiting approval']);
+        Action_status::create(["name" => 'Success']);
+        Action_status::create(["name" => 'Pending']);
+        Action_status::create(["name" => 'Failed']);
+        Action_status::create(["name" => 'Unknown']);
     }
 
     /**
