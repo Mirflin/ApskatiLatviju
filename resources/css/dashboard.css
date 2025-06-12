@@ -30,14 +30,15 @@ body {
 }
 
 #main {
-    min-height: 100vh;
+    min-height: 100%;
     background-color: var(--bg-main);
     color: var(--text-main);
     display: flex;
 }
 
 .dashboard-aside {
-    width: 250px;
+    width: 350px;
+    height: 92vh;
     background-color: var(--bg-aside);
     display: flex;
     flex-direction: column;

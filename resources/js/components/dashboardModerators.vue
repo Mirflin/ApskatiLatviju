@@ -11,13 +11,13 @@
                         class="header-button-panels flex items-center justify-between mb-4"
                     >
                         <h2 class="text-lg font-semibold text-gray-800">
-                            Users
+                            Lietotāji
                         </h2>
                         <button
                             @click="showModal = true"
                             class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
                         >
-                            Create new
+                            Jauns lietotājs
                         </button>
                     </div>
                     <universalTable

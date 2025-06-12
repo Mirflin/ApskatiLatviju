@@ -7,12 +7,12 @@
             <div>
                 <div class="bg-white rounded-xl shadow-md p-4">
                     <div class="header-button-panels flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-semibold text-gray-800">Travel</h2>
+                        <h2 class="text-lg font-semibold text-gray-800">Ceļojumi</h2>
                         <button
                             @click="showModal = true"
                             class="px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded"
                         >
-                            Create new
+                            Jauns ceļojums
                         </button>
                     </div>
                     <universalTable

@@ -13,17 +13,17 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Admin panelis') }}
                     </x-nav-link>
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Profils') }}
                     </x-nav-link>
                     <form method="POST" action="{{ route('logout') }}" class="mt-5 mb-5">
                         @csrf
                         <x-nav-link :active="request()->routeIs('logout')" :href="route('logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                            {{ __('Izlogoties') }}
                         </x-nav-link>
                     </form>
                 </div>

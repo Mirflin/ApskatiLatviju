@@ -7,17 +7,17 @@
             <div>
                 <div class="bg-white rounded-xl shadow-md p-4">
                     <div class="header-button-panels mb-4">
-                        <div class="header-button-panels">
+                        <div class="header-button-panels flex row justify-between header-align mb-4">
                             <h2
-                                class="text-lg font-semibold mb-4 text-gray-800"
+                                class="text-lg font-semibold text-gray-800"
                             >
-                                News
+                                Aktualitātes
                             </h2>
                             <button
                                 @click="showModal = true"
-                                class="px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded flex my-5"
+                                class="px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded flex"
                             >
-                                Create new
+                                Jauna aktualitāte
                             </button>
                         </div>
                         <universalTable
@@ -234,3 +234,10 @@ function handleDelete(row) {
     alert(`Delete ${row}`);
 }
 </script>
+
+<style>
+.header-align{
+    height: 100%;
+    align-items: center;
+}
+</style>

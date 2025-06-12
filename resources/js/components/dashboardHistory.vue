@@ -10,7 +10,7 @@
                         class="header-button-panels flex items-center justify-between mb-4"
                     >
                         <h2 class="text-lg font-semibold text-gray-800">
-                            History
+                            Vēsture
                         </h2>
                     </div>
                     <universalTable
