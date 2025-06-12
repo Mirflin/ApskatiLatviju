@@ -2,11 +2,7 @@
     <article class="main-panel">
         <div class="panel">
             <div class="panel-header">
-<<<<<<< HEAD
-                <p>{{ breadcrumb }}</p>
-=======
                 <p>/ news</p>
->>>>>>> 9e9dbb970e3271c2a58d744ebf7ea80a5562022b
             </div>
             <div>
                 <div class="bg-white rounded-xl shadow-md p-4">
@@ -14,137 +10,157 @@
                         class="header-button-panels flex items-center justify-between mb-4"
                     >
                         <!-- <h2 class="text-lg font-semibold text-gray-800"> -->
-                    <div class="header-button-panels">
-                        <h2 class="text-lg font-semibold mb-4 text-gray-800">
-                            News
-                        </h2>
-                        <button
-                            @click="showModal = true"
-                            class="px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded"
+                        <div class="header-button-panels">
+                            <h2
+                                class="text-lg font-semibold mb-4 text-gray-800"
+                            >
+                                News
+                            </h2>
+                            <button
+                                @click="showModal = true"
+                                class="px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded"
+                            >
+                                Create new
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="custom-table w-full text-left">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Header</th>
+                                        <th>Paragraph</th>
+                                        <th>Image</th>
+                                        <th class="text-center">Tools</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="newsItem in news"
+                                        :key="newsItem.id"
+                                    >
+                                        <td>{{ newsItem.id }}</td>
+                                        <td>{{ newsItem.header }}</td>
+                                        <td
+                                            class="max-w-xs truncate"
+                                            :title="newsItem.paragraph"
+                                        >
+                                            {{ newsItem.paragraph }}
+                                        </td>
+                                        <td>
+                                            <span
+                                                v-if="newsItem.image"
+                                                class="inline-block max-w-[10ch] truncate"
+                                                >{{ newsItem.image }}</span
+                                            >
+                                            <span v-else class="text-gray-400"
+                                                >No image</span
+                                            >
+                                        </td>
+                                        <td class="text-center">
+                                            <button
+                                                @click="editNews(newsItem)"
+                                                class="text-blue-500 hover:text-blue-700 mr-2"
+                                                title="Edit"
+                                            >
+                                                <i
+                                                    class="fa-solid fa-pen-to-square"
+                                                ></i>
+                                            </button>
+                                            <button
+                                                @click="deleteNews(newsItem.id)"
+                                                class="text-red-500 hover:text-red-700"
+                                                title="Delete"
+                                            >
+                                                <i
+                                                    class="fa-solid fa-trash"
+                                                ></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="news.length === 0">
+                                        <td
+                                            colspan="7"
+                                            class="text-center text-gray-400 py-6"
+                                        >
+                                            No news found.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <universalTable
+                            :data="news2"
+                            :columns="columns"
+                            :perPage="10"
+                            :searchableFields="[
+                                'header',
+                                'content',
+                                'created_at',
+                            ]"
+                            @edit="handleEdit"
+                            @delete="handleDelete"
                         >
-                            Create new
-                        </button>
+                            <template #tool="{ row }">
+                                <button @click="$emit('edit', row)">
+                                    <i
+                                        class="fa-solid fa-pen-to-square fa-xl"
+                                    ></i>
+                                </button>
+                                <button @click="$emit('delete', row)">
+                                    <i class="fa-solid fa-trash fa-xl"></i>
+                                </button>
+                            </template>
+                        </universalTable>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="custom-table w-full text-left">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Header</th>
-                                    <th>Paragraph</th>
-                                    <th>Image</th>
-                                    <th class="text-center">Tools</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="newsItem in news" :key="newsItem.id">
-                                    <td>{{ newsItem.id }}</td>
-                                    <td>{{ newsItem.header }}</td>
-                                    <td
-                                        class="max-w-xs truncate"
-                                        :title="newsItem.paragraph"
-                                    >
-                                        {{ newsItem.paragraph }}
-                                    </td>
-                                    <td>
-                                        <span
-                                            v-if="newsItem.image"
-                                            class="inline-block max-w-[10ch] truncate"
-                                            >{{ newsItem.image }}</span
-                                        >
-                                        <span v-else class="text-gray-400"
-                                            >No image</span
-                                        >
-                                    </td>
-                                    <td class="text-center">
-                                        <button
-                                            @click="editNews(newsItem)"
-                                            class="text-blue-500 hover:text-blue-700 mr-2"
-                                            title="Edit"
-                                        >
-                                            <i
-                                                class="fa-solid fa-pen-to-square"
-                                            ></i>
-                                        </button>
-                                        <button
-                                            @click="deleteNews(newsItem.id)"
-                                            class="text-red-500 hover:text-red-700"
-                                            title="Delete"
-                                        >
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr v-if="news.length === 0">
-                                    <td
-                                        colspan="7"
-                                        class="text-center text-gray-400 py-6"
-                                    >
-                                        No news found.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <universalTable
-                        :data="news2"
-                        :columns="columns"
-                        :perPage="10"
-                        :searchableFields="['header', 'content','created_at']"
-                        @edit="handleEdit"
-                        @delete="handleDelete"
-                    >
-                        <template #tool="{ row }">
-                            <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
-                            <button @click="$emit('delete', row)"><i class="fa-solid fa-trash fa-xl"></i></button>
-                        </template>
-                    </universalTable>
                 </div>
-            </div>
 
-            <baseModal
-                v-model="showModal"
-                title="Add / Edit News"
-                @cancel="cancelModal"
-                @save="saveNews"
-            >
-                <form @submit.prevent="saveNews" class="space-y-4">
-                    <div>
-                        <label class="block text-gray-700 mb-1">Header</label>
-                        <input
-                            v-model="form.header"
-                            type="text"
-                            maxlength="60"
-                            required
-                            class="w-full border border-gray-300 rounded px-3 py-2"
-                            placeholder="Enter news header"
-                        />
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 mb-1"
-                            >Paragraph</label
-                        >
-                        <textarea
-                            v-model="form.paragraph"
-                            required
-                            class="w-full border border-gray-300 rounded px-3 py-2"
-                            placeholder="Enter news paragraph"
-                            rows="4"
-                        ></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 mb-1"
-                            >Image URL</label
-                        >
-                        <input
-                            v-model="form.image"
-                            type="url"
-                            class="w-full border border-gray-300 rounded px-3 py-2"
-                            placeholder="Enter image URL"
-                        />
-                    </div>
-                </form>
-            </baseModal>
+                <baseModal
+                    v-model="showModal"
+                    title="Add / Edit News"
+                    @cancel="cancelModal"
+                    @save="saveNews"
+                >
+                    <form @submit.prevent="saveNews" class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 mb-1"
+                                >Header</label
+                            >
+                            <input
+                                v-model="form.header"
+                                type="text"
+                                maxlength="60"
+                                required
+                                class="w-full border border-gray-300 rounded px-3 py-2"
+                                placeholder="Enter news header"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-1"
+                                >Paragraph</label
+                            >
+                            <textarea
+                                v-model="form.paragraph"
+                                required
+                                class="w-full border border-gray-300 rounded px-3 py-2"
+                                placeholder="Enter news paragraph"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-1"
+                                >Image URL</label
+                            >
+                            <input
+                                v-model="form.image"
+                                type="url"
+                                class="w-full border border-gray-300 rounded px-3 py-2"
+                                placeholder="Enter image URL"
+                            />
+                        </div>
+                    </form>
+                </baseModal>
+            </div>
         </div>
     </article>
 </template>
@@ -222,35 +238,68 @@ const deleteNews = (id) => {
     news.value = news.value.filter((n) => n.id !== id);
 };
 
-import universalTable from './universalTable.vue'
+import universalTable from './universalTable.vue';
 
 const news2 = [
-  { id: 1, header: 'Alice', content: 'alice@example.com', created_at: "2025" },
-  { id: 2, header: 'Bob', content: 'bob@example.com' , created_at: "2025"},
-  { id: 3, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
-  { id: 4, header: 'David', content: 'david@example.com' , created_at: "2025"},
-  { id: 5, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
-  { id: 6, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
-  { id: 7, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
-  { id: 8, header: 'David', content: 'david@example.com' , created_at: "2025"},
-  { id: 9, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
-  { id: 10, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
-
-]
+    {
+        id: 1,
+        header: 'Alice',
+        content: 'alice@example.com',
+        created_at: '2025',
+    },
+    { id: 2, header: 'Bob', content: 'bob@example.com', created_at: '2025' },
+    {
+        id: 3,
+        header: 'Charlie',
+        content: 'charlie@example.com',
+        created_at: '2024',
+    },
+    {
+        id: 4,
+        header: 'David',
+        content: 'david@example.com',
+        created_at: '2025',
+    },
+    { id: 5, header: 'Fve', content: 'eve@example.com', created_at: '2025' },
+    {
+        id: 6,
+        header: 'Frank',
+        content: 'frank@example.com',
+        created_at: '2025',
+    },
+    {
+        id: 7,
+        header: 'Charlie',
+        content: 'charlie@example.com',
+        created_at: '2024',
+    },
+    {
+        id: 8,
+        header: 'David',
+        content: 'david@example.com',
+        created_at: '2025',
+    },
+    { id: 9, header: 'Fve', content: 'eve@example.com', created_at: '2025' },
+    {
+        id: 10,
+        header: 'Frank',
+        content: 'frank@example.com',
+        created_at: '2025',
+    },
+];
 
 const columns = [
-  { label: 'Id', key: 'id' },
-  { label: 'Header', key: 'header' },
-  { label: 'Content', key: 'content' },
-  { label: 'Created at', key: 'created_at' },
-]
+    { label: 'Id', key: 'id' },
+    { label: 'Header', key: 'header' },
+    { label: 'Content', key: 'content' },
+    { label: 'Created at', key: 'created_at' },
+];
 
 function handleEdit(row) {
-  alert(`Edit ${row}`)
+    alert(`Edit ${row}`);
 }
 
 function handleDelete(row) {
-  alert(`Delete ${row}`)
+    alert(`Delete ${row}`);
 }
-
 </script>
