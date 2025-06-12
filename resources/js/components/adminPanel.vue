@@ -97,8 +97,8 @@
                     </button>
 
                     <button
-                        @click="setActive('users')"
-                        :class="{ active: active === 'users' }"
+                        @click="setActive('moderators')"
+                        :class="{ active: active === 'moderators' }"
                         class="aside-option"
                     >
                         <div>
@@ -146,8 +146,8 @@ const componentsMap = {
     services: defineAsyncComponent(
         () => import('@/components/dashboardServices.vue'),
     ),
-    users: defineAsyncComponent(
-        () => import('@/components/dashboardUsers.vue'),
+    moderators: defineAsyncComponent(
+        () => import('@/components/dashboardModerators.vue'),
     ),
     travelT: defineAsyncComponent(
         () => import('@/components/dashboardTravelTrend.vue'),

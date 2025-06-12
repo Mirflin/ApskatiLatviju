@@ -6,10 +6,7 @@
             </div>
             <div>
                 <div class="bg-white rounded-xl shadow-md p-4">
-                    <div
-                        class="header-button-panels flex items-center justify-between mb-4"
-                    >
-                        <!-- <h2 class="text-lg font-semibold text-gray-800"> -->
+                    <div class="header-button-panels mb-4">
                         <div class="header-button-panels">
                             <h2
                                 class="text-lg font-semibold mb-4 text-gray-800"
@@ -18,76 +15,10 @@
                             </h2>
                             <button
                                 @click="showModal = true"
-                                class="px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded"
+                                class="px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded flex my-5"
                             >
                                 Create new
                             </button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="custom-table w-full text-left">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Header</th>
-                                        <th>Paragraph</th>
-                                        <th>Image</th>
-                                        <th class="text-center">Tools</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr
-                                        v-for="newsItem in news"
-                                        :key="newsItem.id"
-                                    >
-                                        <td>{{ newsItem.id }}</td>
-                                        <td>{{ newsItem.header }}</td>
-                                        <td
-                                            class="max-w-xs truncate"
-                                            :title="newsItem.paragraph"
-                                        >
-                                            {{ newsItem.paragraph }}
-                                        </td>
-                                        <td>
-                                            <span
-                                                v-if="newsItem.image"
-                                                class="inline-block max-w-[10ch] truncate"
-                                                >{{ newsItem.image }}</span
-                                            >
-                                            <span v-else class="text-gray-400"
-                                                >No image</span
-                                            >
-                                        </td>
-                                        <td class="text-center">
-                                            <button
-                                                @click="editNews(newsItem)"
-                                                class="text-blue-500 hover:text-blue-700 mr-2"
-                                                title="Edit"
-                                            >
-                                                <i
-                                                    class="fa-solid fa-pen-to-square"
-                                                ></i>
-                                            </button>
-                                            <button
-                                                @click="deleteNews(newsItem.id)"
-                                                class="text-red-500 hover:text-red-700"
-                                                title="Delete"
-                                            >
-                                                <i
-                                                    class="fa-solid fa-trash"
-                                                ></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr v-if="news.length === 0">
-                                        <td
-                                            colspan="7"
-                                            class="text-center text-gray-400 py-6"
-                                        >
-                                            No news found.
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                         <universalTable
                             :data="news2"
@@ -137,7 +68,7 @@
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-1"
-                                >Paragraph</label
+                                >Content</label
                             >
                             <textarea
                                 v-model="form.paragraph"

@@ -19,67 +19,6 @@
                             Create new
                         </button>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="custom-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th class="text-center">Tools</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="service in services"
-                                    :key="service.id"
-                                >
-                                    <td>{{ service.id }}</td>
-                                    <td>{{ service.name }}</td>
-                                    <td>{{ service.description }}</td>
-                                    <td>
-                                        <span
-                                            v-if="service.image"
-                                            class="inline-block max-w-[10ch] truncate"
-                                            >{{ service.image }}</span
-                                        >
-                                        <span v-else class="text-gray-400"
-                                            >No image</span
-                                        >
-                                    </td>
-                                    <td>{{ service.price }}</td>
-                                    <td class="text-center">
-                                        <button
-                                            @click="editService(service)"
-                                            class="text-blue-500 hover:text-blue-700 mr-2"
-                                            title="Edit"
-                                        >
-                                            <i
-                                                class="fa-solid fa-pen-to-square"
-                                            ></i>
-                                        </button>
-                                        <button
-                                            @click="deleteService(service.id)"
-                                            class="text-red-500 hover:text-red-700"
-                                            title="Delete"
-                                        >
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr v-if="services.length === 0">
-                                    <td
-                                        colspan="6"
-                                        class="text-center text-gray-400"
-                                    >
-                                        No services found.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
 
                     <universalTable
                         :data="news"
@@ -158,7 +97,6 @@
                             </div>
                         </form>
                     </div>
-                    <!-- Image Preview Column -->
                     <div
                         class="flex-none w-full md:w-1/3 flex items-center justify-center"
                     >

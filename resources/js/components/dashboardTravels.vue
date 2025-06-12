@@ -15,65 +15,8 @@
                             Create new
                         </button>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="custom-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>City</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Time term</th>
-                                    <th class="text-center">Tools</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="travel in travels" :key="travel.id">
-                                    <td>{{ travel.id }}</td>
-                                    <td>{{ travel.name }}</td>
-                                    <td>{{ travel.city }}</td>
-                                    <td>{{ travel.description }}</td>
-                                    <td>
-                                        <span
-                                            v-if="travel.image"
-                                            class="inline-block max-w-[10ch] truncate"
-                                            >{{ travel.image }}</span
-                                        >
-                                        <span v-else class="text-gray-400"
-                                            >No image</span
-                                        >
-                                    </td>
-                                    <td>{{ travel.price }}</td>
-                                    <td class="font-medium">{{ travel.timeTerm }}</td>
-                                    <td class="text-center">
-                                        <button
-                                            @click="editTravel(travel)"
-                                            class="text-blue-500 hover:text-blue-700 mr-2"
-                                            title="Edit"
-                                        >
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </button>
-                                        <button
-                                            @click="deleteTravel(travel.id)"
-                                            class="text-red-500 hover:text-red-700"
-                                            title="Delete"
-                                        >
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr v-if="travels.length === 0">
-                                    <td colspan="8" class="text-center text-gray-400 py-6">
-                                        No travels found.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                     <universalTable
-                        :data="travels"
+                        :data="travels2"
                         :columns="columns"
                         :perPage="10"
                         :searchableFields="['name', 'city','spot_count','group','seazon','price','time_term']"
@@ -261,11 +204,9 @@ const editTravel = (travel) => {
 const deleteTravel = (id) => {
     travels.value = travels.value.filter((t) => t.id !== id);
 };
-</script>
-<script setup>
 import universalTable from './universalTable.vue'
 
-const travels = [
+const travels2 = [
   { id: 1, header: 'Alice', content: 'alice@example.com', created_at: "2025" },
   { id: 2, header: 'Bob', content: 'bob@example.com' , created_at: "2025"},
   { id: 3, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},

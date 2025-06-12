@@ -13,69 +13,6 @@
                             History
                         </h2>
                     </div>
-
-                    <div class="overflow-x-auto">
-                        <table
-                            class="custom-table"
-                        >
-                            <thead>
-                                <tr>
-                                    <th class="rounded-tl-xl">#</th>
-                                    <th>User</th>
-                                    <th>Action</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th
-                                        class="text-center"
-                                    >
-                                        Tools
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="item in history"
-                                    :key="item.id"
-                                    class="hover:bg-[#f5f6f8]"
-                                >
-                                    <td>{{ item.id }}</td>
-                                    <td>{{ item.user }}</td>
-                                    <td>{{ item.action }}</td>
-                                    <td>{{ item.date }}</td>
-                                    <td>
-                                        <span
-                                            :class="statusClass(item.status)"
-                                            >{{ item.status }}</span
-                                        >
-                                    </td>
-                                    <td class="text-center">
-                                        <button
-                                            class="text-blue-500 hover:text-blue-700 mr-2"
-                                            title="Edit"
-                                        >
-                                            <i
-                                                class="fa-solid fa-pen-to-square"
-                                            ></i>
-                                        </button>
-                                        <button
-                                            class="text-red-500 hover:text-red-700"
-                                            title="Delete"
-                                        >
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr v-if="history.length === 0">
-                                    <td
-                                        colspan="6"
-                                        class="text-center text-gray-400"
-                                    >
-                                        No data available
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                     <universalTable
                         :data="news"
                         :columns="columns"
