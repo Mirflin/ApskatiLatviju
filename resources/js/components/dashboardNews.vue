@@ -29,22 +29,34 @@
                                 'content',
                                 'created_at',
                             ]"
-                            @edit="handleEdit"
-                            @delete="handleDelete"
+                            @edit="editNews"
+                            @delete="deleteNews"
+                            @view="handleView"
                         >
                             <template #tool="{ row }">
-                                <button @click="$emit('edit', row)">
-                                    <i
-                                        class="fa-solid fa-pen-to-square fa-xl"
-                                    ></i>
-                                </button>
-                                <button @click="$emit('delete', row)">
-                                    <i class="fa-solid fa-trash fa-xl"></i>
-                                </button>
                             </template>
                         </universalTable>
                     </div>
                 </div>
+                <baseViewModal
+                    v-model="showViewModal"
+                    title="Show news"
+                    @cancel="cancelModal"
+                >
+                    <div class="view-modal">
+                        <div class="">
+                            <div>
+                                <h3>Header: </h3>
+                                <p>{{view_item.header}}</p>
+                            </div>
+                            <div>
+                                <h3>Paragraph: </h3>
+                                <textarea disabled style="resize: none;" class="w-full border border-gray-300 rounded px-3 py-2">{{ view_item.paragraph }}</textarea>
+                            </div>
+                        </div>
+                        <img class="modal-image" :src="view_item.image">
+                    </div>
+                </baseViewModal>
 
                 <baseModal
                     v-model="showModal"
@@ -99,8 +111,10 @@
 <script setup>
 import { ref } from 'vue';
 import baseModal from './baseModal.vue';
+import baseViewModal from './baseViewModal.vue';
 
 const showModal = ref(false);
+const showViewModal = ref(false);
 
 const news = ref([
     {
@@ -137,6 +151,7 @@ const resetForm = () => {
 const cancelModal = () => {
     resetForm();
     showModal.value = false;
+    showViewModal.value = false;
 };
 
 const saveNews = () => {
@@ -226,6 +241,8 @@ const columns = [
     { label: 'Created at', key: 'created_at' },
 ];
 
+const view_item = ref({});
+
 function handleEdit(row) {
     alert(`Edit ${row}`);
 }
@@ -233,11 +250,8 @@ function handleEdit(row) {
 function handleDelete(row) {
     alert(`Delete ${row}`);
 }
-</script>
-
-<style>
-.header-align{
-    height: 100%;
-    align-items: center;
+function handleView(item){
+    showViewModal.value = true
+    view_item.value = item;
 }
-</style>
+</script>

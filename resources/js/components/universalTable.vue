@@ -33,13 +33,21 @@
                                     : item[col.key]
                             }}
                         </td>
+                        <!--
                         <td v-if="$slots.tool" class="text-center">
                             <slot
+                                class="tools"
                                 name="tool"
                                 :row="item"
                                 @edit="emitEdit(item)"
                                 @delete="emitDelete(item)"
                             />
+                        </td>
+                        -->
+                        <td class="text-center">
+                            <button @click="$emit('view', item)"><i class="fa-solid fa-eye"></i></button>
+                            <button @click="$emit('edit', item)"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button @click="$emit('delete', item.id)"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     <tr v-if="paginatedData.length === 0">
@@ -83,7 +91,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['edit', 'delete']);
+const emit = defineEmits(['edit', 'delete','view']);
 
 const page = ref(1);
 const searchQuery = ref('');
@@ -138,6 +146,16 @@ watch(
 );
 </script>
 
+<style scoped>
+.table-container{
+    background-color: var(--bg-aside);
+    color: #fff;
+}
+.text-center button{
+    margin-right: 0.5rem;
+}
+
+</style>
 <!-- <style scoped>
 .table-wrapper {
   padding: 1rem;

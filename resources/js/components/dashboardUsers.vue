@@ -68,6 +68,26 @@
         </div>
       </div>
 
+      <baseViewModal
+          v-model="showViewModal"
+          title="Show news"
+          @cancel="cancelModal"
+      >
+          <div class="view-modal">
+              <div class="">
+                  <div>
+                      <h3>Header: </h3>
+                      <p>{{view_item.header}}</p>
+                  </div>
+                  <div>
+                      <h3>Paragraph: </h3>
+                      <textarea disabled style="resize: none;" class="w-full border border-gray-300 rounded px-3 py-2">{{ view_item.paragraph }}</textarea>
+                  </div>
+              </div>
+              <img class="modal-image" :src="view_item.image">
+          </div>
+      </baseViewModal>
+
       <baseModal
         v-model="showModal"
         title="Add / Edit User"
@@ -131,6 +151,7 @@
 <script setup>
 import { ref } from 'vue';
 import baseModal from './baseModal.vue';
+import baseViewModal from './baseViewModal.vue';
 
 const showModal = ref(false);
 

@@ -139,14 +139,18 @@
                             <span>Lietotāji</span>
                         </div>
                     </button>
+
                     <button
-                        @click="setActive('helpRequest')"
-                        :class="{ active: active === 'helpRequest' }"
-                        class="child-option"
+                        @click="setActive('citi')"
+                        :class="{ active: active === 'citi' }"
+                        class="aside-option"
                     >
-                        <i class="fa-solid fa-handshake-angle fa-xl"></i>
-                        <span>Palidzība</span>
+                        <div>
+                            <i class="fa-solid fa-gears fa-xl"></i>
+                            <span>Citi</span>
+                        </div>
                     </button>
+
                 </div>
 
                 <div class="aside-footer">
@@ -205,6 +209,9 @@ const componentsMap = {
     helpRequest: defineAsyncComponent(
         () => import('@/components/helpRequests.vue'),
     ),
+    citi: defineAsyncComponent(
+        () => import('@/components/dashboardCiti.vue')
+    )
 };
 
 const currentComponent = computed(() => componentsMap[active.value] || null);

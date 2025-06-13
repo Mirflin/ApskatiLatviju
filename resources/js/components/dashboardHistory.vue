@@ -36,8 +36,6 @@
 <script setup>
 import { ref } from 'vue';
 
-const showModal = ref(false);
-
 const form = ref({
     user: '',
     action: '',

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->unsignedBigInteger('permision_group')->default(2);
             $table->foreign('permision_group')->references('id')->on('permision_groups');
+            $table->unsignedBigInteger('status_id');
+            $table->foreign('status_id')->references('id')->on('action_statuses');
             $table->timestamps();
             $table->softDeletes();
         });

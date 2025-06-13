@@ -286,3 +286,25 @@ body.dark-theme .aside-option i.fa-circle-plus:hover {
 }
 
 /* .. */
+
+.header-align{
+    height: 100%;
+    align-items: center;
+}
+.view-modal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.view-modal textarea{
+    width: 20rem;
+    height: 10rem;
+    overflow-y: auto;
+}
+.modal-image{
+    width: 15rem;
+    height: 15rem;
+    background-color: var(--bg-main);
+    margin-left: 1rem;
+}

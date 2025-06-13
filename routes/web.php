@@ -28,6 +28,8 @@ Route::post('/support/send-ticket', [apiController::class, 'createTicket']);
 Route::post('/ticket/submit', [apiController::class, 'createTicket'])->name('ticket.submit');
 Route::post('/send-ticket', [apiController::class, 'createTicket'])->name('send.ticket');
 
+Route::get('/api/user-list', [apiController::class, 'userList'])->name('send.user');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

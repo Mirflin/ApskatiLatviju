@@ -11,6 +11,7 @@ use App\Models\News;
 use App\Models\User;
 use App\Models\travel_check;
 use App\Models\Ticket;
+use App\Models\Permision_groups;
 
 class apiController extends Controller
 {
@@ -156,6 +157,22 @@ class apiController extends Controller
         }
         // message appearing isnt done!
         return redirect()->back()->with('message', 'Radās kļūda, mēģini vēlreiz.');
+    }
+
+    public function userList(){
+        $users = User::all();
+        $userList = [];
+        foreach($users as $user){
+            $elem = [
+                "id" => $user->id,
+                "name" => $user->name,
+                "email" => $user->email,
+                "permision" => Permision_groups::find($user->permision_group),
+                "created_at" => $user->created_at
+            ];
+            array_push($userList, $elem);
+        }
+        return $userList;
     }
 
 

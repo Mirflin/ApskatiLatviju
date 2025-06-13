@@ -18,12 +18,29 @@
                         @delete="handleDelete"
                     >
                         <template #tool="{ row }">
-                            <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
-                            <button @click="$emit('delete', row)"><i class="fa-solid fa-trash fa-xl"></i></button>
                         </template>
                     </universalTable>
                 </div>
             </div>
+            <baseViewModal
+                v-model="showViewModal"
+                title="Show news"
+                @cancel="cancelModal"
+            >
+                <div class="view-modal">
+                    <div class="">
+                        <div>
+                            <h3>Header: </h3>
+                            <p>{{view_item.header}}</p>
+                        </div>
+                        <div>
+                            <h3>Paragraph: </h3>
+                            <textarea disabled style="resize: none;" class="w-full border border-gray-300 rounded px-3 py-2">{{ view_item.paragraph }}</textarea>
+                        </div>
+                    </div>
+                    <img class="modal-image" :src="view_item.image">
+                </div>
+            </baseViewModal>
         </div>
     </article>
 </template>
@@ -31,6 +48,7 @@
 <script setup>
 import { ref } from 'vue';
 import universalTable from './universalTable.vue'
+import baseViewModal from './baseViewModal.vue';
 
 const travels2 = [
   { id: 1, header: 'Alice', content: 'alice@example.com', created_at: "2025" },
