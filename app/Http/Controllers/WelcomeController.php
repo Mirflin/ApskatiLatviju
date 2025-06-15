@@ -3,89 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Travel;
-use App\Models\News;
-use App\Models\Client;
-use App\Models\Service;
-use App\Models\Review;
+use App\Models\travel_check;
+use App\Models\services_check;
 
 class WelcomeController extends Controller
 {
     public function index()
     {
-        $news = News::latest()->get();
-        
-        return view('welcome', compact('news'));
-    }
-    
-    public function travels()
-    {
-        $travels = Travel::whereNull('deleted_at')->get();
-
-        return view('pages.travels', compact('travels'));
+        return view('welcome');
     }
 
-    public function myTravels()
+    public function myChecks(Request $request)
     {
-        return view('pages.my-travels');
-    }
+        $check = null;
+        $type = null;
+        $check_code = $request->input('check_code', '');
 
-    public function support()
-    {
-        return view('pages.support');
-    }
+        if ($request->isMethod('post') && $check_code) {
+            // Search in travel_checks
+            $travelCheck = travel_check::with('travel')
+                ->where('code', $check_code)
+                ->whereNull('deleted_at')
+                ->first();
 
-    public function services()
-    {
-        $services = Service::whereNull('deleted_at')->get();
+            if ($travelCheck) {
+                $check = $travelCheck;
+                $type = 'travel';
+            } else {
+                // Search in services_checks
+                $serviceCheck = services_check::with('service')
+                    ->where('code', $check_code)
+                    ->whereNull('deleted_at')
+                    ->first();
 
-        return view('pages.services', compact('services'));
-    }
-
-    public function showTravelDetails($id)
-    {
-        $travel = Travel::findOrFail($id);
-
-        // get 10 comments with limit-10
-        $reviews = Review::with('client')->latest()->paginate(10);
-
-
-        return view('pages.travel-details', compact('travel', 'reviews'));
-    }
-
-    public function showNewsDetails($id)
-    {
-        $news = News::findOrFail($id);
-
-        $imagePath = 'news/' . $news->image;
-        $news->image_url = $news->image && \Storage::disk('public')->exists($imagePath)
-            ? asset('storage/' . $imagePath)
-            : asset('no-image.png');
-
-        return view('pages.news-details', compact('news'));
-    }
-
-    public function travelRequest(Request $request)
-    {
-        $travel = null;
-        $allTravels = Travel::all();
-
-        if ($request->has('travel_id')) {
-            $travel = Travel::find($request->get('travel_id'));
+                if ($serviceCheck) {
+                    $check = $serviceCheck;
+                    $type = 'service';
+                } else {
+                    return redirect()->route('my.checks')
+                        ->withErrors(['check_code' => 'Čeks ar norādīto kodu nav atrasts.'])
+                        ->withInput();
+                }
+            }
         }
 
-        return view('pages.travel-request', compact('travel', 'allTravels'));
-    }
-
-    public function serviceRequest(Request $request)
-    {
-        $service = null;
-        $allServices = Service::all();
-
-        if ($request->has('service_id')) {
-            $service = Service::find($request->get('service_id'));
-        }
-        
-        return view('pages.service-request', compact('service', 'allServices'));
+        return view('pages.my-checks', compact('check', 'type', 'check_code'));
     }
 }

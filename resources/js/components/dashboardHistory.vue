@@ -22,8 +22,8 @@
                         @delete="handleDelete"
                     >
                         <template #tool="{ row }">
-                            <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
-                            <button @click="$emit('delete', row)"><i class="fa-solid fa-trash fa-xl"></i></button>
+                            <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button @click="$emit('delete', row)"><i class="fa-solid fa-trash"></i></button>
                         </template>
                     </universalTable>
 
@@ -90,9 +90,7 @@ const submitForm = () => {
     };
     showModal.value = false;
 };
-</script>
 
-<script>
 // import axios from 'axios';
 // import { ref, onMounted } from 'vue';
 

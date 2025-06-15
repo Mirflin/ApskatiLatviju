@@ -3,16 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
-main:not(.welcome-container) {
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-}
-
-body:is(.header-margins) {
-    background-color: var(--main-white);
-    color: var(--main-black);
-    margin-top: 100px;
+html, body {
+    height: 100%;
 }
 
 :root {
@@ -24,6 +16,8 @@ body:is(.header-margins) {
     --box-shadow-section: 0 4px 10px rgba(0, 0, 0, 0.1);
     --filter-shadow-item: 0 6px 12px rgba(0, 0, 0, 0.25);
     --filter-shadow-item-selected: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+    --header-h: 10vh;
 }
 
 * {
@@ -36,7 +30,7 @@ body:is(.header-margins) {
 }
 
 header.topbar {
-    height: 100px;
+    height: var(--header-h);
     background-color: var(--main-white);
     display: flex;
     justify-content: space-between;
@@ -99,27 +93,20 @@ header.topbar {
 }
 
 .btn-list a:hover,
-.btn-list button:hover {
-    border-color: var(--main-orange);
+.btn-list button:hover,
+.btn-list a.active {
     background-color: var(--main-orange);
     color: white;
 }
 
 .start-section {
-    height: 75vh;
+    min-height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 0 80px;
     text-align: right;
     color: var(--main-white);
-}
-
-.thumb-img {
-    position: absolute;
-    left: 0;
-    bottom: 90px;
-    width: 350px;
 }
 
 .radial-gradient-circle {
@@ -164,24 +151,6 @@ header.topbar {
 .btn-big:hover {
     transform: scale(1.05);
     filter: drop-shadow(var(--filter-shadow-item-selected));
-}
-
-.welcome-container section {
-    padding: 60px 100px;
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.welcome-container section h2 {
-    font-size: 32px;
-    font-family: 'Oswald', sans-serif;
-    margin-bottom: 15px;
-}
-
-.welcome-container section p {
-    font-size: 18px;
-    color: #333;
-    max-width: 800px;
 }
 
 .burger {
@@ -268,10 +237,6 @@ header.topbar {
         padding: 10px 20px;
     }
 
-    .welcome-container section {
-        padding: 60px 20px;
-    }
-
     .start-section {
         padding: 0 15px;
         justify-content: center;
@@ -285,10 +250,6 @@ header.topbar {
     .btn-big {
         padding: 10px 40px;
         justify-self: center;
-    }
-
-    .thumb-img {
-        display: none;
     }
 }
 
@@ -398,4 +359,30 @@ header.topbar {
     animation: blink 0.8s ease-in-out;
 }
 
-/* --- */
+/* Support styles */
+.pers-image {
+    max-width: none !important;
+    height: 15rem !important;
+    width: auto !important;
+    rotate: -5deg;
+    object-fit: contain;
+}
+
+#text-slideshow {
+    opacity: 0;
+    height: 7rem;
+    max-width: 400px;
+    rotate: -3deg;
+}
+
+#text-slideshow::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 50%;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 20px solid #fff; /* цвет такой же как у фона */
+}

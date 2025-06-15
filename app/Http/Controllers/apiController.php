@@ -10,6 +10,7 @@ use App\Models\Travel_group;
 use App\Models\News;
 use App\Models\User;
 use App\Models\travel_check;
+use App\Models\services_check;
 use App\Models\Ticket;
 
 class apiController extends Controller
@@ -154,7 +155,6 @@ class apiController extends Controller
             Ticket::create($validated);
             return redirect()->back()->with('message', 'Ziņa nosūtīta!');
         }
-        // message appearing isnt done!
         return redirect()->back()->with('message', 'Radās kļūda, mēģini vēlreiz.');
     }
 

@@ -4,86 +4,79 @@
 >
     <p class="w-full sm:w-auto text-center sm:text-left">
         <a
-            href="{{ $footer->url }}"
+            href="https://github.com/Mirflin/ApskatiLatviju"
             target="_blank"
             class="underline text-orange-300 hover:text-orange-500"
         >
             <i class="fa-solid fa-link"></i>
-            {{ $footer->url_name }}
+            Mirflin/ApskatiLatviju
         </a>
     </p>
-    <p class="w-full sm:w-auto text-center">{{ $footer->center_text }}</p>
     <div
         class="flex flex-wrap sm:flex-nowrap gap-2 justify-center sm:justify-start"
     >
         <a
-            href="/support"
+            href="{{route('support')}}"
             class="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white rounded-full shadow-md transition"
         >
             <i class="fa-solid fa-headset"></i>
             Palīdzība
         </a>
         <button
-            id="openModal"
+            onclick="openModal('infoModal')"
             class="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-700 text-white rounded-full shadow-md transition"
         >
             <i class="fa-solid fa-circle-info"></i>
             <span class="inline-block max-w-[10ch] truncate">
-                {{ $footer->button_name }}
+                Kontakti
             </span>
         </button>
     </div>
 </footer>
 
-<!-- Modal window -->
-<div
+<x-modal
     id="infoModal"
+    title="Kontakti"
     class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50 opacity-0 pointer-events-none transition-opacity duration-300"
 >
-    <div
-        class="modal-window bg-[var(--main-white)] text-[var(--main-black)] rounded-2xl p-8 max-w-md w-full shadow-xl relative animate-fade-in-up m-5"
-    >
-        <button
-            id="closeModal"
-            class="absolute top-4 right-4 text-[var(--main-black)] hover:text-[var(--orange-red)] text-xl"
+    <ul class="space-y-4 contacts-list">
+        <li
+            class="contact-item flex flex-col gap-3 border p-3 rounded-md shadow-sm hover:shadow-md transition cursor-pointer"
+            tabindex="0"
         >
-            &times;
-        </button>
-        <h2 class="text-2xl font-bold mb-4 font-oswald">
-            {{ $footer->modal_title }}
-        </h2>
-
-        <div
-            class="modal-window-text space-y-4 text-gray-800 text-lg leading-relaxed"
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-user-tie text-orange-500 text-xl"></i>
+                <div>
+                    <p class="font-semibold">Aleksandrs Ostapjuks</p>
+                    <p class="text-sm text-gray-500">Administrators</p>
+                </div>
+            </div>
+            <div
+                class="contact-extra text-sm text-gray-700 pl-[38px] max-h-0 overflow-hidden transition-all duration-300"
+            >
+                <p><i class="fa-solid fa-phone text-orange-400 mr-2"></i>+371 20000000</p>
+                <p><i class="fa-solid fa-envelope text-orange-400 mr-2"></i>aleksandrs@apskatilatviju.lv</p>
+            </div>
+        </li>
+        <li
+            class="contact-item flex flex-col gap-3 border p-3 rounded-md shadow-sm hover:shadow-md transition cursor-pointer"
+            tabindex="0"
         >
-            {!! $footer->modal_text !!}
-        </div>
-    </div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const modal = document.getElementById('infoModal');
-        const openBtn = document.getElementById('openModal');
-        const closeBtn = document.getElementById('closeModal');
-
-        openBtn.addEventListener('click', () => {
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            modal.classList.add('opacity-100');
-        });
-
-        closeBtn.addEventListener('click', () => {
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            modal.classList.remove('opacity-100');
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                modal.classList.remove('opacity-100');
-            }
-        });
-    });
-</script>
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-user-tie text-orange-500 text-xl"></i>
+                <div>
+                    <p class="font-semibold">Daniils Titovs</p>
+                    <p class="text-sm text-gray-500">Administrators</p>
+                </div>
+            </div>
+            <div
+                class="contact-extra text-sm text-gray-700 pl-[38px] max-h-0 overflow-hidden transition-all duration-300"
+            >
+                <p><i class="fa-solid fa-phone text-orange-400 mr-2"></i>+371 21111111</p>
+                <p><i class="fa-solid fa-envelope text-orange-400 mr-2"></i>daniils@apskatilatviju.lv</p>
+            </div>
+        </li>
+    </ul>
+</x-modal>
 
 

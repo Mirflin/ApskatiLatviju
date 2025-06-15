@@ -4,41 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
 
 class Travel extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'name', 'road_marks', 'city', 'image',
-        'description', 'price', 'spot_count', 'time_term'
-    ];
-
-    public function formattedTimeTerm($format = 'd.m')
-    {
-        if (!$this->time_term) {
-            return null;
-        }
-
-        return Carbon::parse($this->time_term)->format($format);
-
-    }
+    protected $table = 'travel'; // Указываем правильное имя таблицы
+    protected $dates = ['deleted_at', 'time_term'];
+    protected $fillable = ['group_id', 'name', 'road_marks', 'city', 'image', 'description', 'price', 'seazon_id', 'spot_count', 'time_term'];
 
     public function getImageUrlAttribute()
     {
-        $path = 'travels/' . $this->image;
-
-        if ($this->image && Storage::disk('public')->exists($path)) {
-            return asset('storage/' . $path);
-        }
-
-        return asset('no-image.png');
+        $imagePath = 'travels/' . $this->image;
+        return $this->image && \Storage::disk('public')->exists($imagePath)
+            ? asset('storage/' . $imagePath)
+            : asset('no-image.png');
     }
 
-    public function reviews()
+    public function formattedTimeTerm()
     {
-        return $this->hasMany(\App\Models\Review::class)->latest();
+        return \Carbon\Carbon::parse($this->time_term)->format('d.m.Y');
+    }
+
+    public function season()
+    {
+        return $this->belongsTo(Season::class, 'seazon_id');
     }
 }

@@ -1,7 +1,3 @@
-@php
-    $isHome = request()->is('/');
-@endphp
-
 <header class="topbar">
     <div class="logo">
         <a href="/">
@@ -18,73 +14,55 @@
     </button>
     <ul class="btn-list hidden-on-load">
         <li>
-            @if ($isHome)
-                <!-- If on the main page = scroll -->
-                <a href="#start-section" id="homeLink">
-                    <i class="fa-solid fa-house"></i>
-                    Sākums
-                </a>
-            @else
-                <!-- If on the main page = href -->
-                <a href="/">
-                    <i class="fa-solid fa-house"></i>
-                    Sākums
-                </a>
-            @endif
+            <a href="/" class="{{ request()->is('/') ? 'active' : '' }}">
+                <i class="fa-solid fa-house"></i>
+                Sākums
+            </a>
         </li>
         <li>
-            <a href="/my-travels">
+            <a
+                href="{{route('my.checks')}}"
+                class="{{ request()->is('my-checks*') ? 'active' : '' }}"
+            >
                 <i class="fa-solid fa-meteor"></i>
                 Mani čeki
             </a>
         </li>
         <li>
-            @if ($isHome)
-                <!-- If on the main page = scroll -->
-                <a href="#news-section" id="homeLink">
-                    <i class="fa-solid fa-fire"></i>
-                    Aktuāls
-                </a>
-            @else
-                <!-- If on the main page = href -->
-                <a href="/">
-                    <i class="fa-solid fa-fire"></i>
-                    Aktuāls
-                </a>
-            @endif
+            <a
+                href="{{route('news.index')}}"
+                class="{{ request()->is('news*') ? 'active' : '' }}"
+            >
+                <i class="fa-solid fa-fire"></i>
+                Aktualitātes
+            </a>
         </li>
         <li>
-            <a href="/travels">
+            <a
+                href="{{route('travels.index')}}"
+                class="{{ request()->is('travels*') ? 'active' : '' }}"
+            >
                 <i class="fa-solid fa-car"></i>
                 Ceļojumi
             </a>
         </li>
         <li>
-            <a href="/services">
+            <a
+                href="{{route('services.index')}}"
+                class="{{ request()->is('services*') ? 'active' : '' }}"
+            >
                 <i class="fa-solid fa-bell-concierge"></i>
                 Pakalpojumi
             </a>
         </li>
         <li>
-            <a href="#footer-content">
+            <a
+                href="{{route('about')}}"
+                class="{{ request()->is('about*') ? 'active' : '' }}"
+            >
                 <i class="fa-solid fa-circle-info"></i>
                 Par mums
             </a>
         </li>
     </ul>
 </header>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const homeLink = document.getElementById('homeLink');
-        if (homeLink) {
-            homeLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector('#start-section');
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        }
-    });
-</script>
