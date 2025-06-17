@@ -11,6 +11,7 @@ use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TravelController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\CheckController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
@@ -22,7 +23,7 @@ Route::post('/travels/{travel_id}/review', [TravelController::class, 'storeRevie
 
 // Check
 Route::match(['get', 'post'], '/my-checks', [WelcomeController::class, 'myChecks'])->name('my.checks');
-Route::post('/cancel-check', [TravelController::class, 'cancelCheck'])->name('cancel.check');
+Route::post('/cancel-check', [CheckController::class, 'cancelCheck'])->name('cancel.check');
 
 // News
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
@@ -36,6 +37,7 @@ Route::post('/support/submit', [apiController::class, 'createTicket'])->name('ti
 // Services
 Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
 Route::get('/services/service-request', [ServicesController::class, 'serviceRequest'])->name('service.request');
+Route::post('/service/request', [ServicesController::class, 'storeServiceRequest'])->name('service.request');
 
 // Contacts
 Route::get('/contacts', [ContactsController::class, 'contacts'])->name('contacts');

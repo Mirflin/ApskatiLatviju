@@ -214,32 +214,4 @@ class TravelController extends Controller
                 ->withInput();
         }
     }
-
-    public function cancelCheck(Request $request)
-    {
-        try {
-            $request->validate([
-                'check_code' => 'required|string|exists:travel_checks,code',
-                'travel_id' => 'required|exists:travel,id',
-            ]);
-
-            $check = travel_check::where('code', $request->check_code)
-                ->where('travel_id', $request->travel_id)
-                ->whereNull('deleted_at')
-                ->firstOrFail();
-
-            $travel = Travel::findOrFail($request->travel_id);
-            $peopleCount = $check->people_count;
-
-            $check->delete(); // Удаляем чек
-            $travel->increment('spot_count', $peopleCount); // Restore the exact number of seats
-
-            Log::info('Check canceled successfully: ' . $request->check_code);
-
-            return response()->json(['success' => true, 'message' => 'Pieteikums atcelts veiksmīgi!']);
-        } catch (\Exception $e) {
-            Log::error('Error in cancelCheck: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Neizdevās atcelt pieteikumu: ' . $e->getMessage()], 500);
-        }
-    }
 }

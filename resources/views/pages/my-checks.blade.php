@@ -128,6 +128,40 @@
                             </div>
                         </div>
                     </div>
+                @elseif ($type === 'service')
+                    <button
+                        type="button"
+                        class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded font-semibold transition open-modal"
+                        data-modal-id="cancel-modal-{{ $check->id }}"
+                    >
+                        Atcelt pirkumu
+                    </button>
+
+                    <div
+                        id="cancel-modal-{{ $check->id }}"
+                        class="modal opacity-0 pointer-events-none fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                    >
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <p>
+                                Vai tiešām vēlaties atcelt pakalpojuma pieteikumu?
+                            </p>
+                            <div class="mt-4 flex justify-end gap-2">
+                                <button
+                                    class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 w-full rounded confirm-cancel"
+                                    data-check-code="{{ $check->code }}"
+                                    data-service-id="{{ $check->service_id }}"
+                                >
+                                    Jā
+                                </button>
+                                <button
+                                    class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 w-full rounded close-modal"
+                                    data-modal-id="cancel-modal-{{ $check->id }}"
+                                >
+                                    Nē
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 @endif
             </div>
         @elseif ($check_code)
@@ -162,6 +196,7 @@
             if (e.target.classList.contains('confirm-cancel')) {
                 const checkCode = e.target.getAttribute('data-check-code'); // Retrieves the check code from the button's data attribute
                 const travelId = e.target.getAttribute('data-travel-id'); // Retrieves the travel ID from the button's data attribute
+                const serviceId = e.target.getAttribute('data-service-id'); // Retrieves the service ID for service cancellations
                 fetch('/cancel-check', {
                     method: 'POST',
                     headers: {
@@ -170,7 +205,8 @@
                     },
                     body: JSON.stringify({
                         check_code: checkCode,
-                        travel_id: travelId,
+                        travel_id: travelId, // Will be null for services
+                        service_id: serviceId, // Will be null for travels
                     }),
                 })
                     .then((response) => response.json())

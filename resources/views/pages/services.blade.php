@@ -146,22 +146,22 @@
                 >
                     Izvēlies pakalpojumu
                 </label>
-                <select
-                    id="service_id"
-                    name="service_id"
-                    required
-                    class="w-full border border-orange-300 rounded-md p-2"
-                >
-                    <option value="">-- Lūdzu, izvēlies --</option>
-                    @foreach ($services as $serviceOption)
-                        <option
-                            value="{{ $serviceOption->id }}"
-                            @if(isset($selectedService) && $selectedService->id == $serviceOption->id) selected @endif
-                        >
-                            {{ $serviceOption->name }}
-                        </option>
-                    @endforeach
-                </select>
+            <select
+                name="service_id"
+                id="service_id"
+                class="w-full border border-orange-300 rounded-md p-2"
+                required
+            >
+                <option value="">-- Lūdzu, izvēlieties --</option>
+                @foreach ($allServices as $option)
+                    <option
+                        value="{{ $option->id }}"
+                        @if(old('service_id') == $option->id || (isset($service) && $service->id == $option->id)) selected @endif
+                    >
+                        {{ $option->name }} ({{ $option->price }} €)
+                    </option>
+                @endforeach
+            </select>
             </div>
 
             <div class="md:col-span-2">
