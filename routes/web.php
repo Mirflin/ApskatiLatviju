@@ -31,8 +31,7 @@ Route::get('/news/{id}', [NewsController::class, 'showNewsDetails'])->name('news
 
 // Support
 Route::get('/support', [SupportController::class, 'support'])->name('support');
-Route::post('/support/send-ticket', [apiController::class, 'createTicket'])->name('send.ticket');
-Route::post('/support/submit', [apiController::class, 'createTicket'])->name('ticket.submit');
+Route::post('/ticket/submit', [SupportController::class, 'submitTicket'])->name('ticket.submit');
 
 // Services
 Route::get('/services', [ServicesController::class, 'index'])->name('services.index');

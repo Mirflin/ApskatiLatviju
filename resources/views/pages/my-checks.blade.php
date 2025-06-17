@@ -94,6 +94,7 @@
                     <strong>Izveidots:</strong>
                     {{ \Carbon\Carbon::parse($check->created_at)->format('d.m.Y H:i') }}
                 </p>
+
                 @if ($type === 'travel')
                     <button
                         type="button"
@@ -137,31 +138,26 @@
                         Atcelt pirkumu
                     </button>
 
-                    <div
-                        id="cancel-modal-{{ $check->id }}"
-                        class="modal opacity-0 pointer-events-none fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-                    >
-                        <div class="bg-white p-6 rounded-lg shadow-lg">
-                            <p>
-                                Vai tiešām vēlaties atcelt pakalpojuma pieteikumu?
-                            </p>
-                            <div class="mt-4 flex justify-end gap-2">
-                                <button
-                                    class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 w-full rounded confirm-cancel"
-                                    data-check-code="{{ $check->code }}"
-                                    data-service-id="{{ $check->service_id }}"
-                                >
-                                    Jā
-                                </button>
-                                <button
-                                    class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 w-full rounded close-modal"
-                                    data-modal-id="cancel-modal-{{ $check->id }}"
-                                >
-                                    Nē
-                                </button>
-                            </div>
+                    <x-modal id="cancel-modal-{{ $check->id }}">
+                        <p class="text-center">
+                            Vai tiešām vēlaties atcelt pakalpojuma pieteikumu?
+                        </p>
+                        <div class="mt-4 flex justify-center gap-2">
+                            <button
+                                class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 w-20 rounded confirm-cancel"
+                                data-check-code="{{ $check->code }}"
+                                data-service-id="{{ $check->service_id }}"
+                            >
+                                Jā
+                            </button>
+                            <button
+                                class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 w-20 rounded close-modal"
+                                data-modal-id="cancel-modal-{{ $check->id }}"
+                            >
+                                Nē
+                            </button>
                         </div>
-                    </div>
+                    </x-modal>
                 @endif
             </div>
         @elseif ($check_code)

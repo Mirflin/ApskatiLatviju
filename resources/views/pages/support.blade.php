@@ -52,6 +52,11 @@
                     @error('content')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
+                    @if (session('success'))
+                        <div class="text-green-500 text-sm mt-1">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                 </div>
                 <div class="text-right">
                     <button
@@ -78,7 +83,7 @@
                 'Mēs vienmēr esam gatavi palīdzēt jums ar jebkādiem jautājumiem.',
                 'Jūsu problēmas risinājums mums ir prioritāte.',
                 'Neatkarīgi no situācijas, mēs sniegsim atbalstu un konsultācijas.',
-                'Sazinieties ar нами jebkurā laikā — mēs esam blakus.',
+                'Sazinieties ar nami jebkurā laikā — mēs esam blakus.',
                 'Jūsu apmierinātība ir mūsu galvenais mērķis.',
             ];
             const slideshow = document.getElementById('text-slideshow');

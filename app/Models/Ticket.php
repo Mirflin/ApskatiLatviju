@@ -3,16 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 
 class Ticket extends Model
 {
-    // use for tests and seeders
-    use HasFactory;
+    protected $table = 'tickets';
 
-    protected $fillable = [
-        'email',
-        'content',
-    ];
+    protected $fillable = ['email', 'content'];
+
+    public $timestamps = true;
 }

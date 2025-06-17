@@ -148,15 +148,15 @@ class apiController extends Controller
         ],301);
     }
     
-    public function createTicket(Request $request){
-        $validated = $request->only(['email', 'content']);
+    // public function createTicket(Request $request){
+    //     $validated = $request->only(['email', 'content']);
         
-        if (!empty($validated['email']) && !empty($validated['content'])) {
-            Ticket::create($validated);
-            return redirect()->back()->with('message', 'Ziņa nosūtīta!');
-        }
-        return redirect()->back()->with('message', 'Radās kļūda, mēģini vēlreiz.');
-    }
+    //     if (!empty($validated['email']) && !empty($validated['content'])) {
+    //         Ticket::create($validated);
+    //         return redirect()->back()->with('message', 'Ziņa nosūtīta!');
+    //     }
+    //     return redirect()->back()->with('message', 'Radās kļūda, mēģini vēlreiz.');
+    // }
 
 
 
