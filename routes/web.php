@@ -28,8 +28,6 @@ Route::post('/support/send-ticket', [apiController::class, 'createTicket']);
 Route::post('/ticket/submit', [apiController::class, 'createTicket'])->name('ticket.submit');
 Route::post('/send-ticket', [apiController::class, 'createTicket'])->name('send.ticket');
 
-Route::get('/api/user-list', [apiController::class, 'userList'])->name('send.user');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -38,6 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/api/user-list', [apiController::class, 'userList'])->name('send.user');
+    Route::get('/api/top-moderators', [apiController::class, 'activeModerator'])->name('send.moderators');
 });
 
 require __DIR__.'/auth.php';

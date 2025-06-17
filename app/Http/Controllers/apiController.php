@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Action_history;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Service;
@@ -12,6 +13,7 @@ use App\Models\User;
 use App\Models\travel_check;
 use App\Models\Ticket;
 use App\Models\Permision_groups;
+use Illuminate\Support\Facades\DB;
 
 class apiController extends Controller
 {
@@ -167,12 +169,26 @@ class apiController extends Controller
                 "id" => $user->id,
                 "name" => $user->name,
                 "email" => $user->email,
-                "permision" => Permision_groups::find($user->permision_group),
+                "permision" => Permision_groups::find($user->permision_group)->permision_name,
                 "created_at" => $user->created_at
             ];
             array_push($userList, $elem);
         }
         return $userList;
+    }
+
+    public function activeModerator(){
+    
+        $topModerators = User::where('permision_group', 2)
+            ->select('users.id', 'users.name', DB::raw('COUNT(action_histories.id) as action_count'))
+            ->leftJoin('action_histories', 'users.id', '=', 'action_histories.user_id')
+            ->groupBy('users.id', 'users.name')
+            ->orderByDesc('action_count')
+            ->take(5)
+            ->get();
+
+        return $topModerators;
+        
     }
 
 

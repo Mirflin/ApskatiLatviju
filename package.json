@@ -27,6 +27,7 @@
         "singleQuote": true
     },
     "dependencies": {
+        "@amcharts/amcharts5": "^5.13.3",
         "@vitejs/plugin-vue": "^5.2.4",
         "ag-grid-vue3": "^33.3.2",
         "gridjs-vue": "^5.0.4",

@@ -14,6 +14,7 @@
                         </div>
                     </button>
 
+                    <!--
                     <div class="aside-group">
                         <div class="aside-option" @click="toggleGraphsOptions">
                             <div class="flex gap-2">
@@ -47,6 +48,7 @@
                             </button>
                         </div>
                     </div>
+                    -->
 
                     <div class="aside-group">
                         <div class="aside-option" @click="toggleRequestsOptions">
