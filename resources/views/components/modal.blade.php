@@ -4,20 +4,21 @@
 >
     <div
         class="modal-window bg-white text-black rounded-2xl p-8 max-w-2xl w-full shadow-xl relative m-4"
+        style="max-height: 80vh; overflow-y: auto;"
         onclick="event.stopPropagation()"
     >
         <button
             class="absolute top-4 right-4 text-black hover:text-red-500 text-2xl font-bold"
             onclick="closeModal('{{ $id }}')"
         >
-            &times;
+            ×
         </button>
 
         @if ($title)
             <h2 class="text-2xl font-bold mb-4">{{ $title }}</h2>
         @endif
 
-        <div>
+        <div class="px-6"> <!-- Добавляет отступы по бокам внутри слота -->
             {{ $slot }}
         </div>
     </div>

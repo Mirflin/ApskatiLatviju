@@ -1,15 +1,11 @@
 <div
     class="w-full bg-white text-black p-4 rounded-xl shadow-md space-y-6 max-w-6xl mx-auto my-5"
 >
-    <form
-        class="space-y-4"
-        method="GET"
-        action="{{ route('services.index') }}"
-    >
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div>
-                <label class="block font-semibold mb-1">Cena (EUR)</label>
-                <div class="flex gap-2">
+    <form class="space-y-4" method="GET" action="{{ route('services.index') }}">
+        <div class="flex flex-col lg:flex-row lg:items-end gap-4">
+            <div class="flex flex-col lg:flex-row gap-2">
+                <div>
+                    <label class="block font-semibold mb-1">Cena (EUR)</label>
                     <input
                         type="number"
                         name="price_min"
@@ -18,6 +14,8 @@
                         class="w-full border border-orange-300 rounded p-2"
                         value="{{ request('price_min') }}"
                     />
+                </div>
+                <div class="flex items-end">
                     <input
                         type="number"
                         name="price_max"
@@ -29,7 +27,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="flex-1">
                 <label class="block font-semibold mb-1">Nosaukums</label>
                 <input
                     type="text"
@@ -39,15 +37,16 @@
                     placeholder="Pakalpojuma nosaukums"
                 />
             </div>
-        </div>
 
-        <div class="flex justify-between items-center">
-            <button
-                type="submit"
-                class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
-            >
-                Filtrēt
-            </button>
+            <div>
+                <label class="block font-semibold mb-1 invisible lg:visible">.</label>
+                <button
+                    type="submit"
+                    class="w-full bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
+                >
+                    Filtrēt
+                </button>
+            </div>
         </div>
     </form>
 </div>

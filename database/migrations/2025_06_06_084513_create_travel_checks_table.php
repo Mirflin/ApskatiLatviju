@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('travel_id')->references('id')->on('travel');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->string('code');
+            $table->integer('people_count');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -8,7 +8,7 @@
             </p>
             <p class="text-sm text-gray-500">
                 <strong>Datums:</strong>
-                {{ \Carbon\Carbon::parse($review->created_at)->format('d.m.Y H:i') }}
+                {{ \Carbon\Carbon::parse($review->updated_at)->format('d.m.Y H:i') }}
             </p>
         </div>
     @empty

@@ -1,6 +1,6 @@
 <div class="w-full bg-white text-black p-4 rounded-xl shadow-md space-y-6 max-w-6xl mx-auto my-5">
     <form class="space-y-4" method="GET" action="{{ route('travels.index') }}">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
             <div>
                 <label class="block font-semibold mb-1">Cena (EUR)</label>
                 <div class="flex gap-2">
@@ -23,7 +23,6 @@
                 </div>
             </div>
 
-            <!-- Sezons -->
             <div>
                 <label for="season" class="block font-semibold mb-1">Sezons</label>
                 <select
@@ -40,40 +39,39 @@
             </div>
 
             <!-- Laika termiņš -->
-            <div>
+            <div class="lg:col-span-2">
                 <label class="block font-semibold mb-1">Laika termiņš</label>
                 <div class="flex gap-2">
                     <input
                         type="date"
                         name="date_from"
-                        class="w-full border border-orange-300 rounded p-2"
+                        class="flex-1 border border-orange-300 rounded p-2"
                         value="{{ request('date_from') }}"
                     />
                     <input
                         type="date"
                         name="date_to"
-                        class="w-full border border-orange-300 rounded p-2"
+                        class="flex-1 border border-orange-300 rounded p-2"
                         value="{{ request('date_to') }}"
                     />
                 </div>
             </div>
-        </div>
 
-        <div class="flex justify-between items-center">
-            <button
-                type="submit"
-                class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
-            >
-                Filtrēt
-            </button>
-
-            <button
-                type="button"
-                id="toggleAdvanced"
-                class="hover:underline text-orange-500"
-            >
-                Vairāk opciju
-            </button>
+            <div class="flex gap-4 items-center justify-end lg:col-span-4">
+                <button
+                    type="button"
+                    id="toggleAdvanced"
+                    class="hover:underline text-orange-500"
+                >
+                    Vairāk opciju
+                </button>
+                <button
+                    type="submit"
+                    class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
+                >
+                    Filtrēt
+                </button>
+            </div>
         </div>
 
         <div id="advancedFilter" class="hidden mt-4 border-t pt-4">
@@ -89,7 +87,6 @@
                         value="{{ request('city') }}"
                     />
                 </div>
-
                 <div>
                     <label class="block font-semibold mb-1">Nosaukums</label>
                     <input
@@ -100,11 +97,8 @@
                         value="{{ request('name') }}"
                     />
                 </div>
-
                 <div>
-                    <label for="spot_count" class="block font-semibold mb-1">
-                        Brīvas vietas
-                    </label>
+                    <label for="spot_count" class="block font-semibold mb-1">Brīvas vietas</label>
                     <input
                         type="number"
                         name="spot_count"

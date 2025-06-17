@@ -1,3 +1,5 @@
+@section('title', $news->header)
+
 <x-layouts.public>
     <div class="max-w-6xl mx-auto p-6 flex-grow">
         <div class="bg-white rounded-lg shadow-md overflow-hidden p-6 flex flex-col lg:flex-row">

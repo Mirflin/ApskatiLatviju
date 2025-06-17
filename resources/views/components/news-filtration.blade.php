@@ -16,7 +16,7 @@
             </div>
             <div class="flex-1">
                 <label for="search" class="block font-semibold mb-1">
-                    Meklēt pēc nosaukuma
+                    Nosaukums
                 </label>
                 <input
                     type="text"
@@ -24,7 +24,7 @@
                     name="search"
                     class="w-full border border-orange-300 rounded p-2"
                     value="{{ request('search') }}"
-                    placeholder="Ziņas nosaukums"
+                    placeholder="Aktualitātes nosaukums"
                 />
             </div>
             <div>

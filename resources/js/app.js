@@ -4,12 +4,17 @@ import adminPanel from './components/adminPanel.vue';
 import dashboardStart from './components/dashboardStart.vue';
 
 import './modal.js';
+import './pagination.js';
 
-const app = createApp();
-app.component('admin-panel', adminPanel);
-app.component('dashboard-start', dashboardStart);
-app.mount('#app');
+const appElement = document.getElementById('app');
+if (appElement) {
+    const app = createApp();
+    app.component('admin-panel', adminPanel);
+    app.component('dashboard-start', dashboardStart);
+    app.mount('#app');
+}
 
+// nav header, small width = burger nav
 window.addEventListener('DOMContentLoaded', () => {
     const burger = document.querySelector('.burger');
     const btnList = document.querySelector('.btn-list');
@@ -40,34 +45,81 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // Open advanced filters
-document.getElementById('toggleAdvanced')?.addEventListener('click', () => {
-    const advanced = document.getElementById('advancedFilter');
-    if (advanced.classList.contains('hidden')) {
-        advanced.classList.remove('hidden');
-    } else {
-        advanced.classList.add('hidden');
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('toggleAdvanced');
+    const advancedFilter = document.getElementById('advancedFilter');
+    const filterForm = document.querySelector('form[method="GET"]');
+
+    if (!advancedFilter) return;
+
+    const savedState = localStorage.getItem('advancedFiltersOpen');
+    if (savedState === 'true') {
+        advancedFilter.classList.remove('hidden');
+    }
+
+    toggleBtn?.addEventListener('click', () => {
+        const isHidden = advancedFilter.classList.toggle('hidden');
+        localStorage.setItem('advancedFiltersOpen', !isHidden);
+
+        const toggleIcon = document.getElementById('toggleIcon');
+        toggleIcon?.classList.toggle('rotate-180');
+    });
+
+    filterForm?.addEventListener('submit', () => {
+        const advancedInputs = advancedFilter.querySelectorAll('input, select');
+        const hasValues = Array.from(advancedInputs).some(
+            (el) => el.value !== '' && el.name !== '_token',
+        );
+
+        localStorage.setItem('advancedFiltersOpen', hasValues);
+    });
+
+    const advancedInputs = advancedFilter.querySelectorAll('input, select');
+
+    // Automatically open if there are filled fields in additional filters
+    const hasAdvancedFilters = Array.from(advancedInputs).some(
+        (el) => el.value !== '' && el.name !== '_token',
+    );
+
+    if (hasAdvancedFilters) {
+        advancedFilter.classList.remove('hidden');
+        localStorage.setItem('advancedFiltersOpen', 'true');
+
+        const toggleIcon = document.getElementById('toggleIcon');
+        toggleIcon?.classList.add('rotate-180');
     }
 });
 
-// Footer content (open and close detailed info)
+// Contacts (open and close contact info)
 document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.contacts-list .contact-item');
 
-    items.forEach((item) => {
-        item.addEventListener('click', () => {
-            const extra = item.querySelector('.contact-extra');
+    items.forEach((item, index) => {
+        const extraClass = `contact-extra-${index + 1}`;
+        const extra = item.querySelector(`.${extraClass}`);
 
-            if (extra.style.maxHeight && extra.style.maxHeight !== '0px') {
-                extra.style.maxHeight = '0';
-            } else {
-                items.forEach((otherItem) => {
-                    if (otherItem !== item) {
-                        const otherExtra =
-                            otherItem.querySelector('.contact-extra');
-                        otherExtra.style.maxHeight = '0';
-                    }
-                });
-                extra.style.maxHeight = extra.scrollHeight + 'px';
+        const toggleContact = (e) => {
+            e.stopPropagation();
+            const isOpen =
+                extra.style.maxHeight && extra.style.maxHeight !== '0px';
+
+            items.forEach((otherItem, otherIndex) => {
+                const otherExtraClass = `contact-extra-${otherIndex + 1}`;
+                const otherExtra = otherItem.querySelector(
+                    `.${otherExtraClass}`,
+                );
+                otherExtra.style.maxHeight = '0px';
+            });
+
+            extra.style.maxHeight = isOpen ? '0px' : `${extra.scrollHeight}px`;
+        };
+
+        item.addEventListener('click', toggleContact);
+
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleContact(e);
             }
         });
     });

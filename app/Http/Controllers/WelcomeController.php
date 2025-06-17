@@ -21,13 +21,13 @@ class WelcomeController extends Controller
 
         if ($request->isMethod('post') && $check_code) {
             // Search in travel_checks
-            $travelCheck = travel_check::with('travel')
+            $travel_check = travel_check::with('travel')
                 ->where('code', $check_code)
                 ->whereNull('deleted_at')
                 ->first();
 
-            if ($travelCheck) {
-                $check = $travelCheck;
+            if ($travel_check) {
+                $check = $travel_check;
                 $type = 'travel';
             } else {
                 // Search in services_checks

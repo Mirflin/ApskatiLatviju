@@ -1,6 +1,34 @@
-<x-layouts.public class="travel-details-page header-margins min-h-screen flex flex-col">
+@section('title', $travel->name)
+
+@vite(['resources/js/modal.js'])
+
+<x-layouts.public
+    class="travel-details-page header-margins min-h-screen flex flex-col"
+>
     <div class="max-w-6xl mx-auto p-6 flex-grow">
-        <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row">
+        @if (session('success'))
+            <div
+                class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6"
+            >
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div
+                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6"
+            >
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <div
+            class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row"
+        >
             <div class="p-8 flex flex-col justify-between lg:w-1/2">
                 <div>
                     <h1 class="text-4xl font-bold mb-4 text-gray-800">
@@ -20,7 +48,7 @@
                         </li>
                         <li>
                             <strong>Derīguma termiņš:</strong>
-                            {{ $travel->formattedTimeTerm('d.m.Y H:i') }}
+                            {{ $travel->formattedTimeTerm() }}
                         </li>
                         <li>
                             <strong>Brīvas vietas:</strong>
@@ -28,7 +56,7 @@
                         </li>
                         <li>
                             <strong>Cena:</strong>
-                            {{ $travel->price }} €
+                            €{{ number_format($travel->price, 2) }}
                         </li>
                     </ul>
                 </div>
@@ -66,7 +94,7 @@
         class="travel-request-page header-margins min-h-screen flex flex-col bg-white text-gray-800"
     >
         <form
-            action="#"
+            action="{{ route('travel.request.store') }}"
             method="POST"
             class="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
@@ -80,9 +108,13 @@
                     type="text"
                     id="name"
                     name="name"
-                    class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    value="{{ old('name') }}"
+                    class="w-full border border-orange-300 rounded-md p-2"
                     required
                 />
+                @error('name')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
@@ -96,9 +128,13 @@
                     type="text"
                     id="surname"
                     name="surname"
-                    class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    value="{{ old('surname') }}"
+                    class="w-full border border-orange-300 rounded-md p-2"
                     required
                 />
+                @error('surname')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
@@ -109,9 +145,13 @@
                     type="email"
                     id="email"
                     name="email"
-                    class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    value="{{ old('email') }}"
+                    class="w-full border border-orange-300 rounded-md p-2"
                     required
                 />
+                @error('email')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
@@ -119,15 +159,21 @@
                     for="telephone"
                     class="block font-semibold text-orange-800"
                 >
-                    Tālruņa numurs
+                    Tālruņa numurs (+371)
                 </label>
                 <input
                     type="tel"
                     id="telephone"
                     name="telephone"
-                    class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    maxlength="8"
+                    minlength="8"
+                    value="{{ old('telephone') }}"
+                    class="w-full border border-orange-300 rounded-md p-2"
                     required
                 />
+                @error('telephone')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
@@ -141,12 +187,15 @@
                     type="number"
                     id="people-count"
                     name="people-count"
-                    class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    value="{{ old('people-count', 1) }}"
+                    class="w-full border border-orange-300 rounded-md p-2"
                     min="1"
                     max="50"
-                    value="1"
                     required
                 />
+                @error('people-count')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
@@ -159,20 +208,23 @@
                 <select
                     name="travel_id"
                     id="travel_id"
-                    class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    class="w-full border border-orange-300 rounded-md p-2"
                     required
                 >
                     <option value="">-- Lūdzu, izvēlies --</option>
                     @foreach ($allTravels as $option)
                         <option
                             value="{{ $option->id }}"
-                            @if($travel && $travel->id === $option->id) selected @endif
+                            @if($travel && $travel->id === $option->id || old('travel_id') == $option->id) selected @endif
                         >
                             {{ $option->name }}
                             ({{ $option->city }})
                         </option>
                     @endforeach
                 </select>
+                @error('travel_id')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="md:col-span-2">
@@ -187,8 +239,13 @@
                     id="comment"
                     cols="30"
                     rows="5"
-                    class="w-full border border-orange-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
-                ></textarea>
+                    class="w-full border border-orange-300 rounded-md p-2"
+                >
+{{ old('comment') }}</textarea
+                >
+                @error('comment')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="md:col-span-2 flex justify-end">

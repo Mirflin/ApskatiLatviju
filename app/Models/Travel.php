@@ -9,9 +9,9 @@ class Travel extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'travel'; // Указываем правильное имя таблицы
-    protected $dates = ['deleted_at', 'time_term'];
-    protected $fillable = ['group_id', 'name', 'road_marks', 'city', 'image', 'description', 'price', 'seazon_id', 'spot_count', 'time_term'];
+    protected $table = 'travel';
+    protected $dates = ['deleted_at'];
+    protected $fillable = ['name', 'road_marks', 'city', 'image', 'description', 'price', 'seazon_id', 'spot_count', 'time_term'];
 
     public function getImageUrlAttribute()
     {
@@ -23,11 +23,16 @@ class Travel extends Model
 
     public function formattedTimeTerm()
     {
-        return \Carbon\Carbon::parse($this->time_term)->format('d.m.Y');
+        return $this->time_term ? \Carbon\Carbon::parse($this->time_term)->timezone(config('app.timezone'))->format('Y-m-d') : '';
     }
 
     public function season()
     {
-        return $this->belongsTo(Season::class, 'seazon_id');
+        return $this->belongsTo(SeazonGroup::class, 'seazon_id');
+    }
+
+    public function checks()
+    {
+        return $this->hasMany(TravelCheck::class);
     }
 }

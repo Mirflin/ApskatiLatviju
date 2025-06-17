@@ -6,7 +6,9 @@
                 alt="Logo image"
                 class="logo-img"
             />
-            <span class="logo-text">Apskati Latviju!</span>
+            <span class="logo-text whitespace-nowrap">
+                Apskati Latviju!
+            </span>
         </a>
     </div>
     <button class="burger" aria-label="Toggle menu">
@@ -21,7 +23,7 @@
         </li>
         <li>
             <a
-                href="{{route('my.checks')}}"
+                href="{{ route('my.checks') }}"
                 class="{{ request()->is('my-checks*') ? 'active' : '' }}"
             >
                 <i class="fa-solid fa-meteor"></i>
@@ -30,7 +32,7 @@
         </li>
         <li>
             <a
-                href="{{route('news.index')}}"
+                href="{{ route('news.index') }}"
                 class="{{ request()->is('news*') ? 'active' : '' }}"
             >
                 <i class="fa-solid fa-fire"></i>
@@ -39,7 +41,7 @@
         </li>
         <li>
             <a
-                href="{{route('travels.index')}}"
+                href="{{ route('travels.index') }}"
                 class="{{ request()->is('travels*') ? 'active' : '' }}"
             >
                 <i class="fa-solid fa-car"></i>
@@ -48,7 +50,7 @@
         </li>
         <li>
             <a
-                href="{{route('services.index')}}"
+                href="{{ route('services.index') }}"
                 class="{{ request()->is('services*') ? 'active' : '' }}"
             >
                 <i class="fa-solid fa-bell-concierge"></i>
@@ -57,11 +59,11 @@
         </li>
         <li>
             <a
-                href="{{route('about')}}"
-                class="{{ request()->is('about*') ? 'active' : '' }}"
+                href="{{ route('contacts') }}"
+                class="{{ request()->is('contacts*') ? 'active' : '' }}"
             >
                 <i class="fa-solid fa-circle-info"></i>
-                Par mums
+                Kontakti
             </a>
         </li>
     </ul>

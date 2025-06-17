@@ -11,7 +11,7 @@ class travel_check extends Model
 
     protected $table = 'travel_checks';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['travel_id', 'client_id', 'code'];
+    protected $fillable = ['travel_id', 'client_id', 'code', 'people_count'];
 
     public function travel()
     {
