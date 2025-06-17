@@ -2,9 +2,9 @@
 
 <x-layouts.public>
     <div class="start-section radial-gradient-circle">
-        <div class="l-content roadmap">
+<div class="l-content roadmap lg:mx-20">
             <section
-                class="py-16 px-6 text-white"
+                class="py-16 text-white"
             >
                 <div
                     class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-center"
