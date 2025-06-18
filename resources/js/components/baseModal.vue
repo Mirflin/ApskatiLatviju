@@ -6,7 +6,7 @@
             @click="$emit('update:modelValue', false)"
         >
             <div
-                class="model-content bg-white text-black rounded-2xl p-8 max-w-md w-full shadow-xl relative animate-fade-in-up m-5 overflow-y-auto"
+                class="model-content bg-white text-black rounded-2xl p-8 max-w-2xl w-full shadow-xl relative m-4"
                 @click.stop
             >
                 <button
