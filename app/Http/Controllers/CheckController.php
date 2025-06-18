@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\travel_check;
-use App\Models\services_check;
+use App\Models\Travel_check;
+use App\Models\Services_check;
 use App\Models\Travel;
 use Illuminate\Support\Facades\Log;
 
@@ -26,14 +26,14 @@ class CheckController extends Controller
 
             if ($request->travel_id) {
                 Log::info('Searching travel check with code: ' . $request->check_code . ', travel_id: ' . $request->travel_id);
-                $checkExists = travel_check::where('code', $request->check_code)
+                $checkExists = Travel_check::where('code', $request->check_code)
                     ->where('travel_id', $request->travel_id)
                     ->whereNull('deleted_at')
                     ->exists();
                 if (!$checkExists) {
                     throw new \Exception('The selected check code is not found for travel_id: ' . $request->travel_id);
                 }
-                $check = travel_check::where('code', $request->check_code)
+                $check = Travel_check::where('code', $request->check_code)
                     ->where('travel_id', $request->travel_id)
                     ->whereNull('deleted_at')
                     ->firstOrFail();
@@ -44,14 +44,14 @@ class CheckController extends Controller
                 Log::info('Travel check canceled: ' . $request->check_code);
             } elseif ($request->service_id) {
                 Log::info('Searching service check with code: ' . $request->check_code . ', service_id: ' . $request->service_id);
-                $checkExists = services_check::where('code', $request->check_code)
+                $checkExists = Services_check::where('code', $request->check_code)
                     ->where('service_id', $request->service_id)
                     ->whereNull('deleted_at')
                     ->exists();
                 if (!$checkExists) {
                     throw new \Exception('The selected check code is not found for service_id: ' . $request->service_id);
                 }
-                $check = services_check::where('code', $request->check_code)
+                $check = Services_check::where('code', $request->check_code)
                     ->where('service_id', $request->service_id)
                     ->whereNull('deleted_at')
                     ->firstOrFail();

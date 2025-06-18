@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\services_check;
+use App\Models\Services_check;
 
 class Service extends Model
 {
@@ -18,6 +18,6 @@ class Service extends Model
 
     public function checks()
     {
-        return $this->hasMany(services_check::class);
+        return $this->hasMany(Services_check::class);
     }
 }

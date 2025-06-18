@@ -370,7 +370,7 @@ class apiController extends Controller
             $filename = uniqid() . '.' . $extension;
             Storage::disk('public')->put("news/{$filename}", base64_decode($data));
 
-            $validated['image'] = "storage/news/{$filename}";
+            $validated['image'] = "{$filename}";
         }
 
         news::create($validated);
@@ -391,7 +391,7 @@ class apiController extends Controller
             $filename = uniqid() . '.' . $extension;
             Storage::disk('public')->put("news/{$filename}", base64_decode($data));
 
-            $validated['image'] = "storage/news/{$filename}";
+            $validated['image'] = "{$filename}";
             $news->image = $validated['image'];
         }
 
@@ -422,9 +422,9 @@ class apiController extends Controller
             [$_, $extension] = explode('/', $type);
             $data = explode(',', $data)[1];
             $filename = uniqid() . '.' . $extension;
-            Storage::disk('public')->put("travel/{$filename}", base64_decode($data));
+            Storage::disk('public')->put("travels/{$filename}", base64_decode($data));
 
-            $validated['image'] = "storage/travel/{$filename}";
+            $validated['image'] = "{$filename}";
         }
 
         Travel::create($validated);
@@ -443,9 +443,9 @@ class apiController extends Controller
             [$_, $extension] = explode('/', $type);
             $data = explode(',', $data)[1];
             $filename = uniqid() . '.' . $extension;
-            Storage::disk('public')->put("travel/{$filename}", base64_decode($data));
+            Storage::disk('public')->put("travels/{$filename}", base64_decode($data));
 
-            $validated['image'] = "storage/travel/{$filename}";
+            $validated['image'] = "{$filename}";
             $travel->image = $validated['image'];
         }
 

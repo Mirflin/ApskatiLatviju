@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\services_check;
+use App\Models\Services_check;
 use App\Models\Service;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -16,7 +16,7 @@ class ServiceCheckConfirmation extends Mailable
     public $check;
     public $service;
 
-    public function __construct(services_check $check, Service $service)
+    public function __construct(Services_check $check, Service $service)
     {
         $this->check = $check;
         $this->service = $service;

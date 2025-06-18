@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Travel;
 use App\Models\Client;
-use App\Models\travel_check;
+use App\Models\Travel_check;
 use App\Models\Review;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
@@ -71,7 +71,7 @@ class TravelController extends Controller
         ]);
 
         try {
-            $check = travel_check::where('code', $request->code)
+            $check = Travel_check::where('code', $request->code)
                 ->where('travel_id', $travel_id)
                 ->whereNull('deleted_at')
                 ->firstOrFail();
@@ -182,10 +182,10 @@ class TravelController extends Controller
 
             do {
                 $code = Str::random(12);
-            } while (travel_check::where('code', $code)->exists());
+            } while (Travel_check::where('code', $code)->exists());
             Log::info('Check code generated: ' . $code);
 
-            $check = travel_check::create([
+            $check = Travel_check::create([
                 'travel_id' => $travel->id,
                 'client_id' => $client->id,
                 'code' => $code,

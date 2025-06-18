@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\travel_check;
-use App\Models\services_check;
+use App\Models\Travel_check;
+use App\Models\Services_check;
 
 class WelcomeController extends Controller
 {
@@ -21,7 +21,7 @@ class WelcomeController extends Controller
 
         if ($request->isMethod('post') && $check_code) {
             // Search in travel_checks
-            $travel_check = travel_check::with('travel')
+            $travel_check = Travel_check::with('travel')
                 ->where('code', $check_code)
                 ->whereNull('deleted_at')
                 ->first();
@@ -31,7 +31,7 @@ class WelcomeController extends Controller
                 $type = 'travel';
             } else {
                 // Search in services_checks
-                $serviceCheck = services_check::with('service')
+                $serviceCheck = Services_check::with('service')
                     ->where('code', $check_code)
                     ->whereNull('deleted_at')
                     ->first();

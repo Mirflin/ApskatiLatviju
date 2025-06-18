@@ -15,6 +15,6 @@
 
         public function travelChecks()
         {
-            return $this->hasMany(travel_check::class);
+            return $this->hasMany(Travel_check::class);
         }
     }

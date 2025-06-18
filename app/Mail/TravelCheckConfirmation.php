@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\travel_check;
+use App\Models\Travel_check;
 use App\Models\Travel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -15,7 +15,7 @@ class TravelCheckConfirmation extends Mailable
     public $check;
     public $travel;
 
-    public function __construct(travel_check $check, Travel $travel)
+    public function __construct(Travel_check $check, Travel $travel)
     {
         $this->check = $check;
         $this->travel = $travel;
