@@ -1,5 +1,5 @@
 <template>
-    <article class="main-panel">
+    <article class="main-panel" v-if="loaded">
         <div class="panel">
             <div class="panel-header">
                 <p>/ action-history</p>
@@ -10,20 +10,20 @@
                         class="header-button-panels flex items-center justify-between mb-4"
                     >
                         <h2 class="text-lg font-semibold text-gray-800">
-                            History
+                            Vēsture
                         </h2>
                     </div>
                     <universalTable
-                        :data="news"
+                        :data="data"
                         :columns="columns"
                         :perPage="10"
                         :searchableFields="['user','permission', 'status','action','created_at']"
-                        @edit="handleEdit"
-                        @delete="handleDelete"
+                        @view="handleView"
                     >
                         <template #tool="{ row }">
-                            <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button @click="$emit('delete', row)"><i class="fa-solid fa-trash"></i></button>
+                            <button @click="handleView(row)"><i class="fa-solid fa-eye"></i></button>
+                            <button v-if="row.status == 'Waiting approval' && isAdmin" @click="handleAprove(row)"><i class="fa-solid fa-thumbs-up fa-lg"></i></button>
+                            <button v-if="row.status == 'Waiting approval' && isAdmin" @click="handleCancel(row)"><i class="fa-solid fa-ban fa-lg"></i></button>
                         </template>
                     </universalTable>
 
@@ -34,32 +34,43 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import universalTable from './universalTable.vue'
 
-const showModal = ref(false);
+const columns = [
+  { label: 'Id', key: 'id' },
+  { label: 'User', key: 'user' },
+  { label: 'Permissions', key: 'permission' },
+  { label: 'Action', key: 'action' },
+  { label: 'Status', key: 'status' },
+  { label: 'Time', key: 'created_at' },
+]
+
+const data = ref([]);
+const loaded = ref(false);
+const isAdmin = ref(false);
+const user = ref();
+
+onMounted( async () => {
+    try{
+        const response = await axios.get('/api/get-history');
+        data.value = response.data;
+        user.value = (await axios.get('/api/get-current-user')).data;
+        if(user.value.permision_group == 1){
+            isAdmin.value = true
+        }
+    } catch(error){
+        console.log(error)
+    } finally {
+        loaded.value = true;
+    }
+});
 
 const form = ref({
     user: '',
     action: '',
     date: '',
 });
-
-const history = ref([
-    {
-        id: 1,
-        user: 'TestN1 TestSurN1',
-        action: 'Deleted item',
-        date: '2025-01-01',
-        status: 'Success',
-    },
-    {
-        id: 2,
-        user: 'TestN1 TestSurN2',
-        action: 'Edited item',
-        date: '2025-01-01',
-        status: 'Pending',
-    },
-]);
 
 const statusClass = (status) => {
     switch (status.toLowerCase()) {
@@ -138,37 +149,5 @@ const submitForm = () => {
 //             return 'text-gray-600 font-medium';
 //     }
 // };
-import universalTable from './universalTable.vue'
-
-const news = [
-  { id: 1, header: 'Alice', content: 'alice@example.com', created_at: "2025" },
-  { id: 2, header: 'Bob', content: 'bob@example.com' , created_at: "2025"},
-  { id: 3, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
-  { id: 4, header: 'David', content: 'david@example.com' , created_at: "2025"},
-  { id: 5, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
-  { id: 6, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
-  { id: 7, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
-  { id: 8, header: 'David', content: 'david@example.com' , created_at: "2025"},
-  { id: 9, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
-  { id: 10, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
-
-]
-
-const columns = [
-  { label: 'Id', key: 'id' },
-  { label: 'User', key: 'user' },
-  { label: 'Permissions', key: 'permission' },
-  { label: 'Action', key: 'action' },
-  { label: 'Status', key: 'status' },
-  { label: 'Time', key: 'created_at' },
-]
-
-function handleEdit(row) {
-  alert(`Edit ${row}`)
-}
-
-function handleDelete(row) {
-  alert(`Delete ${row}`)
-}
 
 </script>

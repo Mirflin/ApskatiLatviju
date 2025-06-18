@@ -10,15 +10,16 @@
                     >
                         <div>
                             <i class="fa-solid fa-gauge-high fa-xl"></i>
-                            <span>Dashboard</span>
+                            <span>Admin panelis</span>
                         </div>
                     </button>
 
+                    <!--
                     <div class="aside-group">
                         <div class="aside-option" @click="toggleGraphsOptions">
                             <div class="flex gap-2">
                                 <i class="fa-solid fa-chart-simple fa-xl"></i>
-                                <span>Graphs</span>
+                                <span>Grafiki</span>
                             </div>
                             <div>
                                 <i
@@ -34,23 +35,57 @@
                                 :class="{ active: active === 'travelT' }"
                                 class="child-option"
                             >
-                                <i
-                                    class="fa-solid fa-magnifying-glass-chart me-2"
-                                ></i>
-                                <span>Travel trends</span>
+                                <i class="fa-solid fa-location-dot fa-xl"></i>
+                                <span>Ceļojumi</span>
                             </button>
                             <button
                                 @click="setActive('serviceT')"
                                 :class="{ active: active === 'serviceT' }"
                                 class="child-option"
                             >
-                                <i
-                                    class="fa-solid fa-magnifying-glass-chart me-2"
-                                ></i>
-                                <span>Services trends</span>
+                                <i class="fa-solid fa-bell-concierge fa-xl"></i>
+                                <span>Pakalpojumi</span>
                             </button>
                         </div>
                     </div>
+                    -->
+
+                    <div class="aside-group">
+                        <div class="aside-option" @click="toggleRequestsOptions">
+                            <div class="flex gap-2">
+                                <i class="fa-solid fa-list fa-xl"></i>
+                                <span>Pieteikumi</span>
+                            </div>
+                            <div>
+                                <i
+                                    v-if="showRequestsOptions"
+                                    class="fa-solid fa-chevron-up"
+                                ></i>
+                                <i v-else class="fa-solid fa-chevron-down"></i>
+                            </div>
+                        </div>
+
+                        <div v-if="showRequestsOptions" class="child-options">
+                            <button
+                                @click="setActive('travelRequest')"
+                                :class="{ active: active === 'travelRequest' }"
+                                class="child-option"
+                            >
+                                <i class="fa-solid fa-location-dot fa-xl"></i>
+                                <span>Ceļojumi</span>
+                            </button>
+                            <button
+                                @click="setActive('serviceRequest')"
+                                :class="{ active: active === 'serviceRequest' }"
+                                class="child-option"
+                            >
+                                <i class="fa-solid fa-bell-concierge fa-xl"></i>
+                                <span>Pakalpojumi</span>
+                            </button>
+                        </div>
+                    </div>
+
+
 
                     <button
                         @click="setActive('news')"
@@ -59,7 +94,7 @@
                     >
                         <div>
                             <i class="fa-solid fa-fire fa-xl"></i>
-                            <span>News</span>
+                            <span>Aktualitātes</span>
                         </div>
                     </button>
 
@@ -70,7 +105,7 @@
                     >
                         <div>
                             <i class="fa-solid fa-car fa-xl"></i>
-                            <span>Travels</span>
+                            <span>Ceļojumi</span>
                         </div>
                     </button>
 
@@ -81,7 +116,7 @@
                     >
                         <div>
                             <i class="fa-solid fa-bell-concierge fa-xl"></i>
-                            <span>Services</span>
+                            <span>Pakalpojumi</span>
                         </div>
                     </button>
 
@@ -92,7 +127,7 @@
                     >
                         <div>
                             <i class="fa-solid fa-clock-rotate-left fa-xl"></i>
-                            <span>Actions history</span>
+                            <span>Vēsture</span>
                         </div>
                     </button>
 
@@ -103,16 +138,17 @@
                     >
                         <div>
                             <i class="fa-solid fa-user-doctor fa-xl"></i>
-                            <span>Users</span>
+                            <span>Lietotāji</span>
                         </div>
                     </button>
+
                 </div>
 
                 <div class="aside-footer">
                     <button @click="toggleTheme" class="theme-toggle">
-                        <i class="fa-solid fa-moon me-1" v-if="!isDark"></i>
+                        <i class="fa-solid fa-moon me-1" v-if="isDark"></i>
                         <i class="fa-solid fa-sun me-1" v-else></i>
-                        {{ isDark ? 'Dark' : 'Light' }} Mode
+                        {{ isDark ? 'Tumšais' : 'Gaišajs' }} Režims
                     </button>
                 </div>
             </aside>
@@ -155,6 +191,18 @@ const componentsMap = {
     serviceT: defineAsyncComponent(
         () => import('@/components/dashboardServiceTrend.vue'),
     ),
+    travelRequest: defineAsyncComponent(
+        () => import('@/components/travelsRequests.vue'),
+    ),
+    serviceRequest: defineAsyncComponent(
+        () => import('@/components/servicesRequests.vue'),
+    ),
+    helpRequest: defineAsyncComponent(
+        () => import('@/components/helpRequests.vue'),
+    ),
+    citi: defineAsyncComponent(
+        () => import('@/components/dashboardCiti.vue')
+    )
 };
 
 const currentComponent = computed(() => componentsMap[active.value] || null);
@@ -181,9 +229,14 @@ function setActive(name) {
 }
 
 const showGraphsOptions = ref(false);
+const showRequestsOptions = ref(false);
 
 function toggleGraphsOptions() {
     showGraphsOptions.value = !showGraphsOptions.value;
+}
+
+function toggleRequestsOptions(){
+    showRequestsOptions.value = !showRequestsOptions.value;
 }
 
 // dark/light theme switcher

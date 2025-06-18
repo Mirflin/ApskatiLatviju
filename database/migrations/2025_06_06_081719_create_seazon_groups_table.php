@@ -18,10 +18,11 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Seazon_group::create(['name' => 'summer']);
-        Seazon_group::create(['name' => 'autumn']);
-        Seazon_group::create(['name' => 'winter']);
-        Seazon_group::create(['name' => 'spring']);
+        Seazon_group::create(['name' => 'nav sezons']);
+        Seazon_group::create(['name' => 'Vasara']);
+        Seazon_group::create(['name' => 'Rudens']);
+        Seazon_group::create(['name' => 'Ziema']);
+        Seazon_group::create(['name' => 'Pavasāris']);
     }
 
     /**

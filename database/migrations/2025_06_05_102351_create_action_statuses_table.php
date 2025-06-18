@@ -23,6 +23,8 @@ return new class extends Migration
         Action_status::create(["name" => 'Pending']);
         Action_status::create(["name" => 'Failed']);
         Action_status::create(["name" => 'Unknown']);
+        Action_status::create(["name" => 'Active']);
+        Action_status::create(["name" => 'Suspended']);
     }
 
     /**

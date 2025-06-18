@@ -3,7 +3,7 @@
         <input
             type="text"
             v-model="searchQuery"
-            placeholder="Search..."
+            placeholder="Meklēt..."
             class="search-bar"
         />
 
@@ -14,7 +14,7 @@
                         <th v-for="col in columns" :key="col.key">
                             {{ col.label }}
                         </th>
-                        <th v-if="$slots.tool" class="text-center">Tools</th>
+                        <th v-if="$slots.tool" class="text-center">Instrumenti</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,20 +34,22 @@
                             }}
                         </td>
                         <td v-if="$slots.tool" class="text-center">
-                            <slot
-                                name="tool"
-                                :row="item"
-                                @edit="emitEdit(item)"
-                                @delete="emitDelete(item)"
-                            />
+                            <slot name="tool" :row="item" :onEdit="emitEdit" :onDelete="emitDelete" :onRestore="emitRestore" />
                         </td>
+                        <!--
+                        <td class="text-center">
+                            <button @click="$emit('view', item)"><i class="fa-solid fa-eye"></i></button>
+                            <button @click="$emit('edit', item)"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button @click="$emit('delete', item.id)"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                        -->
                     </tr>
                     <tr v-if="paginatedData.length === 0">
                         <td
                             :colspan="columns.length + ($slots.tool ? 1 : 0)"
                             class="text-center text-gray-400 py-6"
                         >
-                            No data found
+                            Nav atrasti dati
                         </td>
                     </tr>
                 </tbody>
@@ -55,10 +57,10 @@
         </div>
 
         <div class="pagination">
-            <button @click="prevPage" :disabled="page === 1">Prev</button>
-            <span>Page {{ page }} of {{ totalPages }}</span>
+            <button @click="prevPage" :disabled="page === 1">Atpakaļ</button>
+            <span>Lappa {{ page }} of {{ totalPages }}</span>
             <button @click="nextPage" :disabled="page === totalPages">
-                Next
+                Talāk
             </button>
         </div>
     </div>
@@ -83,7 +85,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['edit', 'delete']);
+const emit = defineEmits(['edit', 'delete','view', 'restore']);
 
 const page = ref(1);
 const searchQuery = ref('');
@@ -126,8 +128,10 @@ function emitEdit(item) {
 }
 
 function emitDelete(item) {
-    console.log('edit');
     emit('delete', item);
+}
+function emitRestore(item){
+    emit('restore', item)
 }
 
 watch(
@@ -137,3 +141,67 @@ watch(
     },
 );
 </script>
+
+<style scoped>
+.table-container{
+    background-color: var(--bg-aside);
+    color: #fff;
+}
+.text-center button{
+    margin-right: 0.5rem;
+}
+
+</style>
+<!-- <style scoped>
+.table-wrapper {
+  padding: 1rem;
+  font-family: sans-serif;
+}
+
+.alphabet-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.alphabet-filter button {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ccc;
+  background: #eee;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.alphabet-filter button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.table-container {
+  height: 28.35rem;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 31.25rem;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+th {
+  background-color: #f5f5f5;
+}
+
+</style> -->

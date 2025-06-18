@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('header',60);
             $table->text('paragraph');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -9,7 +9,7 @@ class Travel extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'travel';
+    // protected $table = 'travel';
     protected $dates = ['deleted_at'];
     protected $fillable = ['name', 'road_marks', 'city', 'image', 'description', 'price', 'seazon_id', 'spot_count', 'time_term'];
 

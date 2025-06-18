@@ -1,6 +1,6 @@
 <template>
     <article class="main-panel">
-        <div class="panel">
+        <div class="panel" v-if="loaded">
             <div class="panel-header">
                 <p>{{ "/ moderators" }}</p>
             </div>
@@ -11,29 +11,34 @@
                         class="header-button-panels flex items-center justify-between mb-4"
                     >
                         <h2 class="text-lg font-semibold text-gray-800">
-                            Users
+                            Lietotāji
                         </h2>
                         <button
                             @click="showModal = true"
+                            v-if="isAdmin"
                             class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
                         >
-                            Create new
+                            Jauns lietotājs
                         </button>
                     </div>
                     <universalTable
-                        :data="news"
+                        :data="data"
                         :columns="columns"
                         :perPage="10"
-                        :searchableFields="['name', 'email', 'permission']"
-                        @edit="handleEdit"
+                        :searchableFields="['name', 'email', 'permission','status','created_at']"
+                        @edit="editNews"
                         @delete="handleDelete"
+                        @restore="handleRestore"
                     >
-                        <template #tool="{ row }">
-                            <button @click="$emit('edit', row)">
-                                <i class="fa-solid fa-pen-to-square"></i>
+                        <template #tool="{ row }" v-if="isAdmin">
+                            <button @click="editNews(row)">
+                                <i class="fa-solid fa-pen-to-square fa-lg"></i>
                             </button>
-                            <button @click="$emit('delete', row)">
-                                <i class="fa-solid fa-trash"></i>
+                            <button v-if="user.id != row.id && row.status == 'Active'" @click="handleDelete(row)">
+                                <i class="fa-solid fa-trash fa-lg"></i>
+                            </button>
+                            <button v-if="user.id != row.id && row.status == 'Suspended'" @click="handleRestore(row)">
+                                <i class="fa-solid fa-window-restore fa-lg"></i>
                             </button>
                         </template>
                     </universalTable>
@@ -41,61 +46,57 @@
             </div>
             <baseModal
                 v-model="showModal"
-                title="Add / Edit User"
+                title="Jauns / Mainit Lietotāju"
+                v-if="isAdmin"
                 @cancel="cancelModal"
                 @save="saveUser"
             >
                 <form @submit.prevent="saveUser" class="space-y-4">
                     <div>
-                        <label class="block text-gray-700 mb-1">User</label>
+                        <label class="block text-gray-700 mb-1">Lietotājs</label>
                         <input
-                            v-model="form.user"
+                            v-model="form.name"
                             type="text"
                             required
                             class="w-full border border-gray-300 rounded px-3 py-2"
-                            placeholder="Enter user name"
+                            placeholder="Ievadi lietotājvardu"
                         />
                     </div>
 
                     <div>
-                        <label class="block text-gray-700 mb-1">Email</label>
+                        <label class="block text-gray-700 mb-1">E-pasts</label>
                         <input
                             v-model="form.email"
                             type="email"
                             required
                             class="w-full border border-gray-300 rounded px-3 py-2"
-                            placeholder="Enter email"
+                            placeholder="Ievadi e-pastu"
                         />
                     </div>
 
                     <div>
-                        <label class="block text-gray-700 mb-1"
-                            >Permissions</label
+                        <label v-if="isAdmin" class="block text-gray-700 mb-1"
+                            >Atļaujas</label
                         >
                         <select
-                            v-model="form.permissions"
+                            v-model="form.permission"
+                            v-if="isAdmin"
                             class="w-full border border-gray-300 rounded px-3 py-2"
                             required
                         >
-                            <option value="" disabled>Select permission</option>
-                            <option>Moderator</option>
-                            <option>Administrator</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-gray-700 mb-1">Status</label>
-                        <select
-                            v-model="form.status"
-                            class="w-full border border-gray-300 rounded px-3 py-2"
-                            required
-                        >
-                            <option value="" disabled>Select status</option>
-                            <option>Active</option>
-                            <option>Inactive</option>
+                            <option value="" disabled>Izvele atļaujas</option>
+                            <option value="2">Moderators</option>
+                            <option value="1">Administrators</option>
                         </select>
                     </div>
                 </form>
+            </baseModal>
+            <baseModal
+                title="Parols"
+                v-model="showPasswordModal"
+            >
+                <h1>Jauno lietotāju parols: </h1>
+                <p>{{ newPassword }}</p>
             </baseModal>
         </div>
     </article>
@@ -103,49 +104,51 @@
 
 <script setup>
 import universalTable from './universalTable.vue';
-
-import { ref } from 'vue';
 import baseModal from './baseModal.vue';
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
 
 const showModal = ref(false);
+const showPasswordModal = ref(false);
 
-const users = ref([
-    {
-        id: 1,
-        user: 'Test Moder',
-        email: 'tmoder@gmail.com',
-        permissions: 'Moderator',
-        status: 'Active',
-    },
-    {
-        id: 2,
-        user: 'Test Admin',
-        email: 'tadmin@gmail.com',
-        permissions: 'Administrator',
-        status: 'Active',
-    },
-]);
 
-const form = ref({
-    user: '',
-    email: '',
-    permissions: '',
-    status: '',
+const data = ref([]);
+const loaded = ref(false);
+const user = ref();
+const isAdmin = ref(false);
+const newPassword = ref();
+
+async function fetchdata(){
+    try{
+        const response = await axios.get('/api/user-list');
+        data.value = response.data;
+        data.value.forEach(element => {
+            element.created_at = (new Date(element.created_at)).toLocaleString();
+        });
+        user.value = (await axios.get('/api/get-current-user')).data;
+        if(user.value.permision_group == 1){
+            isAdmin.value = true
+        }
+    } catch(error){
+        console.log(error)
+    } finally {
+        loaded.value = true;
+    }
+}
+
+onMounted( async () => {
+    fetchdata()
 });
 
-const statusClass = (status) => {
-    switch (status.toLowerCase()) {
-        case 'active':
-            return 'text-green-600 font-medium';
-        case 'inactive':
-            return 'text-gray-600 font-medium';
-        default:
-            return 'text-gray-600 font-medium';
-    }
-};
+
+const form = ref({
+    name: '',
+    email: '',
+    permission: '',
+});
 
 const resetForm = () => {
-    form.value = { user: '', email: '', permissions: '', status: '' };
+    form.value = { name: '', email: '', permission: ''};
 };
 
 const cancelModal = () => {
@@ -153,79 +156,49 @@ const cancelModal = () => {
     showModal.value = false;
 };
 
-const saveUser = () => {
-    users.value.push({
-        id: users.value.length + 1,
-        user: form.value.user,
-        email: form.value.email,
-        permissions: form.value.permissions,
-        status: form.value.status,
-    });
+const saveUser = async () => {
+    if(form.value.name && form.value.email && form.value.permission){
+        let newData = {
+            name: form.value.name,
+            email: form.value.email,
+            permision_group: parseInt(form.value.permission),
+        };
 
-    resetForm();
-    showModal.value = false;
+        let response = await axios.post('/api/create-new-user', newData);
+        showModal.value = false;
+        let message = response.data.message;
+        if(message != 'redacted'){
+            newPassword.value = response.data.message;
+            showPasswordModal.value = true;
+        }
+        resetForm();
+        showModal.value = false;
+        fetchdata()
+    }
 };
-
-const news = [
-    {
-        id: 1,
-        header: 'Alice',
-        content: 'alice@example.com',
-        created_at: '2025',
-    },
-    { id: 2, header: 'Bob', content: 'bob@example.com', created_at: '2025' },
-    {
-        id: 3,
-        header: 'Charlie',
-        content: 'charlie@example.com',
-        created_at: '2024',
-    },
-    {
-        id: 4,
-        header: 'David',
-        content: 'david@example.com',
-        created_at: '2025',
-    },
-    { id: 5, header: 'Fve', content: 'eve@example.com', created_at: '2025' },
-    {
-        id: 6,
-        header: 'Frank',
-        content: 'frank@example.com',
-        created_at: '2025',
-    },
-    {
-        id: 7,
-        header: 'Charlie',
-        content: 'charlie@example.com',
-        created_at: '2024',
-    },
-    {
-        id: 8,
-        header: 'David',
-        content: 'david@example.com',
-        created_at: '2025',
-    },
-    { id: 9, header: 'Fve', content: 'eve@example.com', created_at: '2025' },
-    {
-        id: 10,
-        header: 'Frank',
-        content: 'frank@example.com',
-        created_at: '2025',
-    },
-];
 
 const columns = [
     { label: 'Id', key: 'id' },
-    { label: 'Name', key: 'name' },
-    { label: 'Email', key: 'email' },
-    { label: 'Permissions', key: 'permission' },
+    { label: 'Vārds', key: 'name' },
+    { label: 'E-pasts', key: 'email' },
+    { label: 'Atļaujas', key: 'permission' },
+    { label: 'Status', key: 'status' },
+    { label: 'Uztaisīts', key: 'created_at' },
 ];
 
-function handleEdit(row) {
-    alert(`Edit ${row}`);
-}
+const editNews = (newsItem) => {
+    form.value = { ...newsItem };
+    showModal.value = true;
+};
 
-function handleDelete(row) {
-    alert(`Delete ${row}`);
+async function handleDelete(item) {
+    await axios.post('/api/delete-user', {id: item.id});
+    cancelModal();
+    fetchdata();
+}
+async function handleRestore(item){
+    await axios.post('/api/restore-user', {id: item.id});
+    cancelModal();
+    fetchdata();
 }
 </script>

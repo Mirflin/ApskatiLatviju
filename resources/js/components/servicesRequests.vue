@@ -1,5 +1,5 @@
 <template>
-    <article class="main-panel">
+    <article class="main-panel" v-if="loaded">
         <div class="panel">
             <div class="panel-header">
                 <p>/ service-request</p>
@@ -10,14 +10,16 @@
                         <h2 class="text-lg font-semibold text-gray-800">Pakalpojumu pieteikumi</h2>
                     </div>
                     <universalTable
-                        :data="travels2"
+                        :data="data"
                         :columns="columns"
                         :perPage="10"
                         :searchableFields="['name', 'city','spot_count','group','seazon','price','time_term']"
-                        @edit="handleEdit"
                         @delete="handleDelete"
                     >
                         <template #tool="{ row }">
+                            <button @click="handleDelete(row)">
+                                <i class="fa-solid fa-trash fa-lg"></i>
+                            </button>
                         </template>
                     </universalTable>
                 </div>
@@ -46,41 +48,43 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import universalTable from './universalTable.vue'
 import baseViewModal from './baseViewModal.vue';
+import axios from 'axios';
 
-const travels2 = [
-  { id: 1, header: 'Alice', content: 'alice@example.com', created_at: "2025" },
-  { id: 2, header: 'Bob', content: 'bob@example.com' , created_at: "2025"},
-  { id: 3, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
-  { id: 4, header: 'David', content: 'david@example.com' , created_at: "2025"},
-  { id: 5, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
-  { id: 6, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
-  { id: 7, header: 'Charlie', content: 'charlie@example.com' , created_at: "2024"},
-  { id: 8, header: 'David', content: 'david@example.com' , created_at: "2025"},
-  { id: 9, header: 'Fve', content: 'eve@example.com' , created_at: "2025"},
-  { id: 10, header: 'Frank', content: 'frank@example.com' , created_at: "2025"},
-
-]
+const data = ref([]);
+const loaded = ref(false);
 
 const columns = [
   { label: 'Id', key: 'id' },
-  { label: 'Name', key: 'name' },
-  { label: 'Description', key: 'description' },
-  { label: 'Price', key: 'price' },
-  { label: 'Client name', key: 'client_name' },
-  { label: 'Client email', key: 'client_email' },
-  { label: 'Code', key: 'code' },
-  { label: 'Created at', key: 'created_at' },
+  { label: 'Nosaukums', key: 'name' },
+  { label: 'Apraksts', key: 'description' },
+  { label: 'Cēna', key: 'price' },
+  { label: 'Klienta vārds', key: 'client_name' },
+  { label: 'Klienta e-pasts', key: 'client_email' },
+  { label: 'Kods', key: 'code' },
+  { label: 'Uztaisīts', key: 'created_at' },
 ]
 
-function handleEdit(row) {
-  alert(`Edit ${row}`)
+async function fetchdata(){
+    try{
+        const response = await axios.get('/api/get-service-requests');
+        data.value = response.data;
+    } catch(error){
+        console.log(error)
+    } finally {
+        loaded.value = true;
+    }
 }
 
-function handleDelete(row) {
-  alert(`Delete ${row}`)
+onMounted( async () => {
+    fetchdata();
+});
+
+async function handleDelete(row) {
+  await axios.post('/api/delete-service-request', {id: row.id});
+  fetchdata();
 }
 
 </script>
