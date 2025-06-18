@@ -31,12 +31,24 @@ class apiController extends Controller
             $exists_service->description = $validated['description'];
             $exists_service->price = $validated['price'];
             $exists_service->save();
+
+            Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Mainits pakalpojums ".$validated['name'],
+                "status_id" => 2
+            ]);
+
             return response()->json([
                 'message' => 'Redacted!',
             ], 201);
         }else{
             try {
                 Service::create($validated);
+                Action_history::create([
+                    "user_id" => Auth::user()->id,
+                    "action" => "Uztaisīts jauns pakalpojums ".$validated['name'],
+                    "status_id" => 2
+                ]);
                 return response()->json([
                     'message' => 'Success!',
                 ], 201);
@@ -56,6 +68,13 @@ class apiController extends Controller
         }
         Services_check::where('service_id', $validated['id'])->delete();
         $service->delete();
+
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Dzests pakalpojums ".$service->name,
+            "status_id" => 2
+        ]);
+
         return response()->json(['message' => 'Deleted Successfully!'], 200);
     }
 
@@ -76,6 +95,11 @@ class apiController extends Controller
                 "time_term" => $validated['time_term']
             ];
             Travel::create($travel);
+            Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Uztaisīts jauns ceļojums ".$validated['name'],
+                "status_id" => 2
+            ]);
             return response()->json([
                 'message' => "Success!",
             ],201);
@@ -109,6 +133,13 @@ class apiController extends Controller
                 "image" => $validated['image']
             ];
             News::create($news);
+
+            Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Uztaisīta jauna zīņa ".$validated['header'],
+                "status_id" => 2
+            ]);
+
             return response()->json([
                 'message' => "Success!",
             ],201);
@@ -130,6 +161,11 @@ class apiController extends Controller
             $exists_user->name = $validated['name'];
             $exists_user->permision_group = $validated['permision_group'];
             $exists_user->save();
+            Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Mainits lietotājs ".$exists_user->name,
+                "status_id" => 2
+            ]);
             return response()->json(['message' => 'redacted'], 200);
         }else{
             $user = [
@@ -138,6 +174,11 @@ class apiController extends Controller
                 'password' => Hash::make($password),
                 'permision_group' => $validated['permision_group']
             ];
+            Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Uztaisīts lietotājs ".$user->name,
+                "status_id" => 2
+            ]);
             User::create($user);
             return response()->json(['message' => $password], 201);
         }
@@ -149,6 +190,11 @@ class apiController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
         Action_history::where('user_id', $validated['id'])->delete();
+        Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Dzests lietotājs ".$user->name,
+                "status_id" => 2
+        ]);
         $user->status_id = 7;
         $user->save();
         $user->delete();
@@ -160,6 +206,11 @@ class apiController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Atjaunots lietotājs ".$exists_user->name,
+            "status_id" => 2
+        ]);
         $user->status_id = 6;
         $user->save();
         $user->restore();
@@ -174,6 +225,11 @@ class apiController extends Controller
                 "client_id" => $validated['client_id'],
                 "code" => '12345'
             ];
+            Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Uztaisits ceļojuma čeks  ".$check->code,
+                "status_id" => 2
+            ]);
             travel_check::create($check);
             return response()->json([
                 'message' => "Success!",
@@ -372,6 +428,11 @@ class apiController extends Controller
 
             $validated['image'] = "{$filename}";
         }
+        Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Uztaisita jauna zīņa ".$validated['header'],
+                "status_id" => 2
+        ]);
 
         news::create($validated);
 
@@ -394,7 +455,11 @@ class apiController extends Controller
             $validated['image'] = "{$filename}";
             $news->image = $validated['image'];
         }
-
+        Action_history::create([
+                "user_id" => Auth::user()->id,
+                "action" => "Mainita ziņa ".$news->header,
+                "status_id" => 2
+        ]);
         $news->header = $validated['header'];
         $news->paragraph = $validated['paragraph'];
         $news->save();
@@ -408,7 +473,11 @@ class apiController extends Controller
 
         $news = news::find($validated['id']);
         $news->delete();
-
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Dzesta zīņa ".$news->header,
+            "status_id" => 2
+        ]);
         return response()->json([
             'message' => "Deleted!",
         ],200);
@@ -426,6 +495,12 @@ class apiController extends Controller
 
             $validated['image'] = "{$filename}";
         }
+
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Uztaisits jauns ceļojums ".$validated['name'],
+            "status_id" => 2
+        ]);
 
         Travel::create($validated);
 
@@ -448,6 +523,12 @@ class apiController extends Controller
             $validated['image'] = "{$filename}";
             $travel->image = $validated['image'];
         }
+
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Mainits ceļojums ".$travel->name,
+            "status_id" => 2
+        ]);
 
         $travel->name = $validated['name'];
         $travel->city = $validated['city'];
@@ -477,6 +558,12 @@ class apiController extends Controller
         $travel->save();
         $travel->delete();
 
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Dzests ceļojums ".$travel->name,
+            "status_id" => 2
+        ]);
+
         return response()->json([
             'message' => "Deleted!",
         ],201);
@@ -487,6 +574,11 @@ class apiController extends Controller
         $travel->status_id = 6;
         $travel->restore();
         $travel->save();
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Atjaunots ceļojums ".$travel->name,
+            "status_id" => 2
+        ]);
         return response()->json([
             'message' => "Restored!",
         ],201);
@@ -496,6 +588,11 @@ class apiController extends Controller
         $validated = $request->only('id');
         $request = Travel_check::find($validated['id']);
         $request->delete();
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Dzests ceļojuma čeks ".$request->code,
+            "status_id" => 2
+        ]);
         return response()->json([
             'message' => "Deleted!",
         ],200);
@@ -504,6 +601,11 @@ class apiController extends Controller
         $validated = $request->only('id');
         $request = Service_check::find($validated['id']);
         $request->delete();
+        Action_history::create([
+            "user_id" => Auth::user()->id,
+            "action" => "Dzests pakalpojuma čeks ".$request->code,
+            "status_id" => 2
+        ]);
         return response()->json([
             'message' => "Deleted!",
         ],200);

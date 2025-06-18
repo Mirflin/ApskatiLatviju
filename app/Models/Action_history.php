@@ -8,11 +8,11 @@ use App\Models\User;
 
 class Action_history extends Model
 {
-    // protected $fillable = [
-    //     'user_id',
-    //     'action',
-    //     'status_id',
-    // ];
+     protected $fillable = [
+         'user_id',
+         'action',
+         'status_id',
+     ];
 
     // public function user(): BelongsTo
     // {
