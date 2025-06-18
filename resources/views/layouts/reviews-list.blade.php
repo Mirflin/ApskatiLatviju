@@ -1,6 +1,6 @@
-<div class="mt-10">
+<div id="reviews-container" class="mt-10">
     @forelse ($reviews as $review)
-        <div class="border-b border-gray-200 py-4">
+        <div class="review-item border-b border-gray-200 py-4">
             <p class="text-gray-700 mb-2">{{ $review->review }}</p>
             <p class="text-sm text-gray-500">
                 <strong>Autors:</strong>

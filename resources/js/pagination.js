@@ -7,6 +7,7 @@ class Paginator {
         this.nextBtnSelector = options.nextBtnSelector || '#next-page';
         this.currentPageSelector = options.currentPageSelector || '#current-page';
         this.paginationContainerSelector = options.paginationContainerSelector || '#js-pagination';
+        this.disableScroll = options.disableScroll || false;
         
         this.currentPage = 1;
         this.items = [];
@@ -92,7 +93,9 @@ class Paginator {
             this.currentPage--;
             this.showPage(this.currentPage);
             this.updatePagination();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (!this.disableScroll) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
     }
     
@@ -101,12 +104,13 @@ class Paginator {
             this.currentPage++;
             this.showPage(this.currentPage);
             this.updatePagination();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (!this.disableScroll) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
     }
 }
 
-// Initialize pagination on different pages
 document.addEventListener('DOMContentLoaded', function() {
     // For travels page
     if (document.querySelector('#travels-container')) {
@@ -129,6 +133,20 @@ document.addEventListener('DOMContentLoaded', function() {
         new Paginator({
             containerSelector: '#services-container',
             itemSelector: '.services-item'
+        });
+    }
+
+    // For reviews/comments page
+    if (document.querySelector('#reviews-container')) {
+        new Paginator({
+            containerSelector: '#reviews-container',
+            itemSelector: '.review-item',
+            itemsPerPage: 5,
+            prevBtnSelector: '#prev-page',
+            nextBtnSelector: '#next-page',
+            currentPageSelector: '#current-page',
+            paginationContainerSelector: '#js-pagination',
+            disableScroll: true
         });
     }
     

@@ -128,7 +128,7 @@
                     for="telephone"
                     class="block font-semibold text-orange-800"
                 >
-                    Tālrunis
+                    Tālruņa numurs (+371)
                 </label>
                 <input
                     type="tel"
