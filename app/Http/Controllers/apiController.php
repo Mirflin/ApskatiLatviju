@@ -10,7 +10,7 @@ use App\Models\Service;
 use App\Models\Travel;
 use App\Models\Travel_group;
 use App\Models\Seazon_group;
-use App\Models\news;
+use App\Models\News;
 use App\Models\User;
 use App\Models\Travel_check;
 use App\Models\Services_check;
@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserConfirmation;
+use Illuminate\Support\Facades\Log;
+
 
 class apiController extends Controller
 {
@@ -118,30 +122,43 @@ class apiController extends Controller
         ],301);
     }
 
-    public function createNewUser(Request $request){
-        $validated = $request->only('name','email','permision_group');
-        $password = rand(10000,100000);
-        $exists_user = User::where('name', $validated['name'])
-                   ->orWhere('email', $validated['email'])
-                   ->first();
+    public function createNewUser(Request $request)
+    {
+        $validated = $request->only('name', 'email', 'permision_group');
+        $password = rand(10000, 100000);
 
-        if($exists_user){
+        $exists_user = User::where('name', $validated['name'])
+            ->orWhere('email', $validated['email'])
+            ->withTrashed()
+            ->first();
+
+        if ($exists_user) {
             $exists_user->email = $validated['email'];
             $exists_user->name = $validated['name'];
             $exists_user->permision_group = $validated['permision_group'];
             $exists_user->save();
             return response()->json(['message' => 'redacted'], 200);
-        }else{
-            $user = [
+        } else {
+            $user = User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'password' => Hash::make($password),
-                'permision_group' => $validated['permision_group']
-            ];
-            User::create($user);
+                'permision_group' => $validated['permision_group'],
+                'status_id' => 1,
+            ]);
+
+            try {
+                Mail::to($user->email)->send(new UserConfirmation($user, $password));
+                Log::info('Email sent successfully to: ' . $user->email . ', Password: ' . $password);
+            } catch (\Exception $e) {
+                Log::error('Failed to send email to ' . $user->email . ': ' . $e->getMessage());
+                return response()->json(['message' => 'User created, but email failed: ' . $e->getMessage()], 500);
+            }
+
             return response()->json(['message' => $password], 201);
         }
     }
+
     public function deleteUser(Request $request){
         $validated = $request->only('id');
         $user = User::where('id', $validated['id'])->first();
