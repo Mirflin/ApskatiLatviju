@@ -34,7 +34,7 @@
                             <button @click="editNews(row)">
                                 <i class="fa-solid fa-pen-to-square fa-lg"></i>
                             </button>
-                            <button v-if="user.id != row.id && row.status == 'Active'" @click="handleDelete(row)">
+                            <button v-if="user.id != row.id && row.status != 'Suspended'" @click="handleDelete(row)">
                                 <i class="fa-solid fa-trash fa-lg"></i>
                             </button>
                             <button v-if="user.id != row.id && row.status == 'Suspended'" @click="handleRestore(row)">
@@ -169,7 +169,6 @@ const saveUser = async () => {
         let message = response.data.message;
         if(message != 'redacted'){
             newPassword.value = response.data.message;
-            showPasswordModal.value = true;
         }
         resetForm();
         showModal.value = false;

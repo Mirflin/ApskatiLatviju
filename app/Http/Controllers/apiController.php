@@ -38,7 +38,7 @@ class apiController extends Controller
 
             Action_history::create([
                 "user_id" => Auth::user()->id,
-                "action" => "Mainits pakalpojums ".$validated['name'],
+                "action" => "Mainits pakalpojums ".$exists_service->name,
                 "status_id" => 2
             ]);
 
@@ -180,7 +180,7 @@ class apiController extends Controller
                 'email' => $validated['email'],
                 'password' => Hash::make($password),
                 'permision_group' => $validated['permision_group'],
-                'status_id' => 1,
+                'status_id' => 3,
             ]);
 
             try {
@@ -220,7 +220,7 @@ class apiController extends Controller
         }
         Action_history::create([
             "user_id" => Auth::user()->id,
-            "action" => "Atjaunots lietotājs ".$exists_user->name,
+            "action" => "Atjaunots lietotājs ".$user->name,
             "status_id" => 2
         ]);
         $user->status_id = 6;
