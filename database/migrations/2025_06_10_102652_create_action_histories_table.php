@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('action');
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')->references('id')->on('action_statuses');
+            $table->json('payload')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

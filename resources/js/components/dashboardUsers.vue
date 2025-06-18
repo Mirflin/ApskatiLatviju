@@ -1,5 +1,5 @@
 <template>
-  <article class="main-panel">
+  <article class="main-panel" v-if="loaded">
     <div class="panel">
       <div class="panel-header">
         <p>{{ $breadcrumb }}</p>
@@ -16,55 +16,19 @@
               Create new
             </button>
           </div>
-
-          <div class="overflow-x-auto">
-            <table class="custom-table min-w-full text-sm text-left text-gray-700">
-              <thead>
-                <tr>
-                  <th class="px-4 py-3 rounded-tl-xl">#</th>
-                  <th class="px-4 py-3">User</th>
-                  <th class="px-4 py-3">Email</th>
-                  <th class="px-4 py-3">Permissions</th>
-                  <th class="px-4 py-3">Status</th>
-                  <th class="px-4 py-3 rounded-tr-xl text-center">Tools</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="us in users"
-                  :key="us.id"
-                  class="hover:bg-[#f5f6f8]"
-                >
-                  <td class="px-4 py-2">{{ us.id }}</td>
-                  <td class="px-4 py-2">{{ us.user }}</td>
-                  <td class="px-4 py-2">{{ us.email }}</td>
-                  <td class="px-4 py-2">{{ us.permissions }}</td>
-                  <td class="px-4 py-2">
-                    <span :class="statusClass(us.status)">{{ us.status }}</span>
-                  </td>
-                  <td class="px-4 py-2 text-center">
-                    <button
-                      class="text-blue-500 hover:text-blue-700 mr-2"
-                      title="Edit"
-                    >
-                      <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button
-                      class="text-red-500 hover:text-red-700"
-                      title="Delete"
-                    >
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="users.length === 0">
-                  <td colspan="6" class="px-4 py-6 text-center text-gray-400">
-                    No users found.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <universalTable
+                :data="data"
+                :columns="columns"
+                :perPage="10"
+                :searchableFields="['user','permission', 'status','action','created_at']"
+                @edit="handleEdit"
+                @delete="handleDelete"
+            >
+                <template #tool="{ row }">
+                    <button @click="$emit('edit', row)"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                    <button @click="$emit('delete', row)"><i class="fa-solid fa-trash fa-xl"></i></button>
+                </template>
+            </universalTable>
         </div>
       </div>
 
@@ -154,6 +118,17 @@ import baseModal from './baseModal.vue';
 import baseViewModal from './baseViewModal.vue';
 
 const showModal = ref(false);
+
+const columns = [
+  { label: 'Id', key: 'id' },
+  { label: 'Vārds', key: 'user' },
+  { label: 'E-pasts', key: 'permission' },
+  { label: 'Atļaujas', key: 'action' },
+  { label: 'Status', key: 'status' },
+]
+
+const data = ref([]);
+const loaded = ref(false);
 
 const users = ref([
     {

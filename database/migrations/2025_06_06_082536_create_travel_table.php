@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('travel', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('group_id')->default(1);
             $table->foreign('group_id')->references('id')->on('travel_groups')->nullable();
             $table->string('name');
             $table->string('road_marks');
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->foreign('seazon_id')->references('id')->on('seazon_groups');
             $table->integer('spot_count')->nullable();
             $table->dateTime('time_term');
+            $table->unsignedBigInteger('status_id')->default(6);
+            $table->foreign('status_id')->references('id')->on('action_statuses');
             $table->timestamps();
             $table->softDeletes();
         });

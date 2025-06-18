@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -15,17 +16,24 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->unsignedBigInteger('permision_group')->default(2);
             $table->foreign('permision_group')->references('id')->on('permision_groups');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('status_id')->default(6);
             $table->foreign('status_id')->references('id')->on('action_statuses');
             $table->timestamps();
             $table->softDeletes();
         });
+
+        User::create([
+            "name" => "admin",
+            "email" => "admin@gmail.com",
+            "password" => Hash::make('12345'),
+            "permision_group" => 1,
+        ]);
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

@@ -49,6 +49,15 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        $user = Auth::user();
+        if ($user->status_id !== 6) {
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'Jūsu lietotājs ir neaktīvs!',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 

@@ -1,12 +1,10 @@
 import './bootstrap';
 
 import { createApp } from 'vue';
-//import  universalTable from "./components/universalTable.vue";
 import adminPanel from "./components/adminPanel.vue";
 import dashboardStart from "./components/dashboardStart.vue";
 
 const app = createApp()
-//app.component('universal-table', universalTable)
 app.component('admin-panel', adminPanel)
 app.component('dashboard-start', dashboardStart)
 app.mount('#app');

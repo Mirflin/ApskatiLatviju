@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class News extends Model
 {
+    protected $fillable = ['header', 'paragraph', 'image'];
     public function getImageUrlAttribute()
     {
         $path = 'news/' . $this->image;

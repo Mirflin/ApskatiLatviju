@@ -85,7 +85,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <button
                         @click="setActive('news')"
@@ -142,24 +142,13 @@
                         </div>
                     </button>
 
-                    <button
-                        @click="setActive('citi')"
-                        :class="{ active: active === 'citi' }"
-                        class="aside-option"
-                    >
-                        <div>
-                            <i class="fa-solid fa-gears fa-xl"></i>
-                            <span>Citi</span>
-                        </div>
-                    </button>
-
                 </div>
 
                 <div class="aside-footer">
                     <button @click="toggleTheme" class="theme-toggle">
-                        <i class="fa-solid fa-moon me-1" v-if="!isDark"></i>
+                        <i class="fa-solid fa-moon me-1" v-if="isDark"></i>
                         <i class="fa-solid fa-sun me-1" v-else></i>
-                        {{ isDark ? 'Dark' : 'Light' }} Mode
+                        {{ isDark ? 'Tumšais' : 'Gaišajs' }} Režims
                     </button>
                 </div>
             </aside>

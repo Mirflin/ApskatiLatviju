@@ -26,13 +26,13 @@
                         @click="$emit('cancel')"
                         class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded"
                     >
-                        Cancel
+                        Atcelt
                     </button>
                     <button
                         @click="$emit('save')"
                         class="px-4 py-2 bg-orange-500 text-white hover:bg-orange-600 rounded"
                     >
-                        Save
+                        Saglabāt
                     </button>
                 </div>
             </div>

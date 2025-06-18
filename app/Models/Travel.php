@@ -13,7 +13,7 @@ class Travel extends Model
 
     protected $fillable = [
         'name', 'road_marks', 'city', 'image',
-        'description', 'price', 'spot_count', 'time_term'
+        'description', 'price', 'spot_count', 'time_term', 'seazon_id', 'group_id','time_term', 'status_id'
     ];
 
     public function formattedTimeTerm($format = 'd.m')

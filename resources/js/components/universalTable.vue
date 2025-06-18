@@ -3,7 +3,7 @@
         <input
             type="text"
             v-model="searchQuery"
-            placeholder="Search..."
+            placeholder="Meklēt..."
             class="search-bar"
         />
 
@@ -14,7 +14,7 @@
                         <th v-for="col in columns" :key="col.key">
                             {{ col.label }}
                         </th>
-                        <th v-if="$slots.tool" class="text-center">Tools</th>
+                        <th v-if="$slots.tool" class="text-center">Instrumenti</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,29 +33,23 @@
                                     : item[col.key]
                             }}
                         </td>
-                        <!--
                         <td v-if="$slots.tool" class="text-center">
-                            <slot
-                                class="tools"
-                                name="tool"
-                                :row="item"
-                                @edit="emitEdit(item)"
-                                @delete="emitDelete(item)"
-                            />
+                            <slot name="tool" :row="item" :onEdit="emitEdit" :onDelete="emitDelete" :onRestore="emitRestore" />
                         </td>
-                        -->
+                        <!--
                         <td class="text-center">
                             <button @click="$emit('view', item)"><i class="fa-solid fa-eye"></i></button>
                             <button @click="$emit('edit', item)"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button @click="$emit('delete', item.id)"><i class="fa-solid fa-trash"></i></button>
                         </td>
+                        -->
                     </tr>
                     <tr v-if="paginatedData.length === 0">
                         <td
                             :colspan="columns.length + ($slots.tool ? 1 : 0)"
                             class="text-center text-gray-400 py-6"
                         >
-                            No data found
+                            Nav atrasti dati
                         </td>
                     </tr>
                 </tbody>
@@ -63,10 +57,10 @@
         </div>
 
         <div class="pagination">
-            <button @click="prevPage" :disabled="page === 1">Prev</button>
-            <span>Page {{ page }} of {{ totalPages }}</span>
+            <button @click="prevPage" :disabled="page === 1">Atpakaļ</button>
+            <span>Lappa {{ page }} of {{ totalPages }}</span>
             <button @click="nextPage" :disabled="page === totalPages">
-                Next
+                Talāk
             </button>
         </div>
     </div>
@@ -91,7 +85,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['edit', 'delete','view']);
+const emit = defineEmits(['edit', 'delete','view', 'restore']);
 
 const page = ref(1);
 const searchQuery = ref('');
@@ -134,8 +128,10 @@ function emitEdit(item) {
 }
 
 function emitDelete(item) {
-    console.log('edit');
     emit('delete', item);
+}
+function emitRestore(item){
+    emit('restore', item)
 }
 
 watch(

@@ -1,5 +1,5 @@
 <template>
-    <article class="main-panel">
+    <article class="main-panel" v-if="loaded">
         <div class="panel">
             <div class="panel-header">
                 <p>/ news</p>
@@ -21,7 +21,7 @@
                             </button>
                         </div>
                         <universalTable
-                            :data="news2"
+                            :data="data"
                             :columns="columns"
                             :perPage="10"
                             :searchableFields="[
@@ -31,32 +31,22 @@
                             ]"
                             @edit="editNews"
                             @delete="deleteNews"
-                            @view="handleView"
+                            @view="viewNews"
                         >
                             <template #tool="{ row }">
+                                <button @click="editNews(row)">
+                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                </button>
+                                <button @click="deleteNews(row)">
+                                    <i class="fa-solid fa-trash fa-lg"></i>
+                                </button>
+                                <button @click="viewNews(row)">
+                                    <i class="fa-solid fa-eye fa-lg"></i>
+                                </button>
                             </template>
                         </universalTable>
                     </div>
                 </div>
-                <baseViewModal
-                    v-model="showViewModal"
-                    title="Show news"
-                    @cancel="cancelModal"
-                >
-                    <div class="view-modal">
-                        <div class="">
-                            <div>
-                                <h3>Header: </h3>
-                                <p>{{view_item.header}}</p>
-                            </div>
-                            <div>
-                                <h3>Paragraph: </h3>
-                                <textarea disabled style="resize: none;" class="w-full border border-gray-300 rounded px-3 py-2">{{ view_item.paragraph }}</textarea>
-                            </div>
-                        </div>
-                        <img class="modal-image" :src="view_item.image">
-                    </div>
-                </baseViewModal>
 
                 <baseModal
                     v-model="showModal"
@@ -64,10 +54,10 @@
                     @cancel="cancelModal"
                     @save="saveNews"
                 >
-                    <form @submit.prevent="saveNews" class="space-y-4">
+                    <form @submit.prevent="saveNews" enctype="multipart/form-data" class="space-y-4">
                         <div>
                             <label class="block text-gray-700 mb-1"
-                                >Header</label
+                                >Apgalvojums</label
                             >
                             <input
                                 v-model="form.header"
@@ -75,62 +65,106 @@
                                 maxlength="60"
                                 required
                                 class="w-full border border-gray-300 rounded px-3 py-2"
-                                placeholder="Enter news header"
+                                placeholder="Ievadi jaunumu apgalvojumu"
                             />
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-1"
-                                >Content</label
+                                >Teksts</label
                             >
                             <textarea
                                 v-model="form.paragraph"
                                 required
                                 class="w-full border border-gray-300 rounded px-3 py-2"
-                                placeholder="Enter news paragraph"
+                                placeholder="Ievadi jaunumu tekstu"
                                 rows="4"
                             ></textarea>
                         </div>
                         <div>
-                            <label class="block text-gray-700 mb-1"
-                                >Image URL</label
-                            >
-                            <input
-                                v-model="form.image"
-                                type="url"
-                                class="w-full border border-gray-300 rounded px-3 py-2"
-                                placeholder="Enter image URL"
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Attēls</label>
+                                <input
+                                    @change="onImageImport"
+                                    type="file"
+                                    id="file-upload"
+                                    name="image"
+                                    class="sr-only"
+                                    placeholder="Enter image URL"
+                                />
+                                <label :class="{ 'highlight': fileSelected }" for="file-upload" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
+                                    >Attels</label
+                                >
+                        </div>
+                        <div class="flex-none w-full md:w-1/3 flex items-center justify-center">
+                            <img
+                                v-if="previewUrl"
+                                :src="previewUrl"
+                                alt="Attels"
+                                class="max-w-full max-h-40 object-contain rounded"
                             />
+                            <span v-else class="text-gray-500">Nav attels</span>
                         </div>
                     </form>
                 </baseModal>
+                <baseViewModal
+                    v-model="showViewModal"
+                    title="Apskatit attelu"
+                >
+                    <div class="flex-none w-full md:w-1/3 flex items-center justify-center">
+                        <img
+                            v-if="view_item"
+                            :src="view_item"
+                            alt="Attels"
+                            class="max-w-full max-h-40 object-contain rounded"
+                        />
+                        <span v-else class="text-gray-500">Nav attels</span>
+                    </div>
+                </baseViewModal>
             </div>
         </div>
     </article>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import baseModal from './baseModal.vue';
+import axios from 'axios';
 import baseViewModal from './baseViewModal.vue';
+import universalTable from './universalTable.vue';
+
+const data = ref([]);
+const loaded = ref(false);
+const imageBase64 = ref();
+const fileSelected = ref(false);
+const previewUrl = ref(null);
+
+const columns = [
+    { label: 'Id', key: 'id' },
+    { label: 'Apgalvojums', key: 'header' },
+    { label: 'Teksts', key: 'paragraph' },
+    { label: 'Attēls', key: 'image' },
+    { label: 'Uztaisīts', key: 'created_at' },
+];
 
 const showModal = ref(false);
 const showViewModal = ref(false);
 
-const news = ref([
-    {
-        id: 1,
-        header: 'Breaking News',
-        paragraph: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-        image: 'https://via.placeholder.com/150x90',
-    },
-    {
-        id: 2,
-        header: 'Update on Event',
-        paragraph:
-            'Praesent commodo cursus magna, vel scelerisque nisl consectetur...',
-        image: '',
-    },
-]);
+async function fetchdata(){
+    try{
+        const response = await axios.get('/api/get-news');
+        data.value = response.data;
+        data.value.forEach(element => {
+            element.created_at = (new Date(element.created_at)).toLocaleString();
+        });
+    } catch(error){
+        console.log(error)
+    } finally {
+        loaded.value = true;
+    }
+}
+
+onMounted( async () => {
+    fetchdata();
+});
 
 const form = ref({
     id: null,
@@ -146,6 +180,8 @@ const resetForm = () => {
         paragraph: '',
         image: '',
     };
+    fileSelected.value = false;
+    previewUrl.value = null;
 };
 
 const cancelModal = () => {
@@ -154,104 +190,68 @@ const cancelModal = () => {
     showViewModal.value = false;
 };
 
-const saveNews = () => {
-    if (form.value.id) {
-        const index = news.value.findIndex((n) => n.id === form.value.id);
-        if (index !== -1) {
-            news.value[index] = { ...form.value };
-        }
-    } else {
-        const newId = news.value.length
-            ? Math.max(...news.value.map((n) => n.id)) + 1
-            : 1;
-        news.value.push({
-            id: newId,
+const saveNews = async () => {
+    try {
+        const news = {
             header: form.value.header,
             paragraph: form.value.paragraph,
-            image: form.value.image,
-        });
+            image: imageBase64.value || null,
+        };
+
+        if (form.value.id) {
+            news.id = form.value.id;
+            await axios.post('/api/edit-news', news);
+        } else {
+            await axios.post('/api/create-new-news', news);
+        }
+
+        resetForm();
+        fetchdata();
+        showModal.value = false;
+        fileSelected.value = false;
+    } catch (error) {
     }
-    resetForm();
-    showModal.value = false;
 };
+
+function onImageImport(e){
+    const file = e.target.files[0];
+    if (file && ["image/png", "image/jpeg", "image/gif", "image/svg+xml"].includes(file.type)) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            imageBase64.value = event.target.result;
+            previewUrl.value = URL.createObjectURL(file);
+        };
+        fileSelected.value = true;
+        reader.readAsDataURL(file);
+    }else{
+        previewUrl.value = null;
+        fileSelected.value = false;
+    }
+}
 
 const editNews = (newsItem) => {
     form.value = { ...newsItem };
     showModal.value = true;
 };
 
-const deleteNews = (id) => {
-    news.value = news.value.filter((n) => n.id !== id);
+const deleteNews = async (item) => {
+    await axios.post('/api/delete-news', {id: item.id});
+    fetchdata();
+    showModal.value = false;
 };
 
-import universalTable from './universalTable.vue';
+const view_item = ref();
 
-const news2 = [
-    {
-        id: 1,
-        header: 'Alice',
-        content: 'alice@example.com',
-        created_at: '2025',
-    },
-    { id: 2, header: 'Bob', content: 'bob@example.com', created_at: '2025' },
-    {
-        id: 3,
-        header: 'Charlie',
-        content: 'charlie@example.com',
-        created_at: '2024',
-    },
-    {
-        id: 4,
-        header: 'David',
-        content: 'david@example.com',
-        created_at: '2025',
-    },
-    { id: 5, header: 'Fve', content: 'eve@example.com', created_at: '2025' },
-    {
-        id: 6,
-        header: 'Frank',
-        content: 'frank@example.com',
-        created_at: '2025',
-    },
-    {
-        id: 7,
-        header: 'Charlie',
-        content: 'charlie@example.com',
-        created_at: '2024',
-    },
-    {
-        id: 8,
-        header: 'David',
-        content: 'david@example.com',
-        created_at: '2025',
-    },
-    { id: 9, header: 'Fve', content: 'eve@example.com', created_at: '2025' },
-    {
-        id: 10,
-        header: 'Frank',
-        content: 'frank@example.com',
-        created_at: '2025',
-    },
-];
-
-const columns = [
-    { label: 'Id', key: 'id' },
-    { label: 'Header', key: 'header' },
-    { label: 'Content', key: 'content' },
-    { label: 'Created at', key: 'created_at' },
-];
-
-const view_item = ref({});
-
-function handleEdit(row) {
-    alert(`Edit ${row}`);
-}
-
-function handleDelete(row) {
-    alert(`Delete ${row}`);
-}
-function handleView(item){
+function viewNews(item){
     showViewModal.value = true
-    view_item.value = item;
+    view_item.value = item.image;
 }
+
 </script>
+<style scoped>
+.highlight{
+  border-color: #2eff5f;
+  background-color: #2eff5f;
+  color: #ffffff;
+}
+</style>
