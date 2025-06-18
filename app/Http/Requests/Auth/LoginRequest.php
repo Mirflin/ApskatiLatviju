@@ -50,15 +50,16 @@ class LoginRequest extends FormRequest
         }
 
         $user = Auth::user();
-        if ($user->status_id !== 6) {
+        if($user->status_id == 6 || $user->status_id == 3){
+            $user->status_id = 6;
+            $user->save();
+            RateLimiter::clear($this->throttleKey());
+        }else{
             Auth::logout();
-
             throw ValidationException::withMessages([
                 'email' => 'Jūsu lietotājs ir neaktīvs!',
             ]);
         }
-
-        RateLimiter::clear($this->throttleKey());
     }
 
     /**

@@ -21,9 +21,9 @@
                         @view="handleView"
                     >
                         <template #tool="{ row }">
-                            <button @click="handleView(row)"><i class="fa-solid fa-eye"></i></button>
+                            <!--<button @click="handleView(row)"><i class="fa-solid fa-eye"></i></button>
                             <button v-if="row.status == 'Waiting approval' && isAdmin" @click="handleAprove(row)"><i class="fa-solid fa-thumbs-up fa-lg"></i></button>
-                            <button v-if="row.status == 'Waiting approval' && isAdmin" @click="handleCancel(row)"><i class="fa-solid fa-ban fa-lg"></i></button>
+                            <button v-if="row.status == 'Waiting approval' && isAdmin" @click="handleCancel(row)"><i class="fa-solid fa-ban fa-lg"></i></button>-->
                         </template>
                     </universalTable>
 
@@ -51,19 +51,27 @@ const loaded = ref(false);
 const isAdmin = ref(false);
 const user = ref();
 
-onMounted( async () => {
+async function fetchdata(){
     try{
-        const response = await axios.get('/api/get-history');
+        let response = await axios.get('/api/get-history');
         data.value = response.data;
+        data.value.forEach(element => {
+            element.created_at = (new Date(element.created_at)).toLocaleString();
+        });
         user.value = (await axios.get('/api/get-current-user')).data;
         if(user.value.permision_group == 1){
             isAdmin.value = true
         }
+
     } catch(error){
         console.log(error)
     } finally {
         loaded.value = true;
     }
+}
+
+onMounted( async () => {
+    fetchdata();
 });
 
 const form = ref({
